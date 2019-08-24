@@ -1,0 +1,34 @@
+{
+  reportDir domain/target/detangled
+  searchPaths
+  [
+    ./domain/target/game_4x-domain-1.0-SNAPSHOT.jar
+  ]
+  level 2
+  startsWith
+  {
+    include
+    [
+      [
+        com
+        seanshubin
+        game_4x
+      ]
+    ]
+    exclude []
+    drop
+    [
+      [
+        com
+        seanshubin
+        game_4x
+      ]
+    ]
+  }
+  ignoreFiles []
+  canFailBuild true
+  ignoreJavadoc true
+  logTiming true
+  logEffectiveConfiguration true
+  allowedInCycle domain/detangler-allowed-in-cycle.txt
+}
