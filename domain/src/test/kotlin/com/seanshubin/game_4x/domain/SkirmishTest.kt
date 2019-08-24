@@ -1,20 +1,19 @@
 package com.seanshubin.game_4x.domain
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import com.seanshubin.game_4x.domain.Intent.Companion.AttackCommanderNamed
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class SkirmishTest {
     @Test
-    fun mutualAssuredDestruction(){
+    fun mutualAssuredDestruction() {
         // given
         val simpleUnit = GameUnit(attack = 1, defense = 1)
-        val aliceArmy =  Army(simpleUnit)
+        val aliceArmy = Army(simpleUnit)
         val aliceIntent = AttackCommanderNamed("bob")
         val bobArmy = Army(simpleUnit)
         val bobIntent = AttackCommanderNamed("alice")
-        val aliceBeforeSkirmish = Commander("alice", aliceArmy, aliceIntent )
+        val aliceBeforeSkirmish = Commander("alice", aliceArmy, aliceIntent)
         val bobBeforeSkirmish = Commander("bob", bobArmy, bobIntent)
         val battlefieldBeforeSkirmish = Battlefield(aliceBeforeSkirmish, bobBeforeSkirmish)
         // when
