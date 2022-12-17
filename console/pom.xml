@@ -20,9 +20,9 @@
         <plugins>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.4.2</version>
                 <configuration>
-                    <finalName>game_4x</finalName>
+                    <finalName>game_4x-console</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
