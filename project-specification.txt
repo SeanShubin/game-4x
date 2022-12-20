@@ -40,8 +40,9 @@
   }
   global [ stdlib test ]
   modules {
-    domain  []
-    console [domain]
+    console  [ game ]
+    game  [ jackson ]
+    skirmish []
   }
   detangler [domain]
   consoleEntryPoint {

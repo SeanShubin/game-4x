@@ -53,8 +53,9 @@
         </dependencies>
     </dependencyManagement>
     <modules>
-        <module>domain</module>
         <module>console</module>
+        <module>game</module>
+        <module>skirmish</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

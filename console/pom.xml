@@ -7,7 +7,7 @@
     <dependencies>
         <dependency>
             <groupId>com.seanshubin.game_4x</groupId>
-            <artifactId>game_4x-domain</artifactId>
+            <artifactId>game_4x-game</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
