@@ -23,7 +23,7 @@ class SampleGameTest {
         ))
         api.addPlanet("Planet B", size = 6, planetResourcesB)
         planetA.addOrbital("colonizer")
-        val strategy:Strategy = StrategyImpl(api)
+        val strategy:Strategy = StrategyImpl()
         val gameBehavior = GameBehaviorImpl(strategy)
         val previousGames = emptyList<GameState>()
         val currentGame = api.gameState()
