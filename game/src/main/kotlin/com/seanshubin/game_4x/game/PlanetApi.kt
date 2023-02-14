@@ -1,6 +1,8 @@
 package com.seanshubin.game_4x.game
 
 interface  PlanetApi {
-    fun addResource(resource:Resource)
-    fun addOrbital(name:String)
+    fun addOrbital(orbitalName:String)
+    fun canColonize():Boolean
+    fun hasColony():Boolean
+    fun colonize(landIndex:Int)
 }
