@@ -1,6 +1,8 @@
 package com.seanshubin.game_4x.game
 
 import org.junit.Test
+import java.nio.file.Files
+import java.nio.file.Paths
 
 class SampleGameTest {
     @Test
@@ -26,6 +28,9 @@ class SampleGameTest {
         val previousGames = emptyList<GameState>()
         val currentGame = api.gameState()
         val finalGame = gameBehavior.runToCompletion(previousGames, currentGame)
-        println(JsonMappers.pretty.writeValueAsString(finalGame.toObject()))
+        val path = Paths.get("generated", "test.json")
+        val json = JsonMappers.pretty.writeValueAsString(finalGame.toObject())
+        Files.createDirectories(path.parent)
+        Files.writeString(path, json)
     }
 }
