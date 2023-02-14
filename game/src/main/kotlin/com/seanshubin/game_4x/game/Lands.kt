@@ -1,6 +1,8 @@
 package com.seanshubin.game_4x.game
 
-data class Lands(val landList: XList<Land>) {
+import com.seanshubin.game_4x.game.ListUtil.updateAtIndex
+
+data class Lands(val landList: List<Land>) {
     fun claimLand(landIndex: Int): Lands {
         val newLandList = landList.updateAtIndex(landIndex) { land ->
             land.claim()
@@ -11,9 +13,9 @@ data class Lands(val landList: XList<Land>) {
     fun claimedExists(): Boolean = landList.any { it.claimed }
     fun nonClaimedExists(): Boolean = landList.any { !it.claimed }
     fun fullyDeveloped(): Boolean = landList.all { it.fullyDeveloped() }
-    fun toObject():List<Any> = landList.list.map{it.toObject()}
+    fun toObject():List<Any> = landList.map{it.toObject()}
 
-    constructor(size: Int, resources: Resources) : this(XList((0 until size).map {
+    constructor(size: Int, resources: Resources) : this((0 until size).map {
         Land(resources)
-    }))
+    })
 }

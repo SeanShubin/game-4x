@@ -1,12 +1,14 @@
 package com.seanshubin.game_4x.game
 
+import com.seanshubin.game_4x.game.ListUtil.removeFirstEqual
+
 data class Planet(
     val name: String,
     val lands: Lands,
-    val inOrbit: XList<String>
+    val inOrbit: List<String>
 ) {
     constructor(name: String, size: Int, resources: Resources) : this(
-        name, lands = Lands(size, resources), inOrbit = XList.emptyList()
+        name, lands = Lands(size, resources), inOrbit = emptyList()
     )
 
     fun addOrbital(name: String): Planet {
@@ -25,6 +27,6 @@ data class Planet(
     fun toObject():Map<String, Any> = mapOf(
         "name" to name,
         "lands" to lands.toObject(),
-        "inOrbit" to inOrbit.list
+        "inOrbit" to inOrbit
     )
 }
