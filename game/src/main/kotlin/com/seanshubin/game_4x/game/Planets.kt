@@ -5,6 +5,7 @@ import com.seanshubin.game_4x.game.MapUtil.updated
 data class Planets(val planetMap: Map<String, Planet>) {
     fun map(f: (Map.Entry<String, Planet>) -> Planet): Planets = Planets(planetMap.mapValues(f))
     fun hasColony(name: String): Boolean = planetMap.getValue(name).hasColony()
+    fun addPlanet(planet:Planet):Planets = copy(planetMap = planetMap + (planet.name to planet))
     fun addPlanet(name: String, size: Int, resources: Resources): Planets {
         val newPlanet = Planet(name, size, resources)
         val newPlanetMap = planetMap + Pair(newPlanet.name, newPlanet)
