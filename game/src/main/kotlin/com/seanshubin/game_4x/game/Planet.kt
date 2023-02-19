@@ -1,7 +1,6 @@
 package com.seanshubin.game_4x.game
 
 import com.seanshubin.game_4x.game.ListUtil.removeAtIndex
-import com.seanshubin.game_4x.game.ListUtil.removeFirstEqual
 
 data class Planet(
     val lands: Lands,
@@ -27,11 +26,6 @@ data class Planet(
     }
 
     fun addLand(land: Land): Planet = copy(lands = lands.addLand(land))
-    fun hasColony(): Boolean = lands.claimedExists()
-    fun canColonize(): Boolean = inOrbit.contains(Names.COLONIZER) && lands.nonClaimedExists()
-    private fun isColonized(): Boolean = lands.claimedExists()
-    private fun hasColonizer(): Boolean = inOrbit.contains(Names.COLONIZER)
-    private fun removeColonizer(): Planet = copy(inOrbit = inOrbit.removeFirstEqual(Names.COLONIZER))
     fun toObject(): Map<String, Any> = mapOf(
         "lands" to lands.toObject(),
         "inOrbit" to inOrbit

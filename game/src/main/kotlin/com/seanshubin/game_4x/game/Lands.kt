@@ -1,7 +1,5 @@
 package com.seanshubin.game_4x.game
 
-import com.seanshubin.game_4x.game.ListUtil.indexOfFirstOrNull
-import com.seanshubin.game_4x.game.ListUtil.updateAtIndex
 import com.seanshubin.game_4x.game.ListUtil.updateFirstApplicable
 
 data class Lands(val landList: List<Land>) {
@@ -16,8 +14,6 @@ data class Lands(val landList: List<Land>) {
         } ?: return null
         return copy(landList = newLandList)
     }
-    fun claimedExists(): Boolean = landList.any { it.claimed }
-    fun nonClaimedExists(): Boolean = landList.any { !it.claimed }
     fun toObject():List<Any> = landList.map{it.toObject()}
 
     companion object {
