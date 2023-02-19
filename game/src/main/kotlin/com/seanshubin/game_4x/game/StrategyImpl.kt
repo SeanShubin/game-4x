@@ -1,7 +1,7 @@
 package com.seanshubin.game_4x.game
 
 class StrategyImpl:Strategy {
-    override fun takeTurn(game: GameState): GameState {
+    override fun takeTurn(game: Game): Game {
         val newPlanets = game.planets.map(::takeTurnForPlanet)
         return game.copy(planets = newPlanets)
     }
