@@ -8,21 +8,24 @@ class SampleGameTest {
     @Test
     fun colonize(){
         val planetResourcesA = Resources(listOf(
-            Resource(Names.FOOD, quantity = 4, rate = 4),
-            Resource(Names.MATERIAL, quantity = 2, rate = 7),
-            Resource(Names.ENERGY, quantity = 6, rate = 5)
+            Resource(Names.FOOD, current = 0, maximum=4, rate = 4),
+            Resource(Names.MATERIAL, current = 0, maximum = 2, rate = 7),
+            Resource(Names.ENERGY, current = 0, maximum = 6, rate = 5)
         ))
-        val planetA = Planet("Planet A", size = 10, planetResourcesA).addOrbital("colonizer")
+        val planetA = Planet.empty.setLandsWithResources(10, planetResourcesA).addOrbital("colonizer")
         val planetResourcesB = Resources(listOf(
-            Resource(Names.FOOD, quantity = 2, rate = 3),
-            Resource(Names.MATERIAL, quantity = 8, rate = 6),
-            Resource(Names.ENERGY, quantity = 3, rate = 4)
+            Resource(Names.FOOD, current = 0, maximum = 2, rate = 3),
+            Resource(Names.MATERIAL, current = 0, maximum = 8, rate = 6),
+            Resource(Names.ENERGY, current = 0, maximum = 3, rate = 4)
         ))
-        val planetB = Planet("Planet B", size = 6, planetResourcesB)
-        val strategy:Strategy = StrategyImpl()
+        val planetB = Planet.empty.setLandsWithResources(6, planetResourcesB)
+        fun colonizePlanetCommand(planet:Planet):Planet = planet.colonize() ?: planet
+        val colonizeCommand = PlanetCommandAdaptor(::colonizePlanetCommand)
+        val commands = listOf(colonizeCommand)
+        val strategy:Strategy = StrategyImpl(commands)
         val gameBehavior = GameBehaviorImpl(strategy)
         val previousGames = emptyList<Game>()
-        val currentGame = Game.empty.addPlanet(planetA).addPlanet(planetB)
+        val currentGame = Game.empty.setPlanets(listOf(planetA, planetB))
         val finalGame = gameBehavior.runToCompletion(previousGames, currentGame)
         val path = Paths.get("generated", "test.json")
         val json = JsonMappers.pretty.writeValueAsString(finalGame.toObject())
@@ -30,3 +33,15 @@ class SampleGameTest {
         Files.writeString(path, json)
     }
 }
+/*
+ColonizePlanet
+BuildFarm
+BuildMaterialMine
+BuildEnergyMine
+ExpandTerritory
+BuildLauncher
+BuildOrbitalFactory
+BuildColonizer
+BuildGate
+SendColonizer
+ */

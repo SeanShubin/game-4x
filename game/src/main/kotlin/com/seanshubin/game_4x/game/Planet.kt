@@ -1,32 +1,43 @@
 package com.seanshubin.game_4x.game
 
+import com.seanshubin.game_4x.game.ListUtil.removeAtIndex
 import com.seanshubin.game_4x.game.ListUtil.removeFirstEqual
 
 data class Planet(
-    val name: String,
     val lands: Lands,
     val inOrbit: List<String>
 ) {
-    constructor(name: String, size: Int, resources: Resources) : this(
-        name, lands = Lands(size, resources), inOrbit = emptyList()
-    )
+    fun colonize(): Planet? = removeOrbital(Names.COLONIZER)?.claimAndBuild(Names.FOOD)
+    private fun removeOrbital(orbitalName: String): Planet? {
+        val index = inOrbit.indexOf(orbitalName)
+        if (index == -1) return null
+        return copy(inOrbit = inOrbit.removeAtIndex(index))
+    }
+
+    fun setLandsWithResources(landCount:Int, resources:Resources):Planet =
+        copy(lands = lands.setWithResources(landCount, resources))
+
+    private fun claimAndBuild(resourceName: String): Planet? {
+        val newLands = lands.claimAndBuild(resourceName)
+        return if (newLands == null) null else copy(lands = newLands)
+    }
 
     fun addOrbital(name: String): Planet {
         return copy(inOrbit = inOrbit + name)
     }
 
-    fun fullyDeveloped(): Boolean {
-        return lands.fullyDeveloped()
-    }
-
-    fun hasColony():Boolean = lands.claimedExists()
+    fun addLand(land: Land): Planet = copy(lands = lands.addLand(land))
+    fun hasColony(): Boolean = lands.claimedExists()
     fun canColonize(): Boolean = inOrbit.contains(Names.COLONIZER) && lands.nonClaimedExists()
-    fun colonize(landIndex: Int): Planet = removeColonizer().claimLand(landIndex)
-    fun removeColonizer(): Planet = copy(inOrbit = inOrbit.removeFirstEqual(Names.COLONIZER))
-    fun claimLand(landIndex: Int): Planet = copy(lands = lands.claimLand(landIndex))
-    fun toObject():Map<String, Any> = mapOf(
-        "name" to name,
+    private fun isColonized(): Boolean = lands.claimedExists()
+    private fun hasColonizer(): Boolean = inOrbit.contains(Names.COLONIZER)
+    private fun removeColonizer(): Planet = copy(inOrbit = inOrbit.removeFirstEqual(Names.COLONIZER))
+    fun toObject(): Map<String, Any> = mapOf(
         "lands" to lands.toObject(),
         "inOrbit" to inOrbit
     )
+
+    companion object {
+        val empty: Planet = Planet(lands = Lands.empty, inOrbit = emptyList())
+    }
 }
