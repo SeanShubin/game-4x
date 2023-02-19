@@ -12,13 +12,13 @@ class SampleGameTest {
             Resource(Names.MATERIAL, current = 0, maximum = 2, rate = 7),
             Resource(Names.ENERGY, current = 0, maximum = 6, rate = 5)
         ))
-        val planetA = Planet.empty.setLandsWithResources(10, planetResourcesA).addOrbital("colonizer")
+        val planetA = Planet("Planet A").setLandsWithResources(10, planetResourcesA).addOrbital("colonizer")
         val planetResourcesB = Resources(listOf(
             Resource(Names.FOOD, current = 0, maximum = 2, rate = 3),
             Resource(Names.MATERIAL, current = 0, maximum = 8, rate = 6),
             Resource(Names.ENERGY, current = 0, maximum = 3, rate = 4)
         ))
-        val planetB = Planet.empty.setLandsWithResources(6, planetResourcesB)
+        val planetB = Planet("Planet B").setLandsWithResources(6, planetResourcesB)
         val commands = listOf(Colonize)
         val strategy:Strategy = StrategyImpl(commands)
         val gameBehavior = GameBehaviorImpl(strategy)

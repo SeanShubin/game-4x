@@ -3,8 +3,9 @@ package com.seanshubin.game_4x.game
 import com.seanshubin.game_4x.game.ListUtil.removeAtIndex
 
 data class Planet(
-    val lands: Lands,
-    val inOrbit: List<String>
+    val name:String,
+    val lands: Lands = Lands.empty,
+    val inOrbit: List<String> = emptyList()
 ) {
     fun colonize(): Planet? = removeOrbital(Names.COLONIZER)?.claimAndBuild(Names.FOOD)
     private fun removeOrbital(orbitalName: String): Planet? {
@@ -27,11 +28,8 @@ data class Planet(
 
     fun addLand(land: Land): Planet = copy(lands = lands.addLand(land))
     fun toObject(): Map<String, Any> = mapOf(
+        "name" to name,
         "lands" to lands.toObject(),
         "inOrbit" to inOrbit
     )
-
-    companion object {
-        val empty: Planet = Planet(lands = Lands.empty, inOrbit = emptyList())
-    }
 }
