@@ -19,9 +19,7 @@ class SampleGameTest {
             Resource(Names.ENERGY, current = 0, maximum = 3, rate = 4)
         ))
         val planetB = Planet.empty.setLandsWithResources(6, planetResourcesB)
-        fun colonizePlanetCommand(planet:Planet):Planet = planet.colonize() ?: planet
-        val colonizeCommand = PlanetCommandAdaptor(::colonizePlanetCommand)
-        val commands = listOf(colonizeCommand)
+        val commands = listOf(Colonize)
         val strategy:Strategy = StrategyImpl(commands)
         val gameBehavior = GameBehaviorImpl(strategy)
         val previousGames = emptyList<Game>()
