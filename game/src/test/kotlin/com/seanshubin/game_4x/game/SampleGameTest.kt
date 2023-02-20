@@ -23,7 +23,7 @@ class SampleGameTest {
             )
         )
         val planetB = Planet("Planet B").setLandsWithResources(6, planetResourcesB)
-        val commands = listOf(Colonize)
+        val commands = listOf(Colonize, GenerateFood)
         val strategy: Strategy = StrategyImpl(commands)
         val gameBehavior = GameBehaviorImpl(strategy)
         val previousGames = emptyList<Game>()

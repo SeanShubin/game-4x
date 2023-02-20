@@ -9,6 +9,10 @@ data class Resource(
     val onSurface: Int = 0
 ) {
     fun buildGatherer(): Resource? = if (gatherers < inGround) copy(gatherers = gatherers + 1) else null
+    fun generate(): Resource? =
+        if (extracted < gatherers) copy(extracted = extracted + 1, onSurface = onSurface + density)
+        else null
+
     fun toObject(): Map<String, Any> = mapOf(
         "name" to name,
         "density" to density,

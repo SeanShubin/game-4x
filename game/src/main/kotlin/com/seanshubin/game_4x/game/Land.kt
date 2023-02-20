@@ -6,6 +6,10 @@ data class Land(
     val labor:Int = 0
 ) {
     fun claimAndBuild(resourceName:String):Land? = claim()?.build(resourceName)
+    fun generate(resourceName:String):Land? {
+        val newResources = resources.generate(resourceName)
+        return if(newResources == null) null else copy(resources = newResources)
+    }
     private fun claim():Land? = if(claimed) null else copy(claimed = true)
     private fun build(resourceName:String):Land? {
         val newResources = resources.build(resourceName)

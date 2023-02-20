@@ -19,4 +19,26 @@ object ListUtil {
         }
         return null
     }
+
+    fun <T> List<T>.applyToExactlyOneApplicable(predicate:(T)->Boolean, update:(T)->T?):List<T>? {
+        var count = 0
+        val newList = map {
+            if(predicate(it)){
+                val newElement = update(it)
+                if(newElement == null){
+                    it
+                } else {
+                    count++
+                    newElement
+                }
+            } else {
+                it
+            }
+        }
+        return when (count) {
+            0 -> null
+            1 -> newList
+            else -> throw RuntimeException("expected to only apply to one element, but applied to $count")
+        }
+    }
 }
