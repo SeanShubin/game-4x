@@ -2,15 +2,17 @@ package com.seanshubin.game_4x.game
 
 data class Resource(
     val name: String,
-    val current: Int,
-    val maximum: Int,
-    val rate: Int
+    val density: Int,
+    val inGround: Int,
+    val gatherers:Int,
+    val onSurface: Int
 ) {
-    fun buildGatherer():Resource? = if(current < maximum) copy(current = current+1) else null
+    fun buildGatherer():Resource? = if(gatherers < inGround) copy(gatherers = gatherers+1) else null
     fun toObject(): Map<String, Any> = mapOf(
         "name" to name,
-        "current" to current,
-        "maximum" to maximum,
-        "rate" to rate
+        "density" to density,
+        "inGround" to inGround,
+        "gatherers" to gatherers,
+        "onSurface" to onSurface
     )
 }

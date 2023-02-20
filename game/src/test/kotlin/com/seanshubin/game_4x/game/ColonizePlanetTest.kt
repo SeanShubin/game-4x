@@ -6,9 +6,15 @@ import kotlin.test.assertNull
 
 class ColonizePlanetTest {
     @Test
-    fun typicalColonizeScenario(){
+    fun typicalColonizeScenario() {
         // given
-        val emptyFoodResource = Resource(name=Names.FOOD, current = 0, maximum = 4, rate = 10)
+        val emptyFoodResource = Resource(
+            name = Names.FOOD,
+            density = 10,
+            inGround = 4,
+            gatherers = 0,
+            onSurface = 0
+        )
         val singleFoodResource = emptyFoodResource.buildGatherer()!!
         val unclaimedLand = Land.empty.addResource(emptyFoodResource)
         val claimedLand = Land.empty.addResource(singleFoodResource).copy(claimed = true)
@@ -23,9 +29,15 @@ class ColonizePlanetTest {
     }
 
     @Test
-    fun willNotColonizeWithoutColonizer(){
+    fun willNotColonizeWithoutColonizer() {
         // given
-        val foodResource = Resource(name=Names.FOOD, current = 0, maximum = 4, rate = 10)
+        val foodResource = Resource(
+            name = Names.FOOD,
+            density = 10,
+            inGround = 4,
+            gatherers = 0,
+            onSurface = 0
+        )
         val unclaimedLand = Land.empty.addResource(foodResource)
         val planet = Planet("the planet").addLand(unclaimedLand)
 
@@ -37,9 +49,15 @@ class ColonizePlanetTest {
     }
 
     @Test
-    fun willNotColonizeIfColonyExists(){
+    fun willNotColonizeIfColonyExists() {
         // given
-        val foodResource = Resource(name=Names.FOOD, current = 0, maximum = 4, rate = 10)
+        val foodResource = Resource(
+            name = Names.FOOD,
+            density = 10,
+            inGround = 4,
+            gatherers = 0,
+            onSurface = 0
+        )
         val claimedLand = Land.empty.addResource(foodResource).copy(claimed = true)
         val planet = Planet("the planet").addOrbital(Names.COLONIZER).addLand(claimedLand)
 
@@ -47,11 +65,11 @@ class ColonizePlanetTest {
         val actual = planet.colonize()
 
         // then
-        assertNull( actual)
+        assertNull(actual)
     }
 
     @Test
-    fun willNotColonizeIfNoFood(){
+    fun willNotColonizeIfNoFood() {
         // given
         val unclaimedLand = Land.empty
         val planet = Planet("the planet").addOrbital(Names.COLONIZER).addLand(unclaimedLand)
