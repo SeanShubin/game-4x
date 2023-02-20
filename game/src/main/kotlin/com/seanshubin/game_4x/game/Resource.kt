@@ -8,9 +8,13 @@ data class Resource(
     val extracted: Int = 0,
     val onSurface: Int = 0
 ) {
+    fun endTurn():Resource = copy(extracted = 0, onSurface = 0)
     fun buildGatherer(): Resource? = if (gatherers < inGround) copy(gatherers = gatherers + 1) else null
     fun generate(): Resource? =
         if (extracted < gatherers) copy(extracted = extracted + 1, onSurface = onSurface + density)
+        else null
+    fun consumeFromSurface():Resource? =
+        if(onSurface > 0) copy(onSurface = onSurface -1)
         else null
 
     fun toObject(): Map<String, Any> = mapOf(

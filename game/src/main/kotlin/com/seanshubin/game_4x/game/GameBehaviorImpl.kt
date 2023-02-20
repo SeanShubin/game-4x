@@ -1,9 +1,12 @@
 package com.seanshubin.game_4x.game
 
-class GameBehaviorImpl(private val strategy:Strategy): GameBehavior {
-    override tailrec fun runToCompletion(previousGames:List<Game>, currentGame:Game):Game {
-        if(previousGames.contains(currentGame)) return currentGame
+class GameBehaviorImpl(private val strategy: Strategy) : GameBehavior {
+    override tailrec fun runToCompletion(games: List<Game>): List<Game> {
+        val currentGame = games.last()
         val nextGame = strategy.takeTurn(currentGame)
-        return runToCompletion(previousGames + currentGame, nextGame)
+        return if (currentGame == nextGame)
+            games
+        else
+            runToCompletion(games + nextGame)
     }
 }

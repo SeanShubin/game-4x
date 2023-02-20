@@ -7,6 +7,7 @@ data class Planet(
     val lands: Lands = Lands(),
     val inOrbit: List<String> = emptyList()
 ) {
+    fun endTurn():Planet = copy(lands = lands.endTurn())
     fun colonize(): Planet? = removeOrbital(Names.COLONIZER)?.claimAndBuild(Names.FOOD)
     private fun removeOrbital(orbitalName: String): Planet? {
         val index = inOrbit.indexOf(orbitalName)

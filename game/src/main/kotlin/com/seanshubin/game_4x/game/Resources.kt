@@ -5,9 +5,16 @@ import com.seanshubin.game_4x.game.ListUtil.indexOfFirstOrNull
 import com.seanshubin.game_4x.game.ListUtil.replaceAtIndex
 
 data class Resources(val resourceList:List<Resource> = emptyList()){
+    fun endTurn():Resources = copy(resourceList = resourceList.map{it.endTurn()})
     fun generate(resourceName:String):Resources? {
         val newResourceList = resourceList.applyToExactlyOneApplicable({it.name == resourceName}){
             it.generate()
+        } ?: return null
+        return copy(resourceList = newResourceList)
+    }
+    fun consumeFromSurface(resourceName:String):Resources? {
+        val newResourceList = resourceList.applyToExactlyOneApplicable({it.name == resourceName}){
+            it.consumeFromSurface()
         } ?: return null
         return copy(resourceList = newResourceList)
     }

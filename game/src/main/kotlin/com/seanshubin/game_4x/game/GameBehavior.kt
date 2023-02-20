@@ -1,5 +1,5 @@
 package com.seanshubin.game_4x.game
 
 interface GameBehavior {
-    fun runToCompletion(previousGames:List<Game>, currentGame:Game):Game
+    fun runToCompletion(games:List<Game>):List<Game>
 }
