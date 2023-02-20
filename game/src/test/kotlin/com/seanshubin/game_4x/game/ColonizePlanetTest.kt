@@ -11,9 +11,7 @@ class ColonizePlanetTest {
         val emptyFoodResource = Resource(
             name = Names.FOOD,
             density = 10,
-            inGround = 4,
-            gatherers = 0,
-            onSurface = 0
+            inGround = 4
         )
         val singleFoodResource = emptyFoodResource.buildGatherer()!!
         val unclaimedLand = Land(resources = Resources(listOf(emptyFoodResource)))
@@ -34,9 +32,7 @@ class ColonizePlanetTest {
         val foodResource = Resource(
             name = Names.FOOD,
             density = 10,
-            inGround = 4,
-            gatherers = 0,
-            onSurface = 0
+            inGround = 4
         )
         val unclaimedLand = Land(resources = Resources(listOf(foodResource)))
         val planet = Planet("the planet").addLand(unclaimedLand)
@@ -54,9 +50,7 @@ class ColonizePlanetTest {
         val foodResource = Resource(
             name = Names.FOOD,
             density = 10,
-            inGround = 4,
-            gatherers = 0,
-            onSurface = 0
+            inGround = 4
         )
         val claimedLand = Land(resources = Resources(listOf(foodResource))).copy(claimed = true)
         val planet = Planet("the planet").addOrbital(Names.COLONIZER).addLand(claimedLand)

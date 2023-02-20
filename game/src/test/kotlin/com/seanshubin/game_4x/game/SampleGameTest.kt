@@ -9,17 +9,17 @@ class SampleGameTest {
     fun colonize() {
         val planetResourcesA = Resources(
             listOf(
-                Resource(Names.FOOD, density=4, inGround=4, gatherers=0, onSurface=0),
-                Resource(Names.MATERIAL, density=7, inGround=2, gatherers=0, onSurface=0),
-                Resource(Names.ENERGY, density=5, inGround=6, gatherers=0, onSurface=0)
+                Resource(Names.FOOD, density=4, inGround=4),
+                Resource(Names.MATERIAL, density=7, inGround=2),
+                Resource(Names.ENERGY, density=5, inGround=6)
             )
         )
         val planetA = Planet("Planet A").setLandsWithResources(10, planetResourcesA).addOrbital("colonizer")
         val planetResourcesB = Resources(
             listOf(
-                Resource(Names.FOOD, density=3, inGround=2, gatherers=0, onSurface=0),
-                Resource(Names.MATERIAL, density=6, inGround=8, gatherers=0, onSurface=0),
-                Resource(Names.ENERGY, density=4, inGround=3, gatherers=0, onSurface=0)
+                Resource(Names.FOOD, density=3, inGround=2),
+                Resource(Names.MATERIAL, density=6, inGround=8),
+                Resource(Names.ENERGY, density=4, inGround=3)
             )
         )
         val planetB = Planet("Planet B").setLandsWithResources(6, planetResourcesB)
