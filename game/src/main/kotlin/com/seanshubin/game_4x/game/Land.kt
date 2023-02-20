@@ -1,11 +1,11 @@
 package com.seanshubin.game_4x.game
 
 data class Land(
-    val claimed:Boolean,
-    val resources:Resources
+    val claimed:Boolean = false,
+    val resources:Resources = Resources(),
+    val labor:Int = 0
 ) {
     fun claimAndBuild(resourceName:String):Land? = claim()?.build(resourceName)
-    fun setResources(resources:Resources):Land = copy(resources =resources)
     private fun claim():Land? = if(claimed) null else copy(claimed = true)
     private fun build(resourceName:String):Land? {
         val newResources = resources.build(resourceName)
@@ -13,10 +13,7 @@ data class Land(
     }
     fun toObject():Map<String, Any> = mapOf(
         "claimed" to claimed,
-        "resources" to resources.toObject()
+        "resources" to resources.toObject(),
+        "labor" to labor
     )
-    fun addResource(resource:Resource) = copy(resources = resources.add(resource))
-    companion object {
-        val empty = Land(claimed = false, resources = Resources.empty)
-    }
 }

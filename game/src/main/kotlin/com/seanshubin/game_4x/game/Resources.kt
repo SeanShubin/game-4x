@@ -3,7 +3,7 @@ package com.seanshubin.game_4x.game
 import com.seanshubin.game_4x.game.ListUtil.indexOfFirstOrNull
 import com.seanshubin.game_4x.game.ListUtil.replaceAtIndex
 
-data class Resources(val resourceList:List<Resource>){
+data class Resources(val resourceList:List<Resource> = emptyList()){
     fun build(resourceName:String):Resources? {
         val index = resourceList.indexOfFirstOrNull{it.name == resourceName} ?: return null
         val newResource = resourceList[index].buildGatherer()

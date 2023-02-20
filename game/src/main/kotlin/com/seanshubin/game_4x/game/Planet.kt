@@ -4,7 +4,7 @@ import com.seanshubin.game_4x.game.ListUtil.removeAtIndex
 
 data class Planet(
     val name:String,
-    val lands: Lands = Lands.empty,
+    val lands: Lands = Lands(),
     val inOrbit: List<String> = emptyList()
 ) {
     fun colonize(): Planet? = removeOrbital(Names.COLONIZER)?.claimAndBuild(Names.FOOD)

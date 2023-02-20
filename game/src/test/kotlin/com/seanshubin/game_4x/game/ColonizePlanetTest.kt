@@ -16,8 +16,8 @@ class ColonizePlanetTest {
             onSurface = 0
         )
         val singleFoodResource = emptyFoodResource.buildGatherer()!!
-        val unclaimedLand = Land.empty.addResource(emptyFoodResource)
-        val claimedLand = Land.empty.addResource(singleFoodResource).copy(claimed = true)
+        val unclaimedLand = Land(resources = Resources(listOf(emptyFoodResource)))
+        val claimedLand = Land(resources = Resources(listOf(singleFoodResource))).copy(claimed = true)
         val planet = Planet("the planet").addOrbital(Names.COLONIZER).addLand(unclaimedLand)
         val expected = Planet("the planet").addLand(claimedLand)
 
@@ -38,7 +38,7 @@ class ColonizePlanetTest {
             gatherers = 0,
             onSurface = 0
         )
-        val unclaimedLand = Land.empty.addResource(foodResource)
+        val unclaimedLand = Land(resources = Resources(listOf(foodResource)))
         val planet = Planet("the planet").addLand(unclaimedLand)
 
         // when
@@ -58,7 +58,7 @@ class ColonizePlanetTest {
             gatherers = 0,
             onSurface = 0
         )
-        val claimedLand = Land.empty.addResource(foodResource).copy(claimed = true)
+        val claimedLand = Land(resources = Resources(listOf(foodResource))).copy(claimed = true)
         val planet = Planet("the planet").addOrbital(Names.COLONIZER).addLand(claimedLand)
 
         // when
@@ -71,7 +71,7 @@ class ColonizePlanetTest {
     @Test
     fun willNotColonizeIfNoFood() {
         // given
-        val unclaimedLand = Land.empty
+        val unclaimedLand = Land()
         val planet = Planet("the planet").addOrbital(Names.COLONIZER).addLand(unclaimedLand)
 
         // when
