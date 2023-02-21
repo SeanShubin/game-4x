@@ -12,6 +12,12 @@ data class Land(
         return if(newResources == null) null else copy(resources = newResources)
     }
     fun generateLabor():Land? = consumeResource(Names.FOOD)?.produceLabor()
+    private fun consumeLabor():Land? = if(labor > 0) copy(labor = labor-1) else null
+    private fun produceGatherer(resourceName:String):Land? {
+        val newResources = resources.build(resourceName)
+        return if(newResources== null) null else copy(resources = newResources)
+    }
+    fun buildGatherer(resourceName:String):Land? = consumeLabor()?.produceGatherer(resourceName)
     private fun consumeResource(resourceName:String):Land? {
         val newResources = resources.consumeFromSurface(resourceName) ?: return null
         return copy(resources = newResources)
