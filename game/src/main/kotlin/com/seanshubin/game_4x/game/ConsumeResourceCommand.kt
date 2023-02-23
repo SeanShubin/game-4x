@@ -17,16 +17,16 @@ data class ConsumeResourceCommand(
         val resource = game.resource(planetName, landIndex, resourceName)
         val oldValue = resource.valueAtLocation(resourceLocation)
         val newValue = oldValue - 1
+        val name = FormatUtil.formatCommand(this, "planet", planetName, "land", landIndex, "resource", resourceName, "location", resourceLocation)
         return if (newValue < 0) {
-            val message = "$oldValue resources available"
-            Result(this, game, success = false, listOf(message))
+            Result(this, game, success = false, listOf(
+                name, "$oldValue resources available"))
         } else {
-            val message = "Value changed from $oldValue to $newValue"
             Result(
                 this,
                 game.setResourceAtLocation(planetName, landIndex, resourceName, resourceLocation, newValue),
                 success = true,
-                listOf(message)
+                listOf(name, "changed from $oldValue to $newValue")
             )
         }
     }

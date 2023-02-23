@@ -12,17 +12,20 @@ data class ConsumeOrbitalCommand(
     )
 
     override fun execute(game: Game): Result {
+        val name = FormatUtil.formatCommand(this, "planet", planetName, "land", landIndex, "orbital", orbitalName)
         return if (game.containsOrbital(planetName, landIndex, orbitalName)) {
             val newGame = game.takeOrbital(planetName, landIndex, orbitalName)
             Result(
                 this, newGame, success = true, listOf(
-                    "Removed orbital $orbitalName from planet $planetName land $landIndex"
+                    name,
+                    "Removed orbital"
                 )
             )
         } else {
             Result(
                 this, game, success = false, listOf(
-                    "No orbital $orbitalName available on planet $planetName land $landIndex"
+                    name,
+                    "Orbital not available"
                 )
             )
         }

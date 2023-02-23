@@ -1,5 +1,7 @@
 package com.seanshubin.game_4x.game
 
+import com.seanshubin.game_4x.game.FormatUtil.formatCommand
+
 data class ColonizeCommand(val planetName: String, val landIndex: Int) : Command {
     override fun toObject(): Map<String, Any> = mapOf(
         "planetName" to planetName,
@@ -7,13 +9,15 @@ data class ColonizeCommand(val planetName: String, val landIndex: Int) : Command
     )
 
     override fun execute(game: Game): Result {
-        val secureLand = SecureLand(planetName, landIndex)
+        val secureLandCommand = SecureLandCommand(planetName, landIndex)
         val consumeColonizer = ConsumeOrbitalCommand(planetName, landIndex, Names.COLONIZER)
         val payUndevelopedCost = ConsumeResourceCommand(planetName, landIndex, Names.FOOD, ResourceLocation.UNDEVELOPED)
-        val placeGatherer = ProduceResourceCommand(planetName, landIndex, Names.FOOD, ResourceLocation.GATHERER)
+        val placeGatherer = ProduceGathererCommand(planetName, landIndex, Names.FOOD)
+        val name = formatCommand(this, "planet", planetName, "land", landIndex)
         return CompositeCommand(
+            name,
             listOf(
-                secureLand,
+                secureLandCommand,
                 consumeColonizer,
                 payUndevelopedCost,
                 placeGatherer

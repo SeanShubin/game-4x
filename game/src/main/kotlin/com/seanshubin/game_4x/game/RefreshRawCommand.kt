@@ -1,5 +1,7 @@
 package com.seanshubin.game_4x.game
 
+import com.seanshubin.game_4x.game.FormatUtil.formatCommand
+
 data class RefreshRawCommand(val planetName: String, val landIndex: Int, val resourceName: String) : Command {
     override fun toObject(): Map<String, Any> = mapOf(
         "planetName" to planetName,
@@ -8,13 +10,15 @@ data class RefreshRawCommand(val planetName: String, val landIndex: Int, val res
     )
 
     override fun execute(game: Game): Result {
+        val name = formatCommand(this, "planet", planetName, "land", landIndex, "resource", resourceName)
         val details = mutableListOf<String>()
+        details.add(name)
         val newGame = game.updateResource(planetName, landIndex, resourceName) { resource: Resource ->
             val gatherers = resource.valuesByLocation.getValue(ResourceLocation.GATHERER)
             val raw = resource.valuesByLocation.getValue(ResourceLocation.RAW)
             val needed = gatherers - raw
             if (needed > 0) {
-                details.add("Refreshed $needed raw $resourceName from $raw to $gatherers on planet $planetName land $landIndex")
+                details.add("Changed from $raw to $gatherers")
                 resource.setValueAtLocation(ResourceLocation.RAW, gatherers)
             } else {
                 resource

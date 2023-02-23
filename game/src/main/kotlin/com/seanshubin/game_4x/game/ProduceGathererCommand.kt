@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.game
 
-data class ProduceResourceCommand(
+data class ProduceGathererCommand(
     val planetName: String,
     val landIndex: Int,
     val resourceName: String
@@ -22,11 +22,11 @@ data class ProduceResourceCommand(
             resourceName
         )
         val resource = game.resource(planetName, landIndex, resourceName)
-        val oldValue = resource.valueAtLocation(ResourceLocation.PROCESSED)
-        val newValue = oldValue + resource.density
+        val oldValue = resource.valueAtLocation(ResourceLocation.GATHERER)
+        val newValue = oldValue + 1
         return Result(
             this,
-            game.setResourceAtLocation(planetName, landIndex, resourceName, ResourceLocation.PROCESSED, newValue),
+            game.setResourceAtLocation(planetName, landIndex, resourceName, ResourceLocation.GATHERER, newValue),
             success = true,
             listOf(name, "changed from $oldValue to $newValue")
         )

@@ -8,13 +8,15 @@ data class SpoilCommand(val planetName: String, val landIndex: Int, val resource
     )
 
     override fun execute(game: Game): Result {
+        val name = FormatUtil.formatCommand(this, "planet", planetName, "land", landIndex, "resource", resourceName)
         val details = mutableListOf<String>()
+        details.add(name)
         val newGame = game.updateResource(planetName, landIndex, resourceName) { resource: Resource ->
             val processed = resource.valuesByLocation.getValue(ResourceLocation.PROCESSED)
             if (processed == 0) {
                 resource
             } else {
-                details.add("Discarded $processed of $resourceName on planet $planetName land $landIndex")
+                details.add("Changed from $processed to 0")
                 resource.setValueAtLocation(ResourceLocation.PROCESSED, 0)
             }
         }
