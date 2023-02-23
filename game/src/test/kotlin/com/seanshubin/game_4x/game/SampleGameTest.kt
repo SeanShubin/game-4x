@@ -8,31 +8,25 @@ import java.nio.file.Paths
 class SampleGameTest {
     @Test
     fun colonize() {
-        val planetResourcesA = Resources(
-            listOf(
-                Resource(Names.FOOD, density = 4, inGround = 4),
-                Resource(Names.MATERIAL, density = 7, inGround = 2),
-                Resource(Names.ENERGY, density = 5, inGround = 6)
-            )
-        )
-        val planetA = Planet("Planet A").setLandsWithResources(2, planetResourcesA).addOrbital("colonizer")
-        val planetResourcesB = Resources(
-            listOf(
-                Resource(Names.FOOD, density = 3, inGround = 2),
-                Resource(Names.MATERIAL, density = 6, inGround = 8),
-                Resource(Names.ENERGY, density = 4, inGround = 3)
-            )
-        )
-        val planetB = Planet("Planet B").setLandsWithResources(2, planetResourcesB)
+        val initialGame = Game()
+            .addPlanet("Planet A")
+            .addLand("Planet A", 2)
+            .addResource("Planet A", landIndex = 0, resourceName = "food", prevalence = 4, density = 6)
+            .addResource("Planet A", landIndex = 1, resourceName = "food", prevalence = 4, density = 6)
+            .addOrbital("Planet A", landIndex = 0, "colonizer")
+            .addPlanet("Planet B")
+            .addLand("Planet B", 2)
+            .addResource("Planet B", landIndex = 0, resourceName = "food", prevalence = 8, density = 3)
+            .addResource("Planet B", landIndex = 1, resourceName = "food", prevalence = 8, density = 3)
         val commands = listOf(
-            Colonize,
-            GenerateFood,
-            GenerateLabor,
-            BuildFarm
+            ColonizeWherePossible,
+            GenerateFoodWherePossible,
+            BuildFarmWherePossible
         )
-        val strategy: Strategy = StrategyImpl(commands)
+        val beforeTurnCommand = RefreshCommand
+        val strategy: Strategy = StrategyImpl(beforeTurnCommand, commands)
         val gameBehavior = GameBehaviorImpl(strategy)
-        val initialGames = listOf(Game(planets = listOf(planetA, planetB)))
+        val initialGames = listOf(initialGame)
         val finalGames = gameBehavior.runToCompletion(initialGames)
         val basePath = Paths.get("generated")
         removeFiles(basePath)
@@ -66,4 +60,16 @@ BuildOrbitalFactory
 BuildColonizer
 BuildGate
 SendColonizer
+
+addPlanet(name="planet a")
+selectPlanet(name="planet a")
+addLand()
+selectLand(index=0)
+addResource(name="food", prevalence=6, density=4)
+addObject(place="orbit", what="colonizer")
+startGame()
+colonize()
+extractResource(resource="food")
+convertFoodToLabor(times=4)
+buildGatherer(resource="food")
  */

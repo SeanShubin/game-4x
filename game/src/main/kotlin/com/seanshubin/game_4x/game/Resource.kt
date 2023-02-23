@@ -2,27 +2,35 @@ package com.seanshubin.game_4x.game
 
 data class Resource(
     val name: String,
+    val prevalence: Int,
     val density: Int,
-    val inGround: Int,
-    val gatherers: Int = 0,
-    val extracted: Int = 0,
-    val onSurface: Int = 0
+    val valuesByLocation: Map<ResourceLocation, Int>
 ) {
-    fun endTurn():Resource = copy(extracted = 0, onSurface = 0)
-    fun buildGatherer(): Resource? = if (gatherers < inGround) copy(gatherers = gatherers + 1) else null
-    fun generate(): Resource? =
-        if (extracted < gatherers) copy(extracted = extracted + 1, onSurface = onSurface + density)
-        else null
-    fun consumeFromSurface():Resource? =
-        if(onSurface > 0) copy(onSurface = onSurface -1)
-        else null
+    constructor(name: String, prevalence: Int, density: Int) : this(
+        name, prevalence, density, mapOf(
+            ResourceLocation.UNDEVELOPED to prevalence,
+            ResourceLocation.RAW to 0,
+            ResourceLocation.GATHERER to 0,
+            ResourceLocation.PROCESSED to 0
+        )
+    )
+
+    fun valueAtLocation(location: ResourceLocation): Int = valuesByLocation.getValue(location)
+    fun setValueAtLocation(location: ResourceLocation, value: Int): Resource =
+        copy(valuesByLocation = valuesByLocation + (location to value))
 
     fun toObject(): Map<String, Any> = mapOf(
         "name" to name,
+        "prevalence" to prevalence,
         "density" to density,
-        "inGround" to inGround,
-        "gatherers" to gatherers,
-        "extracted" to extracted,
-        "onSurface" to onSurface
+        "valuesByLocation" to valuesByLocation
     )
+
+    companion object {
+        val nameMatches = { resourceName: String ->
+            { resource: Resource ->
+                resourceName == resource.name
+            }
+        }
+    }
 }

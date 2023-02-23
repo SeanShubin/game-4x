@@ -1,11 +1,18 @@
 package com.seanshubin.game_4x.game
 
-abstract class AllLandsCommand:AllPlanetsCommand() {
-    override fun executeOnPlanet(planet: Planet): Planet? {
-        val newLands = planet.lands.landList.map(::executeOnLandNotNull)
-        return planet.copy(lands = Lands(newLands))
+abstract class AllLandsCommand : AllPlanetsCommand() {
+    override fun executeOnPlanet(game: Game, planetName: String): Result {
+        var currentGame = game
+        val details = mutableListOf<String>()
+        (0 until game.landCount(planetName)).forEach {
+            val result = executeOnLand(currentGame, planetName, it)
+            if (result.success) {
+                currentGame = result.game
+                details.addAll(result.details)
+            }
+        }
+        return Result(this, currentGame, success = true, details)
     }
-    private fun executeOnLandNotNull(land:Land):Land =
-        executeOnLand(land) ?: land
-    abstract fun executeOnLand(land:Land):Land?
+
+    abstract fun executeOnLand(game: Game, planetName: String, landIndex: Int): Result
 }

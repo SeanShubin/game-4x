@@ -1,31 +1,27 @@
 package com.seanshubin.game_4x.game
 
 import com.seanshubin.game_4x.game.ListUtil.applyToExactlyOneApplicable
-import com.seanshubin.game_4x.game.ListUtil.indexOfFirstOrNull
-import com.seanshubin.game_4x.game.ListUtil.replaceAtIndex
 
-data class Resources(val resourceList:List<Resource> = emptyList()){
-    fun endTurn():Resources = copy(resourceList = resourceList.map{it.endTurn()})
-    fun generate(resourceName:String):Resources? {
-        val newResourceList = resourceList.applyToExactlyOneApplicable({it.name == resourceName}){
-            it.generate()
-        } ?: return null
-        return copy(resourceList = newResourceList)
+data class Resources(val resourceList: List<Resource> = emptyList()) {
+    val resourceMap = resourceList.associateBy { it.name }
+    fun getNames(): List<String> = resourceList.map { it.name }
+    fun setAtLocation(resourceName: String, resourceLocation: ResourceLocation, newValue: Int): Resources =
+        updateResource(resourceName) { resource ->
+            resource.setValueAtLocation(resourceLocation, newValue)
+        }
+
+    fun addResource(resourceName: String, prevalence: Int, density: Int): Resources {
+        if (resourceMap.contains(resourceName)) throw RuntimeException("Resource $resourceName already exists")
+        val resource = Resource(
+            name = resourceName,
+            prevalence = prevalence,
+            density = density
+        )
+        return copy(resourceList = resourceList + resource)
     }
-    fun consumeFromSurface(resourceName:String):Resources? {
-        val newResourceList = resourceList.applyToExactlyOneApplicable({it.name == resourceName}){
-            it.consumeFromSurface()
-        } ?: return null
-        return copy(resourceList = newResourceList)
-    }
-    fun build(resourceName:String):Resources? {
-        val index = resourceList.indexOfFirstOrNull{it.name == resourceName} ?: return null
-        val newResource = resourceList[index].buildGatherer()
-        return if(newResource == null) null else copy(resourceList = resourceList.replaceAtIndex(index, newResource))
-    }
-    fun add(resource:Resource):Resources = copy(resourceList = resourceList + resource)
-    fun toObject():List<Any> = resourceList.map { it.toObject() }
-    companion object {
-        val empty = Resources(emptyList())
-    }
+
+    fun updateResource(name: String, update: (Resource) -> Resource): Resources =
+        copy(resourceList.applyToExactlyOneApplicable(Resource.nameMatches(name), update))
+
+    fun toObject(): List<Any> = resourceList.map { it.toObject() }
 }

@@ -1,36 +1,42 @@
 package com.seanshubin.game_4x.game
 
-import com.seanshubin.game_4x.game.ListUtil.removeAtIndex
-
 data class Planet(
-    val name:String,
-    val lands: Lands = Lands(),
-    val inOrbit: List<String> = emptyList()
+    val name: String,
+    val lands: Lands = Lands()
 ) {
-    fun endTurn():Planet = copy(lands = lands.endTurn())
-    fun colonize(): Planet? = removeOrbital(Names.COLONIZER)?.claimAndBuild(Names.FOOD)
-    private fun removeOrbital(orbitalName: String): Planet? {
-        val index = inOrbit.indexOf(orbitalName)
-        if (index == -1) return null
-        return copy(inOrbit = inOrbit.removeAtIndex(index))
-    }
+    fun getSecurity(landIndex: Int): Int = lands.getSecurity(landIndex)
+    fun addOrbital(landIndex: Int, orbitalName: String): Planet = copy(lands = lands.addOrbital(landIndex, orbitalName))
+    fun setResourceAtLocation(
+        landIndex: Int,
+        resourceName: String,
+        resourceLocation: ResourceLocation,
+        newValue: Int
+    ): Planet =
+        copy(lands = lands.setResourceAtLocation(landIndex, resourceName, resourceLocation, newValue))
 
-    fun setLandsWithResources(landCount:Int, resources:Resources):Planet =
+    fun addResource(landIndex: Int, resourceName: String, prevalence: Int, density: Int): Planet =
+        copy(lands = lands.addResource(landIndex, resourceName, prevalence, density))
+
+    fun landCount(): Int = lands.landList.size
+    fun land(index: Int): Land = lands.landList[index]
+    fun updateLand(landIndex: Int, update: (Land) -> Land): Planet =
+        copy(lands = lands.updateLand(landIndex, update))
+
+    fun setLandsWithResources(landCount: Int, resources: Resources): Planet =
         copy(lands = lands.setWithResources(landCount, resources))
 
-    private fun claimAndBuild(resourceName: String): Planet? {
-        val newLands = lands.claimAndBuild(resourceName)
-        return if (newLands == null) null else copy(lands = newLands)
-    }
-
-    fun addOrbital(name: String): Planet {
-        return copy(inOrbit = inOrbit + name)
-    }
-
     fun addLand(land: Land): Planet = copy(lands = lands.addLand(land))
+    fun addLand(quantity: Int): Planet = copy(lands = lands.addLand(quantity))
     fun toObject(): Map<String, Any> = mapOf(
         "name" to name,
-        "lands" to lands.toObject(),
-        "inOrbit" to inOrbit
+        "lands" to lands.toObject()
     )
+
+    companion object {
+        val nameMatches = { planetName: String ->
+            { planet: Planet ->
+                planetName == planet.name
+            }
+        }
+    }
 }
