@@ -1,4 +1,7 @@
 package com.seanshubin.game_4x.game
 
-class Resource {
-}
+data class Resource(
+    val name: String,
+    val prevalence: Int,
+    val density: Int
+)

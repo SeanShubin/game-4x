@@ -77,5 +77,26 @@ class ApiTest {
         assertEquals(expected, actual)
     }
 
+    @Test
+    fun createResource() {
+        // given
+        val planetName = "Planet A"
+        val landIndex = 0
+        val name = "food"
+        val prevalence = 4
+        val density = 6
+        val api = createApi()
+        api.createPlanet(planetName)
+        api.createLand(planetName)
+        val expected = listOf(Resource(name, prevalence, density))
+
+        // when
+        api.createResource(planetName, landIndex, name, prevalence, density)
+        val actual = api.listResources(planetName, landIndex)
+
+        // then
+        assertEquals(expected, actual)
+    }
+
     private fun createApi(): Api = ApiImpl()
 }
