@@ -1,4 +1,3 @@
 package com.seanshubin.game_4x.game
 
-class Land {
-}
+data class Land(val resources:List<Resource> = emptyList())

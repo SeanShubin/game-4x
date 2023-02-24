@@ -15,4 +15,7 @@ class ApiImpl:Api {
     override fun createLand(planetName: String) {
         universe = CreateLandCommand(planetName).execute(universe).assertSuccess()
     }
+
+    override fun listResources(planetName: String, landIndex: Int): List<Resource> =
+        universe.planetsByName.getValue(planetName).lands[landIndex].resources
 }

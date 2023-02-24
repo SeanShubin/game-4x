@@ -60,5 +60,22 @@ class ApiTest {
         assertEquals(expected, actual)
     }
 
+    @Test
+    fun landStartsWithNoResources() {
+        // given
+        val api = createApi()
+        val planetName = "Planet A"
+        api.createPlanet(planetName)
+        api.createLand(planetName)
+        val landIndex = 0
+        val expected = 0
+
+        // when
+        val actual = api.listResources(planetName, landIndex).size
+
+        // then
+        assertEquals(expected, actual)
+    }
+
     private fun createApi(): Api = ApiImpl()
 }
