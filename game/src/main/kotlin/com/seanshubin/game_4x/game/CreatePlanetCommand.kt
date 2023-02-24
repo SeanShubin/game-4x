@@ -8,6 +8,6 @@ data class CreatePlanetCommand(val name:String):Command {
             failure("Planet named '$name' already exists")
         } else {
             val newUniverse = universe.addPlanet(name)
-            success(newUniverse,"Created planet '$name'")
+            success("Created planet '$name'", newUniverse)
         }
 }
