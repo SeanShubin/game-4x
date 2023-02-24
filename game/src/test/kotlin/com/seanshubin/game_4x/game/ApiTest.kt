@@ -8,10 +8,10 @@ class ApiTest {
     fun empty() {
         // given
         val api = createApi()
-        val expected = emptyList<String>()
+        val expected = emptyList<Planet>()
 
         // when
-        val actual = api.listPlanetNames()
+        val actual = api.listPlanets()
 
         // then
         assertEquals(expected, actual)
@@ -27,7 +27,7 @@ class ApiTest {
         api.createPlanet("Planet A")
 
         // then
-        val actual = api.listPlanetNames()
+        val actual = api.listPlanets().map{it.name}
         assertEquals(expected, actual)
     }
 
