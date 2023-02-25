@@ -27,7 +27,7 @@ class ApiTest {
         api.createPlanet("Planet A")
 
         // then
-        val actual = api.listPlanets().map{it.name}
+        val actual = api.listPlanets().map { it.name }
         assertEquals(expected, actual)
     }
 
@@ -82,21 +82,45 @@ class ApiTest {
         // given
         val planetName = "Planet A"
         val landIndex = 0
-        val name = "food"
-        val prevalence = 4
-        val density = 6
         val api = createApi()
         api.createPlanet(planetName)
         api.createLand(planetName)
-        val resource = Resource("food", density=6)
-        val expected = listOf(resource, resource, resource, resource)
+        val resource = Things.createNode(resource = "food", density = 6)
 
         // when
-        api.createResource(planetName, landIndex, name, prevalence, density)
+        api.addThing(planetName, landIndex, resource, 4)
         val actual = api.listThings(planetName, landIndex)
 
         // then
-        assertEquals(expected, actual)
+        assertEquals(4, actual.quantityByThing[resource])
+    }
+
+    @Test
+    fun populateLand() {
+        // given
+        val planetName = "Planet A"
+        val landIndex = 0
+        val api = createApi()
+        val colonizer = Things.createColonizer()
+        val unusedNode = Things.createNode(resource = "food", density = 6)
+        val usedNode = Things.createNode(resource = "food", density = 6, activated = true)
+        val gatherer = Things.createGatherer(resource = "food")
+        api.createPlanet(planetName)
+        api.createLand(planetName)
+        api.addThing(planetName, landIndex, colonizer)
+        api.addThing(planetName, landIndex, unusedNode, quantity = 4)
+        api.addThing(planetName, landIndex, usedNode, quantity = 2)
+        api.addThing(planetName, landIndex, gatherer, quantity = 5)
+
+        // when
+        val actual = api.listThings(planetName, landIndex)
+
+        // then
+        assertEquals(1, actual.quantityByThing.getValue(colonizer))
+        assertEquals(4, actual.quantityByThing.getValue(unusedNode))
+        assertEquals(2, actual.quantityByThing.getValue(usedNode))
+        assertEquals(5, actual.quantityByThing.getValue(gatherer))
+        assertEquals(12, actual.size)
     }
 
     private fun createApi(): Api = ApiImpl()

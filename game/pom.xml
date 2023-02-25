@@ -6,6 +6,11 @@
     <artifactId>game_4x-game</artifactId>
     <dependencies>
         <dependency>
+            <groupId>com.seanshubin.game_4x</groupId>
+            <artifactId>game_4x-format</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
         </dependency>

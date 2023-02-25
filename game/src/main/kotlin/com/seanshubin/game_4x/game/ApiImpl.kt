@@ -15,10 +15,10 @@ class ApiImpl:Api {
         universe = CreateLandCommand(planetName).execute(universe)
     }
 
-    override fun listThings(planetName: String, landIndex: Int): List<Thing> =
+    override fun listThings(planetName: String, landIndex: Int): CollectionOfThings =
         universe.planetsByName.getValue(planetName).lands[landIndex].things
 
-    override fun createResource(planetName: String, landIndex: Int, name: String, prevalence: Int, density: Int) {
-        universe = CreateResourceCommand(planetName, landIndex, name, prevalence, density).execute(universe)
+    override fun addThing(planetName: String, landIndex: Int, thing: Thing, quantity: Int) {
+        universe = CreateThingCommand(planetName, landIndex, thing, quantity).execute(universe)
     }
 }

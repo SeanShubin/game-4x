@@ -55,6 +55,7 @@
     <modules>
         <module>console</module>
         <module>game</module>
+        <module>format</module>
         <module>prototype</module>
         <module>skirmish</module>
     </modules>

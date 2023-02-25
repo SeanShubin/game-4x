@@ -1,14 +1,13 @@
 package com.seanshubin.game_4x.game
 
-data class CreateResourceCommand(
+data class CreateThingCommand(
     val planetName: String,
     val landIndex: Int,
-    val name: String,
-    val prevalence: Int,
-    val density: Int
+    val thing: Thing,
+    val quantity:Int = 1
 ) : Command {
     override fun execute(universe: Universe): Universe =
         universe.updateLand(planetName, landIndex) { land ->
-            land.addThings(List(prevalence){ Resource(name, density)})
+            land.addThing(thing, quantity)
         }
 }
