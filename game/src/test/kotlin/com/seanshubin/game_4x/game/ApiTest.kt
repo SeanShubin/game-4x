@@ -61,7 +61,7 @@ class ApiTest {
     }
 
     @Test
-    fun landStartsWithNoResources() {
+    fun landStartsEmpty() {
         // given
         val api = createApi()
         val planetName = "Planet A"
@@ -71,7 +71,7 @@ class ApiTest {
         val expected = 0
 
         // when
-        val actual = api.listResources(planetName, landIndex).size
+        val actual = api.listThings(planetName, landIndex).size
 
         // then
         assertEquals(expected, actual)
@@ -88,11 +88,12 @@ class ApiTest {
         val api = createApi()
         api.createPlanet(planetName)
         api.createLand(planetName)
-        val expected = listOf(Resource(name, prevalence, density))
+        val resource = Resource("food", density=6)
+        val expected = listOf(resource, resource, resource, resource)
 
         // when
         api.createResource(planetName, landIndex, name, prevalence, density)
-        val actual = api.listResources(planetName, landIndex)
+        val actual = api.listThings(planetName, landIndex)
 
         // then
         assertEquals(expected, actual)

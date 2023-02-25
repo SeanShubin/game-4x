@@ -8,5 +8,7 @@ data class CreateResourceCommand(
     val density: Int
 ) : Command {
     override fun execute(universe: Universe): Universe =
-        universe.addResource(planetName, landIndex, name, prevalence, density)
+        universe.updateLand(planetName, landIndex) { land ->
+            land.addThings(List(prevalence){ Resource(name, density)})
+        }
 }

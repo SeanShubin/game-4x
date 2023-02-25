@@ -9,10 +9,6 @@ data class Universe(val planets: List<Planet> = emptyList()) {
     fun addLand(planetName: String): Universe = updatePlanet(planetName) { planet ->
         planet.addLand()
     }
-    fun addResource(planetName:String, landIndex:Int, name:String, prevalence:Int, density:Int):Universe =
-        updateLand(planetName, landIndex){ land ->
-            land.addResource(name, prevalence, density)
-        }
     fun updatePlanet(planetName: String, update: (Planet) -> Planet): Universe =
         copy(planets = planets.updateWhere({ it.name == planetName }, update))
     fun updateLand(planetName: String, landIndex: Int, update: (Land) -> Land): Universe =

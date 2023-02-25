@@ -15,8 +15,8 @@ class ApiImpl:Api {
         universe = CreateLandCommand(planetName).execute(universe)
     }
 
-    override fun listResources(planetName: String, landIndex: Int): List<Resource> =
-        universe.planetsByName.getValue(planetName).lands[landIndex].resources
+    override fun listThings(planetName: String, landIndex: Int): List<Thing> =
+        universe.planetsByName.getValue(planetName).lands[landIndex].things
 
     override fun createResource(planetName: String, landIndex: Int, name: String, prevalence: Int, density: Int) {
         universe = CreateResourceCommand(planetName, landIndex, name, prevalence, density).execute(universe)
