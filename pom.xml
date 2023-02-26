@@ -54,6 +54,7 @@
     </dependencyManagement>
     <modules>
         <module>console</module>
+        <module>command</module>
         <module>game</module>
         <module>format</module>
         <module>prototype</module>

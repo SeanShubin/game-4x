@@ -71,7 +71,7 @@ class ApiSetupTest {
         val expected = 0
 
         // when
-        val actual = api.listThings(planetName, landIndex).size
+        val actual = api.getLand(planetName, landIndex).size
 
         // then
         assertEquals(expected, actual)
@@ -89,7 +89,7 @@ class ApiSetupTest {
 
         // when
         api.addThing(planetName, landIndex, resource, 4)
-        val actual = api.listThings(planetName, landIndex)
+        val actual = api.getLand(planetName, landIndex)
 
         // then
         assertEquals(4, actual.quantityByThing[resource])
@@ -113,7 +113,7 @@ class ApiSetupTest {
         api.addThing(planetName, landIndex, gatherer, quantity = 5)
 
         // when
-        val actual = api.listThings(planetName, landIndex)
+        val actual = api.getLand(planetName, landIndex)
 
         // then
         assertEquals(1, actual.quantityByThing.getValue(colonizer))

@@ -5,7 +5,7 @@ interface Api {
     fun createPlanet(name:String)
     fun listLands(planetName:String):List<Land>
     fun createLand(planetName:String)
-    fun listThings(planetName:String, landIndex:Int):CollectionOfThings
+    fun getLand(planetName:String, landIndex:Int):Land
     fun addThing(planetName:String, landIndex:Int, thing:Thing, quantity:Int = 1)
     fun colonize(planetName:String, landIndex:Int, name:String)
 }

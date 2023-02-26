@@ -3,6 +3,18 @@ package com.seanshubin.game_4x.game
 data class Thing(val attributes:List<Pair<String, Attribute>>){
     constructor(vararg pairs:Pair<String, Any>):this(pairsToAttributePairs(*pairs))
     fun toLines():List<String> = attributes.flatMap{it.toLines()}
+    fun partiallyMatches(that:Thing):Boolean {
+        val thisAttributeNames = this.attributeNames().toSet()
+        val thatAttributeNames = that.attributeNames().toSet()
+        val commonAttributeNames = thisAttributeNames.intersect(thatAttributeNames).toList()
+        val commonThis = this.onlyAttributes(commonAttributeNames)
+        val commonThat = that.onlyAttributes(commonAttributeNames)
+        return commonThis == commonThat
+    }
+    fun attributeNames():List<String> = attributes.map { it.first }.distinct()
+    fun onlyAttributes(names:List<String>):Thing = Thing(attributes = attributes.filter {
+        names.contains(it.first)
+    })
     companion object {
         sealed interface Attribute
         data class StringAttribute(val stringValue:String):Attribute{

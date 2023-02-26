@@ -16,13 +16,15 @@ class ApiGameplayTest {
         api.createLand(planetName)
         api.addThing(planetName, landIndex, node)
         api.addThing(planetName, landIndex, colonizer)
-        val expected  = CollectionOfThings(
+        val expected  = Land(
+            planetName,
+            landIndex,
             node to 1,
             colonizer to 1
         )
 
         // when
-        val actual = api.listThings(planetName, landIndex)
+        val actual = api.getLand(planetName, landIndex)
 
         // then
         assertEquals(
@@ -45,14 +47,16 @@ class ApiGameplayTest {
         api.createLand(planetName)
         api.addThing(planetName, landIndex, node)
         api.addThing(planetName, landIndex, colonizer)
-        val expected  = CollectionOfThings(
+        val expected  = Land(
+            planetName,
+            landIndex,
             citizen to 1,
             gatherer to 1
         )
 
         // when
         api.colonize(planetName, landIndex, "colonize")
-        val actual = api.listThings(planetName, landIndex)
+        val actual = api.getLand(planetName, landIndex)
 
         // then
         assertEquals(expected, actual)

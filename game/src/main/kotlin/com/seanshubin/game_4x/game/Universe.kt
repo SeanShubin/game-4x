@@ -8,8 +8,15 @@ data class Universe(val planets: List<Planet> = emptyList()) {
     fun addPlanet(name: String): Universe = copy(planets = planets + Planet(name))
     fun updatePlanet(planetName: String, update: (Planet) -> Planet): Universe =
         copy(planets = planets.updateWhere({ it.name == planetName }, update))
+
     fun updateLand(planetName: String, landIndex: Int, update: (Land) -> Land): Universe =
         updatePlanet(planetName) { planet ->
             planet.copy(lands = planet.lands.updateAtIndex(landIndex, update))
         }
+
+    fun updateEachPlanet(update: (Planet) -> Planet): Universe =
+        copy(planets = planets.map(update))
+
+    fun updateEachLand(updateLand: (Land) -> Land): Universe =
+        updateEachPlanet { it.updateEachLand(updateLand) }
 }
