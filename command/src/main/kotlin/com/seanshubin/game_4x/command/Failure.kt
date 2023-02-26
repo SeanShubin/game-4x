@@ -8,10 +8,8 @@ data class Failure(val context: HasToObject, val state: HasToObject, val message
         JsonMappers.pretty.writeValueAsString(toObject())
 
     override fun toObject(): Map<String, Any> = mapOf(
-        "contextType" to context.javaClass.simpleName,
-        "context" to context.toObject(),
-        "stateType" to state.javaClass.simpleName,
-        "state" to state.toObject(),
+        context.javaClass.simpleName to context.toObject(),
+        state.javaClass.simpleName to state.toObject(),
         "message" to message
     )
 }
