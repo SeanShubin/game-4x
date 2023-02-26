@@ -15,8 +15,8 @@ data class Land(
 
     val size: Int get() = things.sumOf { it.second }
     val quantityByThing: Map<Thing, Int> = things.toMap()
-    fun countPartiallyMatches(thing: Thing): Int = things.filter {
-        thing.partiallyMatches(it.first)
+    fun countPartiallyMatches(query: Thing): Int = things.filter {
+        query.isPartOf(it.first)
     }.sumOf { it.second }
 
     override fun toObject(): Map<String, Any> = mapOf(
@@ -37,14 +37,29 @@ data class Land(
     fun setQuantity(thing: Thing, newQuantity: Int): Land =
         updateQuantity(thing) { newQuantity }
 
-    private fun updateQuantity(target: Thing, update: (Int) -> Int): Land =
-        if (quantityByThing.containsKey(target)) {
-            copy(things = things.updateWhere({ (thing, _) -> thing == target }) { (thing, quantity) ->
-                thing to update(quantity)
-            })
+    private fun updateQuantity(target: Thing, update: (Int) -> Int): Land {
+        val existingValue = quantityByThing[target]
+        val newValue = if (existingValue == null) {
+            update(0)
         } else {
-            copy(things = things + (target to update(0)))
+            update(existingValue)
         }
+        return if (existingValue == null) {
+            if (newValue == 0) {
+                this
+            } else {
+                copy(things = things + (target to newValue))
+            }
+        } else {
+            if (newValue == 0) {
+                copy(things = things.filter { (thing, _) -> thing != target })
+            } else {
+                copy(things = things.updateWhere({ (thing, _) -> thing == target }) { (thing, _) ->
+                    thing to newValue
+                })
+            }
+        }
+    }
 
     companion object {
         fun Pair<Thing, Int>.toLines(): List<String> {

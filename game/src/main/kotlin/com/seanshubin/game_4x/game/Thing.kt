@@ -2,21 +2,17 @@ package com.seanshubin.game_4x.game
 
 data class Thing(val attributes: List<Pair<String, Attribute>>) : HasToObject {
     constructor(vararg pairs: Pair<String, Any>) : this(pairsToAttributePairs(*pairs))
+    val attributeByName:Map<String, Attribute> = attributes.toMap()
 
     fun toLines(): List<String> = attributes.flatMap { it.toLines() }
-    fun partiallyMatches(that: Thing): Boolean {
-        val thisAttributeNames = this.attributeNames().toSet()
-        val thatAttributeNames = that.attributeNames().toSet()
-        val commonAttributeNames = thisAttributeNames.intersect(thatAttributeNames).toList()
-        val commonThis = this.onlyAttributes(commonAttributeNames)
-        val commonThat = that.onlyAttributes(commonAttributeNames)
-        return commonThis == commonThat
-    }
 
-    fun attributeNames(): List<String> = attributes.map { it.first }.distinct()
-    fun onlyAttributes(names: List<String>): Thing = Thing(attributes = attributes.filter {
-        names.contains(it.first)
-    })
+    fun isPartOf(that:Thing):Boolean =
+        attributes.all { it.isPartOf(that) }
+
+    private fun Pair<String, Attribute>.isPartOf(that:Thing):Boolean {
+        val thatAttribute = that.attributeByName[first] ?: return false
+        return second == thatAttribute
+    }
 
     override fun toObject(): List<Any> = attributes.map { it.toObject() }
 
