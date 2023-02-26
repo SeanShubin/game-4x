@@ -11,5 +11,5 @@ object ListUtil {
         }
 
     fun <T> List<T>.updateAtIndex(index: Int, update: (T) -> T): List<T> =
-        take(index) + update(get(index)) + drop(index+1)
+        take(index) + update(get(index)) + drop(index + 1)
 }

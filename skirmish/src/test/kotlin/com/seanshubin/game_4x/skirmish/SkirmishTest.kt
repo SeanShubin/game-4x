@@ -1,8 +1,8 @@
 package com.seanshubin.game_4x.skirmish
 
+import com.seanshubin.game_4x.skirmish.Intent.Companion.AttackCommanderNamed
 import kotlin.test.Test
 import kotlin.test.assertTrue
-import com.seanshubin.game_4x.skirmish.Intent.Companion.AttackCommanderNamed
 
 class SkirmishTest {
     @Test
@@ -10,8 +10,8 @@ class SkirmishTest {
         // given
         val simpleUnit = GameUnit(attack = 1, armor = 1)
         val battlefieldBeforeSkirmish = setupBattlefield(
-                1, simpleUnit,
-                1, simpleUnit
+            1, simpleUnit,
+            1, simpleUnit
         )
         // when
 
@@ -30,8 +30,8 @@ class SkirmishTest {
         val simpleUnit = GameUnit(attack = 1, armor = 1)
         val strongUnit = GameUnit(attack = 1, armor = 5)
         val battlefieldBeforeSkirmish = setupBattlefield(
-                5, simpleUnit,
-                1, strongUnit
+            5, simpleUnit,
+            1, strongUnit
         )
         // when
 
@@ -44,8 +44,10 @@ class SkirmishTest {
         assertTrue(bobAfterSkirmish.army.isEmpty())
     }
 
-    private fun setupBattlefield(aliceQuantity: Int, aliceUnit: GameUnit,
-                                 bobQuantity: Int, bobUnit: GameUnit): Battlefield {
+    private fun setupBattlefield(
+        aliceQuantity: Int, aliceUnit: GameUnit,
+        bobQuantity: Int, bobUnit: GameUnit
+    ): Battlefield {
         val aliceUnits = (1..aliceQuantity).map { aliceUnit }
         val aliceArmy = Army(aliceUnits)
         val aliceIntent = AttackCommanderNamed("bob")

@@ -21,7 +21,7 @@ data class Thing(val attributes: List<Pair<String, Attribute>>) : HasToObject {
     override fun toObject(): List<Any> = attributes.map { it.toObject() }
 
     companion object {
-        sealed interface Attribute: HasToObject
+        sealed interface Attribute : HasToObject
         data class StringAttribute(val stringValue: String) : Attribute {
             override fun toObject(): String = stringValue
         }

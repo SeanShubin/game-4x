@@ -12,6 +12,6 @@ data class BuildGatherer(val planetName: String, val landIndex: Int, val resourc
         val secureNodeCost = ConsumeResourceCommand(planetName, landIndex, Names.FOOD, ResourceLocation.UNDEVELOPED)
         val placeGatherer = ProduceGathererCommand(planetName, landIndex, Names.FOOD)
         val name = FormatUtil.formatCommand(this, "planet", planetName, "land", landIndex, "resource", resourceName)
-        return CompositeCommand(name,listOf(payFoodCost, secureNodeCost, placeGatherer)).execute(game)
+        return CompositeCommand(name, listOf(payFoodCost, secureNodeCost, placeGatherer)).execute(game)
     }
 }

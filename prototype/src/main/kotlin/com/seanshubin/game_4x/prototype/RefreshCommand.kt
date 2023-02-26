@@ -7,7 +7,7 @@ object RefreshCommand : AllResourcesCommand() {
         val spoil = SpoilCommand(planetName, landIndex, resourceName)
         val refreshRaw = RefreshRawCommand(planetName, landIndex, resourceName)
         val name = FormatUtil.formatCommand(this, "planet", planetName, "land", landIndex, "resource", resourceName)
-        val result = CompositeCommand(name,listOf(spoil, refreshRaw)).execute(game)
+        val result = CompositeCommand(name, listOf(spoil, refreshRaw)).execute(game)
         return result
     }
 }

@@ -1,7 +1,6 @@
 package com.seanshubin.game_4x.command
 
 import arrow.core.Either
-import arrow.core.right
 import com.seanshubin.game_4x.game.Universe
 
 class CommandRunnerImpl(private val command: Command) : CommandRunner {

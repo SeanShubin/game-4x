@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 class ApiGameplayTest {
     @Test
-    fun startWithColonizer(){
+    fun startWithColonizer() {
         // given
         val planetName = "Planet A"
         val landIndex = 0
@@ -16,7 +16,7 @@ class ApiGameplayTest {
         api.createLand(planetName)
         api.addThing(planetName, landIndex, node)
         api.addThing(planetName, landIndex, colonizer)
-        val expected  = Land(
+        val expected = Land(
             planetName,
             landIndex,
             node to 1,
@@ -29,12 +29,13 @@ class ApiGameplayTest {
         // then
         assertEquals(
             expected.toLines().joinToString("\n"),
-            actual.toLines().joinToString("\n"))
+            actual.toLines().joinToString("\n")
+        )
 
     }
 
     @Test
-    fun colonize(){
+    fun colonize() {
         // given
         val planetName = "Planet A"
         val landIndex = 0
@@ -47,7 +48,7 @@ class ApiGameplayTest {
         api.createLand(planetName)
         api.addThing(planetName, landIndex, node)
         api.addThing(planetName, landIndex, colonizer)
-        val expected  = Land(
+        val expected = Land(
             planetName,
             landIndex,
             citizen to 1,

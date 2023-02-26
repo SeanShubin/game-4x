@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype
 
-data class CompositeCommand(val name:String, val list: List<Command>) : Command {
+data class CompositeCommand(val name: String, val list: List<Command>) : Command {
     override fun toObject(): List<Any> = list.map { it.toObject() }
 
     override fun execute(game: Game): Result {
@@ -16,7 +16,7 @@ data class CompositeCommand(val name:String, val list: List<Command>) : Command 
                 success = false
             }
         }
-        val details = listOf(name) + accumulatedDetails.map{"  $it"}
+        val details = listOf(name) + accumulatedDetails.map { "  $it" }
         return if (success) {
             Result(this, currentGame, success = true, details)
         } else {

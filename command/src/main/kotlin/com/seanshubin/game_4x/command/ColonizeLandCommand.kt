@@ -5,7 +5,7 @@ import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 import com.seanshubin.game_4x.game.Things
 
-object ColonizeLandCommand:SingleLandCommand {
+object ColonizeLandCommand : SingleLandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
     override fun execute(land: Land): Either<Failure, Land> {
