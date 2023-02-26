@@ -16,8 +16,9 @@ class CommandRunnerTest {
         // given
         val planetName = "Planet A"
         val landIndex = 0
+        val density = 6
         val colonizer = Things.createColonizer()
-        val node = Things.createNode("food", density = 6)
+        val node = Things.createNode("food", density)
 
         val updateLand = { land: Land ->
             land.addThing(node).addThing(colonizer)
@@ -28,7 +29,8 @@ class CommandRunnerTest {
         val universe = Universe()
             .addPlanet(planetName)
             .updatePlanet(planetName, updatePlanet)
-        val command = EveryLandCommand(IgnoreFailureLandCommand(ColonizeLandCommand))
+        val commands = listOf(ColonizeLandCommand, RunGathererCommand("food", density))
+        val command = EveryLandCommand(CompositeCommand(commands.map { IgnoreFailureLandCommand(it) }))
         val commandRunner = CommandRunnerImpl(command)
 
         // when
@@ -38,7 +40,7 @@ class CommandRunnerTest {
         writeHistory(history)
     }
 
-    private fun writeHistory(history:List<Universe>){
+    private fun writeHistory(history: List<Universe>) {
         val basePath = Paths.get("generated")
         Files.createDirectories(basePath)
         removeFiles(basePath)

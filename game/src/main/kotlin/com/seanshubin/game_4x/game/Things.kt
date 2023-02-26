@@ -15,7 +15,13 @@ object Things {
         "activated" to activated
     )
 
-    fun createCitizen(): Thing = Thing(
-        "name" to "citizen"
+    fun createCitizen(activated: Boolean = false): Thing = Thing(
+        "name" to "citizen",
+        "activated" to activated
+    )
+
+    fun createSupply(resource:String): Thing = Thing(
+        "name" to "supply",
+        "resource" to resource
     )
 }
