@@ -2,11 +2,18 @@ package com.seanshubin.game_4x.game
 
 data class Thing(val attributes:List<Pair<String, Attribute>>){
     constructor(vararg pairs:Pair<String, Any>):this(pairsToAttributePairs(*pairs))
+    fun toLines():List<String> = attributes.flatMap{it.toLines()}
     companion object {
         sealed interface Attribute
-        data class StringAttribute(val stringValue:String):Attribute
-        data class IntAttribute(val intValue:Int):Attribute
-        data class BooleanAttribute(val booleanValue:Boolean):Attribute
+        data class StringAttribute(val stringValue:String):Attribute{
+            override fun toString(): String = """"$stringValue""""
+        }
+        data class IntAttribute(val intValue:Int):Attribute {
+            override fun toString(): String = intValue.toString()
+        }
+        data class BooleanAttribute(val booleanValue:Boolean):Attribute{
+            override fun toString(): String = booleanValue.toString()
+        }
         fun pairsToAttributePairs(vararg pairs:Pair<String, Any>):List<Pair<String, Attribute>> =
             pairs.map{(first, second) ->
                 first to second.toAttribute()
@@ -19,5 +26,9 @@ data class Thing(val attributes:List<Pair<String, Attribute>>){
                 is Boolean -> BooleanAttribute(this)
                 else -> throw RuntimeException("Unsupported type '${this.javaClass.simpleName}'")
             }
+        private fun Pair<String, Attribute>.toLines():List<String>{
+            val (name, value) = this
+            return listOf("$name = $value")
+        }
     }
 }

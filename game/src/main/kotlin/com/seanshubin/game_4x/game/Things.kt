@@ -13,4 +13,7 @@ object Things {
         "resource" to resource,
         "activated" to activated
     )
+    fun createCitizen():Thing = Thing(
+        "name" to "citizen"
+    )
 }

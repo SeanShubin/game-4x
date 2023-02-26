@@ -3,7 +3,7 @@ package com.seanshubin.game_4x.game
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ApiTest {
+class ApiSetupTest {
     @Test
     fun empty() {
         // given
