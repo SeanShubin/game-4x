@@ -8,10 +8,10 @@ import com.seanshubin.game_4x.game.Planet
 import com.seanshubin.game_4x.game.Universe
 
 data class EveryLandCommand(val singleLandCommand: SingleLandCommand) : Command {
-    override fun execute(universe: Universe): Either<String, Universe> {
-        val initialValue:Either<String, Universe> = universe.right()
-        val foldPlanetFunction = { currentPlanetValue:Either<String, Universe>, planet: Planet ->
-            val foldLandFunction = { currentLandValue:Either<String, Universe>, land: Land ->
+    override fun execute(universe: Universe): Either<Failure, Universe> {
+        val initialValue:Either<Failure, Universe> = universe.right()
+        val foldPlanetFunction = { currentPlanetValue:Either<Failure, Universe>, planet: Planet ->
+            val foldLandFunction = { currentLandValue:Either<Failure, Universe>, land: Land ->
                 currentLandValue.flatMap { universe:Universe ->
                     val landResult = singleLandCommand.execute(land)
                     landResult.flatMap { land:Land ->

@@ -1,5 +1,6 @@
 package com.seanshubin.game_4x.command
 
+import com.seanshubin.game_4x.format.JsonMappers
 import com.seanshubin.game_4x.game.*
 import org.junit.Test
 
@@ -21,14 +22,14 @@ class CommandRunnerTest {
         val universe = Universe()
             .addPlanet(planetName)
             .updatePlanet(planetName, updatePlanet)
-        val command = EveryLandCommand(ColonizeLandCommand)
+        val command = EveryLandCommand(IgnoreFailureLandCommand(ColonizeLandCommand))
         val commandRunner = CommandRunnerImpl(command)
 
         // when
         val history = commandRunner.runToCompletion(universe)
 
         // then
-        history.forEach(::println)
+        history.forEach { println(JsonMappers.pretty.writeValueAsString(it.toObject())) }
     }
 
 }

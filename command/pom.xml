@@ -10,6 +10,11 @@
             <artifactId>game_4x-game</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.seanshubin.game_4x</groupId>
+            <artifactId>game_4x-format</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>com.seanshubin.game_4x</groupId>

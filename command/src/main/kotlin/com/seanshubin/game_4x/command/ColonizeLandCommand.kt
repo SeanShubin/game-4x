@@ -6,7 +6,9 @@ import com.seanshubin.game_4x.game.Thing
 import com.seanshubin.game_4x.game.Things
 
 object ColonizeLandCommand:SingleLandCommand {
-    override fun execute(things: Land): Either<String, Land> {
+    override fun toObject(): String = this.javaClass.simpleName
+
+    override fun execute(land: Land): Either<Failure, Land> {
         val colonizer = Things.createColonizer()
         val foodNodeQuery = Thing(
             "name" to "node",
@@ -27,6 +29,6 @@ object ColonizeLandCommand:SingleLandCommand {
             addCitizen,
             addFarm
         )
-        return composite.execute(things)
+        return composite.execute(land)
     }
 }

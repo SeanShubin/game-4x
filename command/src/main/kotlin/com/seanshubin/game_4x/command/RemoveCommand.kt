@@ -6,14 +6,23 @@ import arrow.core.right
 import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 
-data class RemoveCommand(val target: Thing, val quantity:Int = 1):SingleLandCommand {
-    override fun execute(things: Land): Either<String, Land> {
-        val oldQuantity = things.quantityByThing[target] ?: 0
+data class RemoveCommand(val target: Thing, val quantity: Int = 1) : SingleLandCommand {
+    override fun execute(land: Land): Either<Failure, Land> {
+        val oldQuantity = land.quantityByThing[target] ?: 0
         val newQuantity = oldQuantity - quantity
-        return if(newQuantity < 0) {
-            "can not reduce $oldQuantity by $quantity".left()
+        return if (newQuantity < 0) {
+            Failure(
+                this,
+                land,
+                "can not reduce $oldQuantity by $quantity"
+            ).left()
         } else {
-            things.setQuantity(target, newQuantity).right()
+            land.setQuantity(target, newQuantity).right()
         }
     }
+
+    override fun toObject(): Map<String, Any> = mapOf(
+        "target" to target.toObject(),
+        "quantity" to quantity
+    )
 }

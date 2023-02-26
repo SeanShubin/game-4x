@@ -13,7 +13,7 @@ class CommandRunnerImpl(private val command: Command) : CommandRunner {
             val result = command.execute(current)
             current = when (result) {
                 is Either.Right -> result.value
-                is Either.Left -> throw RuntimeException(result.value)
+                is Either.Left -> throw RuntimeException(result.value.toString())
             }
         } while (!history.contains(current))
         return history

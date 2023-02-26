@@ -5,7 +5,7 @@ import com.seanshubin.game_4x.game.ListUtil.updateWhere
 data class Land(
     val planetName:String,
     val index:Int,
-    val quantities: List<Pair<Thing, Int>>) {
+    val quantities: List<Pair<Thing, Int>>):HasToObject {
     constructor(planetName:String, index:Int, vararg element:Pair<Thing, Int>):this(planetName, index, element.toList())
     val size:Int get() = quantities.sumOf{it.second}
     val quantityByThing: Map<Thing, Int> = quantities.toMap()
@@ -13,6 +13,15 @@ data class Land(
         thing.partiallyMatches(it.first)
     }.sumOf { it.second }
 
+    override fun toObject(): Map<String, Any> = mapOf(
+        "planetName" to planetName,
+        "index" to index,
+        "quantities" to quantities.map{it.toObject()}
+    )
+    private fun Pair<Thing, Int>.toObject():Map<String, Any> = mapOf(
+        "thing" to first.toObject(),
+        "quantity" to second
+    )
     fun toLines():List<String> = quantities.flatMap{it.toLines()}
     fun addThing(thing:Thing, quantityToAdd:Int = 1):Land =
         updateQuantity(thing){ oldValue -> oldValue + quantityToAdd }

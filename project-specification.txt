@@ -41,9 +41,9 @@
   global [ stdlib test ]
   modules {
     console   [ game ]
-    command   [ game ]
+    command   [ game format ]
     game      [ jackson arrow format ]
-    format    []
+    format    [ jackson ]
     prototype [ jackson ]
     skirmish  []
   }
