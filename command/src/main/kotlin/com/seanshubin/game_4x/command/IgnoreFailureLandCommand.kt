@@ -6,6 +6,7 @@ import com.seanshubin.game_4x.game.Land
 
 data class IgnoreFailureLandCommand(val delegate: SingleLandCommand) : SingleLandCommand {
     override fun execute(land: Land): Either<Failure, Land> {
+        DebugCommand.debug(this)
         val result = delegate.execute(land)
         return if (result.isLeft()) land.right()
         else result

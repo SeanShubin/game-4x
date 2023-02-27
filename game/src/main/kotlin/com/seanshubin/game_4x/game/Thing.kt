@@ -1,10 +1,16 @@
 package com.seanshubin.game_4x.game
 
+import com.seanshubin.game_4x.game.ListUtil.updateWhere
+
 data class Thing(val attributes: List<Pair<String, Attribute>>) : HasToObject {
     constructor(vararg pairs: Pair<String, Any>) : this(pairsToAttributePairs(*pairs))
     val attributeByName:Map<String, Attribute> = attributes.toMap()
 
     fun toLines(): List<String> = attributes.flatMap { it.toLines() }
+
+    fun setBooleanValue(name:String, value:Boolean):Thing = copy(attributes = attributes.updateWhere({it.first == name}){
+        name to BooleanAttribute(value)
+    })
 
     fun isPartOf(that:Thing):Boolean =
         attributes.all { it.isPartOf(that) }

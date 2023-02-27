@@ -9,6 +9,7 @@ object ColonizeLandCommand : SingleLandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
     override fun execute(land: Land): Either<Failure, Land> {
+        DebugCommand.debug(this)
         val colonizer = Things.createColonizer()
         val foodNodeQuery = Thing(
             "name" to "node",

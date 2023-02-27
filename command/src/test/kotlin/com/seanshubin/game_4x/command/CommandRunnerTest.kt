@@ -12,7 +12,7 @@ import java.nio.file.Paths
 
 class CommandRunnerTest {
     @Test
-    fun colonize() {
+    fun runToCompletion() {
         // given
         val planetName = "Planet A"
         val landIndex = 0
@@ -29,27 +29,32 @@ class CommandRunnerTest {
         val universe = Universe()
             .addPlanet(planetName)
             .updatePlanet(planetName, updatePlanet)
-        val commands = listOf(ColonizeLandCommand, RunGathererCommand("food", density))
-        val command = EveryLandCommand(CompositeCommand(commands.map { IgnoreFailureLandCommand(it) }))
-        val commandRunner = CommandRunnerImpl(command)
+        val commands = listOf(
+            ZeroOrMoreCommand(ColonizeLandCommand),
+            ZeroOrMoreCommand(RunGathererCommand("food", density)),
+            ActivatedCitizensEatOrLeave,
+            NonActivatedCitizensEatOrLeave,
+            NewCitizensEnterCommand,
+            ResetSupplyCommand,
+            ResetGathererCommand,
+            ResetNodeCommand
+        )
+        val command = EveryLandCommand(CompositeCommand(commands))
+        val basePath = Paths.get("generated")
+        val newUniverseEvent = {turn:Int, newUniverse:Universe ->
+            writeTurn(basePath, turn, newUniverse)
+        }
+        val turnLimit = 10
+        val commandRunner = CommandRunnerImpl(command, newUniverseEvent, turnLimit)
 
         // when
+        clearHistory(basePath)
         val history = commandRunner.runToCompletion(universe)
 
         // then
-        writeHistory(history)
     }
 
-    private fun writeHistory(history: List<Universe>) {
-        val basePath = Paths.get("generated")
-        Files.createDirectories(basePath)
-        removeFiles(basePath)
-        history.mapIndexed { index, game ->
-            writeTurn(basePath, index, game)
-        }
-    }
-
-    private fun removeFiles(basePath: Path) {
+    private fun clearHistory(basePath: Path){
         Files.list(basePath).toList().forEach { file ->
             Files.delete(file)
         }

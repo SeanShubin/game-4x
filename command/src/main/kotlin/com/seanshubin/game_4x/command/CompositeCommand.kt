@@ -9,6 +9,7 @@ data class CompositeCommand(val list: List<SingleLandCommand>) : SingleLandComma
     constructor(vararg singleLandCommand: SingleLandCommand) : this(singleLandCommand.toList())
 
     override fun execute(land: Land): Either<Failure, Land> {
+        DebugCommand.debug(this)
         var current: Either<Failure, Land> = land.right()
         list.forEach { command ->
             current = current.flatMap { command.execute(it) }
