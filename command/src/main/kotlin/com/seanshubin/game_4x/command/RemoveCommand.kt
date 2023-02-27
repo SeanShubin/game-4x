@@ -6,7 +6,7 @@ import arrow.core.right
 import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 
-data class RemoveCommand(val target: Thing, val quantity: Int = 1) : SingleLandCommand {
+data class RemoveCommand(val target: Thing, val quantity: Int = 1) : LandCommand {
     override fun execute(land: Land): Either<Failure, Land> {
         DebugCommand.debug(this)
         val oldQuantity = land.quantityByThing[target] ?: 0

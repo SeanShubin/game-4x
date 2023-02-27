@@ -4,7 +4,7 @@ import arrow.core.Either
 import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 
-object DiscardSupplyCommand:SingleLandCommand {
+object DiscardSupplyCommand:LandCommand {
     override fun execute(land: Land): Either<Failure, Land> {
         DebugCommand.debug(this)
         val anySupply = Thing("name" to "supply")

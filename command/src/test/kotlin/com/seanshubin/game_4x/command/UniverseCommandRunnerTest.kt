@@ -10,7 +10,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class CommandRunnerTest {
+class UniverseCommandRunnerTest {
     @Test
     fun runToCompletion() {
         // given
@@ -38,7 +38,7 @@ class CommandRunnerTest {
             DiscardSupplyCommand,
             ResetActivatedCommand
         )
-        val command = EveryLandCommand(CompositeCommand(commands))
+        val command = EveryLandUniverseCommand(CompositeCommand(commands))
         val basePath = Paths.get("generated")
         val newUniverseEvent = {turn:Int, newUniverse:Universe ->
             writeTurn(basePath, turn, newUniverse)

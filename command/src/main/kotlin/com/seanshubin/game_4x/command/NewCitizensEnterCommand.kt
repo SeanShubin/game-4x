@@ -6,7 +6,7 @@ import com.seanshubin.game_4x.game.Thing
 import com.seanshubin.game_4x.game.Things
 import kotlin.math.min
 
-object NewCitizensEnterCommand : SingleLandCommand {
+object NewCitizensEnterCommand : LandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
     override fun execute(land: Land): Either<Failure, Land> {

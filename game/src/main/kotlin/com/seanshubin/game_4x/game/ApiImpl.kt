@@ -9,14 +9,14 @@ class ApiImpl : Api {
     }
 
     override fun listLands(planetName: String): List<Land> =
-        universe.planetsByName.getValue(planetName).lands
+        universe.getPlanet(planetName).lands
 
     override fun createLand(planetName: String) {
         universe = universe.updatePlanet(planetName) { it.addLand() }
     }
 
     override fun getLand(planetName: String, landIndex: Int): Land =
-        universe.planetsByName.getValue(planetName).lands[landIndex]
+        universe.getPlanet(planetName).lands[landIndex]
 
     override fun addThing(planetName: String, landIndex: Int, thing: Thing, quantity: Int) {
         universe = universe.updateLand(planetName, landIndex) { it.addThing(thing, quantity) }
