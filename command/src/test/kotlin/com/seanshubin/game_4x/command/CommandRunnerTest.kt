@@ -35,9 +35,8 @@ class CommandRunnerTest {
             ActivatedCitizensEatOrLeave,
             NonActivatedCitizensEatOrLeave,
             NewCitizensEnterCommand,
-            ResetSupplyCommand,
-            ResetGathererCommand,
-            ResetNodeCommand
+            DiscardSupplyCommand,
+            ResetActivatedCommand
         )
         val command = EveryLandCommand(CompositeCommand(commands))
         val basePath = Paths.get("generated")
