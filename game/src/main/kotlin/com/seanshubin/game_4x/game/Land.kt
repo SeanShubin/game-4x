@@ -3,13 +3,9 @@ package com.seanshubin.game_4x.game
 import com.seanshubin.game_4x.game.ListUtil.updateWhere
 
 data class Land(
-    val planetName: String,
-    val index: Int,
     val things: List<Pair<Thing, Int>>
 ) : HasToObject {
-    constructor(planetName: String, index: Int, vararg element: Pair<Thing, Int>) : this(
-        planetName,
-        index,
+    constructor(vararg element: Pair<Thing, Int>) : this(
         element.toList()
     )
 
@@ -24,11 +20,7 @@ data class Land(
         query.isPartOf(it.first)
     }.sumOf { it.second }
 
-    override fun toObject(): Map<String, Any> = mapOf(
-        "planetName" to planetName,
-        "index" to index,
-        "things" to things.map { it.toObject() }
-    )
+    override fun toObject(): List<Any> = things.map { it.toObject() }
 
     private fun Pair<Thing, Int>.toObject(): Map<String, Any> = mapOf(
         "thing" to first.toObject(),

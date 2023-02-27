@@ -17,7 +17,7 @@ data class RunGathererCommand(val resource:String, val density:Int) : LandComman
         val usedCitizen = Things.createCitizen(activated = true)
         val supply = Things.createSupply(resource)
 
-        val composite = CompositeCommand(
+        val composite = CompositeLandCommand(
             RemoveCommand(unusedGatherer),
             AddCommand(usedGatherer),
             RemoveCommand(unusedNode),

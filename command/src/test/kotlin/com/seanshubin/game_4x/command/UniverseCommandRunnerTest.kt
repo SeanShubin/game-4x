@@ -38,7 +38,7 @@ class UniverseCommandRunnerTest {
             DiscardSupplyCommand,
             ResetActivatedCommand
         )
-        val command = EveryLandUniverseCommand(CompositeCommand(commands))
+        val command = EveryLandUniverseCommand(CompositeLandCommand(commands))
         val basePath = Paths.get("generated")
         val newUniverseEvent = {turn:Int, newUniverse:Universe ->
             writeTurn(basePath, turn, newUniverse)
@@ -54,6 +54,7 @@ class UniverseCommandRunnerTest {
     }
 
     private fun clearHistory(basePath: Path){
+        Files.createDirectories(basePath)
         Files.list(basePath).toList().forEach { file ->
             Files.delete(file)
         }

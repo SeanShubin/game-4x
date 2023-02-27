@@ -23,7 +23,7 @@ object ColonizeLandCommand : LandCommand {
         val addCitizen = AddCommand(Things.createCitizen())
         val addFarm = AddCommand(Things.createGatherer("food"))
 
-        val composite = CompositeCommand(
+        val composite = CompositeLandCommand(
             removeColonizer,
             atLeastOneFoodNode,
             noCitizens,

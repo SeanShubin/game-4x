@@ -17,8 +17,6 @@ class ApiGameplayTest {
         api.addThing(planetName, landIndex, node)
         api.addThing(planetName, landIndex, colonizer)
         val expected = Land(
-            planetName,
-            landIndex,
             node to 1,
             colonizer to 1
         )
@@ -49,8 +47,6 @@ class ApiGameplayTest {
         api.addThing(planetName, landIndex, node)
         api.addThing(planetName, landIndex, colonizer)
         val expected = Land(
-            planetName,
-            landIndex,
             citizen to 1,
             gatherer to 1
         )

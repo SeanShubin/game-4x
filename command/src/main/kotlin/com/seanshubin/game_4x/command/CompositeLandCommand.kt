@@ -5,7 +5,7 @@ import arrow.core.flatMap
 import arrow.core.right
 import com.seanshubin.game_4x.game.Land
 
-data class CompositeCommand(val list: List<LandCommand>) : LandCommand {
+data class CompositeLandCommand(val list: List<LandCommand>) : LandCommand {
     constructor(vararg landCommand: LandCommand) : this(landCommand.toList())
 
     override fun execute(land: Land): Either<Failure, Land> {

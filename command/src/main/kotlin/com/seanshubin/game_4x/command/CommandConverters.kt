@@ -15,5 +15,9 @@ object CommandConverters {
                     is Either.Left -> result.value.left()
                 }
             }
+
+            override fun toObject(): Any = this@toUniverseCommand.toObject()
         }
+
+
 }

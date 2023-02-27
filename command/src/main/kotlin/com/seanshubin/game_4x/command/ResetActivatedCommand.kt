@@ -20,7 +20,7 @@ object ResetActivatedCommand:LandCommand {
 
         }
         return if(resetCommands.isEmpty()) return land.right()
-        else CompositeCommand(resetCommands).execute(land)
+        else CompositeLandCommand(resetCommands).execute(land)
     }
 
     override fun toObject(): String = this.javaClass.simpleName
