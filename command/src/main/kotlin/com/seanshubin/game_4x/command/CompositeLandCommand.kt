@@ -7,8 +7,8 @@ import com.seanshubin.game_4x.command.FormatUtil.indent
 import com.seanshubin.game_4x.format.JsonMappers
 import com.seanshubin.game_4x.game.Land
 
-data class CompositeLandCommand(val list: List<LandCommand>) : LandCommand {
-    constructor(vararg landCommand: LandCommand) : this(landCommand.toList())
+data class CompositeLandCommand(val parent:LandCommand, val list: List<LandCommand>) : LandCommand {
+//    constructor(parent:LandCommand, vararg landCommand: LandCommand) : this(parent, landCommand.toList())
 
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         var current: Either<LandFailure, LandSuccess> =
@@ -25,25 +25,9 @@ data class CompositeLandCommand(val list: List<LandCommand>) : LandCommand {
         val details = if (allDetails.isEmpty()) {
             emptyList()
         } else {
-            listOf("composite land: ${list.size}") + allDetails.indent()
+            listOf(JsonMappers.compact.writeValueAsString(parent.toObject())) + allDetails.indent()
         }
         return current.map { it.copy(details = details) }
-    }
-
-    private fun appendDetails(
-        details: MutableList<String>,
-        result: Either<LandFailure, LandSuccess>
-    ): Either<LandFailure, LandSuccess> {
-        when (result) {
-            is Either.Right -> {
-                if (result.value.details.isNotEmpty()) {
-                    details.add(JsonMappers.compact.writeValueAsString(result.value.command))
-                    details.addAll(result.value.details.indent())
-                }
-            }
-            else -> {}
-        }
-        return result
     }
 
     override fun toObject(): Map<String, Any> = mapOf(

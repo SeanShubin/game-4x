@@ -25,7 +25,7 @@ object EatOrLeave {
             if (commands.isEmpty()) {
                 LandSuccess(command, land, listOf("nothing to do")).right()
             } else {
-                CompositeLandCommand(commands).execute(land)
+                CompositeLandCommand(command, commands).execute(land)
             }
         return result
     }

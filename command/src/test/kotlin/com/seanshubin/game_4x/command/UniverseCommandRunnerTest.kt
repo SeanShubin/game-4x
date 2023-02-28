@@ -1,5 +1,6 @@
 package com.seanshubin.game_4x.command
 
+import arrow.core.Either
 import com.seanshubin.game_4x.format.JsonMappers
 import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Planet
@@ -29,16 +30,23 @@ class UniverseCommandRunnerTest {
         val universe = Universe()
             .addPlanet(planetName)
             .updatePlanet(planetName, updatePlanet)
-        val commands = listOf(
-            ZeroOrMoreCommand(ColonizeLandCommand),
+        val strategy = object:LandCommand{
+            override fun execute(land: Land): Either<LandFailure, LandSuccess> {
+                val commands = listOf(
+                    ZeroOrMoreCommand(ColonizeLandCommand),
 //            ZeroOrMoreCommand(RunGathererCommand("food", density)),
 //            ActivatedCitizensEatOrLeave,
 //            NonActivatedCitizensEatOrLeave,
 //            NewCitizensEnterCommand,
 //            DiscardSupplyCommand,
 //            ResetActivatedCommand
-        )
-        val command = EveryLandUniverseCommand(CompositeLandCommand(commands))
+                )
+                return CompositeLandCommand(this, commands).execute(land)
+            }
+
+            override fun toObject(): String = "strategy"
+        }
+        val command = EveryLandUniverseCommand(strategy)
         val basePath = Paths.get("generated")
         val newUniverseEvent = {turn:Int, newUniverse:Universe ->
             writeTurn(basePath, turn, newUniverse)

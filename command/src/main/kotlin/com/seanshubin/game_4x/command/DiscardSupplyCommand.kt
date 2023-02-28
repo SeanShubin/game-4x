@@ -12,7 +12,7 @@ object DiscardSupplyCommand:LandCommand {
             val quantity = land.quantityByThing[it] ?: 0
             RemoveCommand(it, quantity)
         }
-        return CompositeLandCommand(removeSupplyCommands).execute(land)
+        return CompositeLandCommand(this, removeSupplyCommands).execute(land)
     }
 
     override fun toObject(): String = this.javaClass.simpleName
