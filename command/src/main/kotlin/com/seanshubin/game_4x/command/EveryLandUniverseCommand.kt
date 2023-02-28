@@ -11,7 +11,7 @@ data class EveryLandUniverseCommand(val landCommand: LandCommand) : UniverseComm
                 LandToUniverseCommandAdapter(planet.name, landIndex, landCommand)
             }
         }
-        return CompositeUniverseCommand(universeCommandList).execute(universe)
+        return CompositeUniverseCommand(this, universeCommandList).execute(universe)
     }
 
     override fun toObject(): Any = landCommand.toObject()

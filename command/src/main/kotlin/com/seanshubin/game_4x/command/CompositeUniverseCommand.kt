@@ -1,12 +1,11 @@
 package com.seanshubin.game_4x.command
 
 import arrow.core.Either
-import arrow.core.flatMap
 import arrow.core.right
 import com.seanshubin.game_4x.game.Universe
 
-data class CompositeUniverseCommand(val list: List<UniverseCommand>) : UniverseCommand {
-    constructor(vararg universeCommand: UniverseCommand) : this(universeCommand.toList())
+data class CompositeUniverseCommand(val parent:UniverseCommand, val list: List<UniverseCommand>) : UniverseCommand {
+//    constructor(vararg universeCommand: UniverseCommand) : this(universeCommand.toList())
 
     override fun execute(universe: Universe): Either<UniverseFailure, UniverseSuccess> {
         val children = mutableListOf<UniverseSuccess>()
@@ -23,7 +22,7 @@ data class CompositeUniverseCommand(val list: List<UniverseCommand>) : UniverseC
                 }
             }
         }
-        return UniverseSuccess(this, current, "composite universe ${list.size}", children).right()
+        return UniverseSuccess(parent.javaClass.simpleName, current, "count: ${list.size}", children).right()
     }
 
     override fun toObject(): Map<String, Any> = mapOf(

@@ -20,7 +20,7 @@ data class CompositeLandCommand(val parent:LandCommand, val list: List<LandComma
                 is Either.Left -> return result
             }
         }
-        val result= LandSuccess(this, currentLand, "composite land ${list.size}", successResults).right()
+        val result= LandSuccess(parent, currentLand, "composite land ${list.size}", successResults).right()
         return result
     }
 

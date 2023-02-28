@@ -17,8 +17,8 @@ data class LandToUniverseCommandAdapter(
             is Either.Right -> {
                 val newUniverse = universe.setLand(planetName, landIndex, landResult.value.land)
                 val message= "planet '$planetName', land $landIndex: ${landResult.value.message}"
-                val children = landResult.value.children.map { it.toUniverseSuccess(this, newUniverse) }
-                UniverseSuccess(this, newUniverse, message, children).right()
+                val children = landResult.value.children.map { it.toUniverseSuccess(newUniverse) }
+                UniverseSuccess(landCommand.javaClass.simpleName, newUniverse, message, children).right()
             }
             is Either.Left -> UniverseFailure(this, universe, landResult.value.message).left()
         }
@@ -31,8 +31,8 @@ data class LandToUniverseCommandAdapter(
         "landCommand" to landCommand.toObject()
     )
 
-    private fun LandSuccess.toUniverseSuccess(command:UniverseCommand, universe:Universe):UniverseSuccess {
-        val newChildren = children.map{it.toUniverseSuccess(command, universe)}
-        return UniverseSuccess(command, universe, message, newChildren)
+    private fun LandSuccess.toUniverseSuccess(universe:Universe):UniverseSuccess {
+        val newChildren = children.map{it.toUniverseSuccess(universe)}
+        return UniverseSuccess(command.javaClass.simpleName, universe, message, newChildren)
     }
 }
