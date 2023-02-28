@@ -8,26 +8,20 @@ import com.seanshubin.game_4x.format.JsonMappers
 import com.seanshubin.game_4x.game.Land
 
 data class CompositeLandCommand(val parent:LandCommand, val list: List<LandCommand>) : LandCommand {
-//    constructor(parent:LandCommand, vararg landCommand: LandCommand) : this(parent, landCommand.toList())
-
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        var current: Either<LandFailure, LandSuccess> =
-            LandSuccess(this, land, emptyList()).right()
-        val allResults = mutableListOf<Either<LandFailure, LandSuccess>>()
+        var currentLand = land
+        val successResults = mutableListOf<LandSuccess>()
         list.forEach { command ->
-            current = current.flatMap {
-                val result= command.execute(it.land)
-                allResults.add(result)
-                result
+            when(val result = command.execute(currentLand)){
+                is Either.Right -> {
+                    currentLand = result.value.land
+                    successResults.add(result.value)
+                }
+                is Either.Left -> return result
             }
         }
-        val allDetails = allResults.mapNotNull{it.getOrNull()}.flatMap{it.details}
-        val details = if (allDetails.isEmpty()) {
-            emptyList()
-        } else {
-            listOf(JsonMappers.compact.writeValueAsString(parent.toObject())) + allDetails.indent()
-        }
-        return current.map { it.copy(details = details) }
+        val result= LandSuccess(this, currentLand, "composite land ${list.size}", successResults).right()
+        return result
     }
 
     override fun toObject(): Map<String, Any> = mapOf(

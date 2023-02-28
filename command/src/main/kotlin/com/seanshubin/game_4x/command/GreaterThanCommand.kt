@@ -10,7 +10,7 @@ data class GreaterThanCommand(val thing: Thing, val target: Int = 1) : LandComma
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         val quantity: Int = land.countPartiallyMatches(thing)
         return if (quantity > target) {
-            LandSuccess(this, land, listOf("$quantity > $target")).right()
+            LandSuccess(this, land, "$quantity > $target").right()
         } else {
             LandFailure(
                 this,

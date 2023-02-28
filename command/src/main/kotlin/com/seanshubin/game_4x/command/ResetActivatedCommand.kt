@@ -18,7 +18,7 @@ object ResetActivatedCommand:LandCommand {
             )
 
         }
-        return if(resetCommands.isEmpty()) return LandSuccess(this, land, listOf("nothing to reset")).right()
+        return if(resetCommands.isEmpty()) return LandSuccess(this, land, "nothing to reset").right()
         else CompositeLandCommand(this, resetCommands).execute(land)
     }
 

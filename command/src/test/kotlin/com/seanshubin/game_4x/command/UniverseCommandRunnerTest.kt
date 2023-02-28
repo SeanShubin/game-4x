@@ -30,23 +30,7 @@ class UniverseCommandRunnerTest {
         val universe = Universe()
             .addPlanet(planetName)
             .updatePlanet(planetName, updatePlanet)
-        val strategy = object:LandCommand{
-            override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-                val commands = listOf(
-                    ZeroOrMoreCommand(ColonizeLandCommand),
-//            ZeroOrMoreCommand(RunGathererCommand("food", density)),
-//            ActivatedCitizensEatOrLeave,
-//            NonActivatedCitizensEatOrLeave,
-//            NewCitizensEnterCommand,
-//            DiscardSupplyCommand,
-//            ResetActivatedCommand
-                )
-                return CompositeLandCommand(this, commands).execute(land)
-            }
-
-            override fun toObject(): String = "strategy"
-        }
-        val command = EveryLandUniverseCommand(strategy)
+        val command = EveryLandUniverseCommand(GenericLandStrategy)
         val basePath = Paths.get("generated")
         val newUniverseEvent = {turn:Int, newUniverse:Universe ->
             writeTurn(basePath, turn, newUniverse)

@@ -5,19 +5,21 @@ import com.seanshubin.game_4x.format.JsonMappers
 import com.seanshubin.game_4x.game.HasToObject
 import com.seanshubin.game_4x.game.Universe
 
-data class UniverseSuccess(val command: UniverseCommand, val universe: Universe, val details: List<String>) : HasToObject {
+data class UniverseSuccess(val command: UniverseCommand, val universe: Universe, val message:String, val children: List<UniverseSuccess>) : HasToObject {
     override fun toString(): String =
         JsonMappers.pretty.writeValueAsString(toObject())
 
     override fun toObject(): Map<String, Any> = mapOf(
         "command" to command.toObject(),
         "universe" to universe.toObject(),
-        "details" to details
+        "message" to message,
+        "children" to children
     )
 
     fun toLines():List<String> {
-        if(details.isEmpty()) return emptyList()
         val compact = JsonMappers.compact.writeValueAsString(command.toObject())
-        return listOf(compact) + details.indent()
+        val parentLine = "$compact: $message"
+        val childLines = children.flatMap { it.toLines()}
+        return listOf(parentLine) + childLines.indent()
     }
 }

@@ -9,21 +9,20 @@ data class ZeroOrMoreCommand(val delegate:LandCommand):LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         var current = land
         var times = 0
-        val detailsFromLoop = mutableListOf<String>()
+        val children = mutableListOf<LandSuccess>()
         do {
             val result = delegate.execute(current)
-            if(result is Either.Right){
-                times++
-                current = result.value.land
-                detailsFromLoop.addAll(result.value.details)
+            when( result){
+                is Either.Right -> {
+                    times++
+                    current = result.value.land
+                    children.add(result.value)
+                }
+                else -> {}
             }
         } while(result.isRight())
-        val details = if(times == 0){
-            emptyList()
-        } else {
-            listOf("zero or more: $times") + detailsFromLoop.indent()
-        }
-        return LandSuccess(this, current, details).right()
+        val message = "times: $times"
+        return LandSuccess(this, current, message, children).right()
     }
 
     override fun toObject():Map<String, Any> = mapOf("delegate" to delegate.toObject())

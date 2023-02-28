@@ -10,7 +10,7 @@ data class EqualToCommand(val thing: Thing, val target: Int) : LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         val quantity: Int = land.countPartiallyMatches(thing)
         return if (quantity == target) {
-            LandSuccess(this, land, listOf("expected $target = actual $quantity")).right()
+            LandSuccess(this, land, "expected $target = actual $quantity").right()
         } else {
             LandFailure(
                 this,

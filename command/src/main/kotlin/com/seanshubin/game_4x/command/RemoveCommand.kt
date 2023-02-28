@@ -18,7 +18,7 @@ data class RemoveCommand(val target: Thing, val quantity: Int = 1) : LandCommand
             ).left()
         } else {
             val newLand =land.setQuantity(target, newQuantity)
-            LandSuccess(this, newLand, listOf("removed $quantity, from $oldQuantity to $newQuantity")).right()
+            LandSuccess(this, newLand, "removed $quantity, from $oldQuantity to $newQuantity").right()
         }
     }
 

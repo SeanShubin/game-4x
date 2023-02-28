@@ -10,8 +10,8 @@ data class AddCommand(val target: Thing, val quantity: Int = 1) : LandCommand {
         val oldQuantity = land.quantityByThing[target] ?: 0
         val newQuantity = oldQuantity + quantity
         val newLand:Land =land.setQuantity(target, newQuantity)
-        val details = listOf("changed quantity from $oldQuantity to $newQuantity for $target")
-        return LandSuccess(this, newLand, details).right()
+        val message = "changed quantity from $oldQuantity to $newQuantity for $target"
+        return LandSuccess(this, newLand, message).right()
     }
 
     override fun toObject(): Map<String, Any> = mapOf(
