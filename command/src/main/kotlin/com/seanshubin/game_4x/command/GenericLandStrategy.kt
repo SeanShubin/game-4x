@@ -7,12 +7,12 @@ object GenericLandStrategy:LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         val commands = listOf(
             ZeroOrMoreCommand(ColonizeLandCommand),
-//            ZeroOrMoreCommand(RunGathererCommand("food", density)),
-//            ActivatedCitizensEatOrLeave,
-//            NonActivatedCitizensEatOrLeave,
-//            NewCitizensEnterCommand,
-//            DiscardSupplyCommand,
-//            ResetActivatedCommand
+            ZeroOrMoreCommand(RunGathererCommand("food")),
+            ActivatedCitizensEatOrLeave,
+            NonActivatedCitizensEatOrLeave,
+            NewCitizensEnterCommand,
+            DiscardSupplyCommand,
+            ResetActivatedCommand
         )
         val result = CompositeLandCommand(this, commands).execute(land)
         return result

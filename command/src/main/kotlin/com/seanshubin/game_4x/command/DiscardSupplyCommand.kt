@@ -7,7 +7,7 @@ import com.seanshubin.game_4x.game.Thing
 object DiscardSupplyCommand:LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         val anySupply = Thing("name" to "supply")
-        val supplyList = land.fullMatchesFor(anySupply)
+        val supplyList = land.findUnique(anySupply)
         val removeSupplyCommands = supplyList.map {
             val quantity = land.quantityByThing[it] ?: 0
             RemoveCommand(it, quantity)

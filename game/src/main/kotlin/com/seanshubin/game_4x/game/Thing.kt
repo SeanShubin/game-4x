@@ -23,17 +23,24 @@ data class Thing(val attributes: List<Pair<String, Attribute>>) : HasToObject {
     override fun toObject(): List<Any> = attributes.map { it.toObject() }
 
     companion object {
-        sealed interface Attribute : HasToObject
+        sealed interface Attribute : HasToObject {
+            fun requireInt():Int = throw RuntimeException("${javaClass.simpleName} is not an integer")
+            fun requireBoolean():Boolean = throw RuntimeException("${javaClass.simpleName} is not an integer")
+            fun requireString():String = throw RuntimeException("${javaClass.simpleName} is not an integer")
+        }
         data class StringAttribute(val stringValue: String) : Attribute {
             override fun toObject(): String = stringValue
+            override fun requireString(): String = stringValue
         }
 
         data class IntAttribute(val intValue: Int) : Attribute {
             override fun toObject(): Int = intValue
+            override fun requireInt(): Int = intValue
         }
 
         data class BooleanAttribute(val booleanValue: Boolean) : Attribute {
             override fun toObject(): Boolean = booleanValue
+            override fun requireBoolean(): Boolean = booleanValue
         }
 
         fun pairsToAttributePairs(vararg pairs: Pair<String, Any>): List<Pair<String, Attribute>> =

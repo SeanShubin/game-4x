@@ -8,7 +8,7 @@ import com.seanshubin.game_4x.game.Thing
 object ResetActivatedCommand:LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         val anyActivated = Thing("activated" to true)
-        val list = land.fullMatchesFor(anyActivated)
+        val list = land.findUnique(anyActivated)
         val resetCommands:List<LandCommand> = list.flatMap {
             val quantity = land.quantityByThing[it] ?: 0
             val thingThatWasReset = it.setBooleanValue("activated", false)

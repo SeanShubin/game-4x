@@ -11,9 +11,16 @@ data class Land(
 
     val size: Int get() = things.sumOf { it.second }
     val quantityByThing: Map<Thing, Int> = things.toMap()
-    fun fullMatchesFor(query: Thing):List<Thing> =
-        things.map{it.first}.filter {
+    fun findUnique(query: Thing): List<Thing> =
+        things.map { it.first }.filter {
             query.isPartOf(it)
+        }
+
+    fun findExpanded(query: Thing): List<Thing> =
+        things.map { it.first }.filter {
+            query.isPartOf(it)
+        }.flatMap { thing ->
+            List(quantityByThing[thing] ?: 0) { thing }
         }
 
     fun countPartiallyMatches(query: Thing): Int = things.filter {
