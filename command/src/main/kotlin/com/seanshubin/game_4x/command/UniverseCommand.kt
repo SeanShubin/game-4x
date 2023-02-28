@@ -5,5 +5,5 @@ import com.seanshubin.game_4x.game.HasToObject
 import com.seanshubin.game_4x.game.Universe
 
 interface UniverseCommand:HasToObject {
-    fun execute(universe: Universe): Either<Failure, Universe>
+    fun execute(universe: Universe): Either<UniverseFailure, Universe>
 }

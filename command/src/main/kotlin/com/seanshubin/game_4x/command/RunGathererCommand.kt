@@ -7,7 +7,7 @@ import com.seanshubin.game_4x.game.Things
 data class RunGathererCommand(val resource:String, val density:Int) : LandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
-    override fun execute(land: Land): Either<Failure, Land> {
+    override fun execute(land: Land): Either<LandFailure, Land> {
         DebugCommand.debug(this)
         val unusedGatherer = Things.createGatherer(resource)
         val usedGatherer = Things.createGatherer(resource, activated = true)

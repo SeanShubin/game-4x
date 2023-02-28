@@ -5,7 +5,7 @@ import arrow.core.right
 import com.seanshubin.game_4x.game.Land
 
 data class IgnoreFailureLandCommand(val delegate: LandCommand) : LandCommand {
-    override fun execute(land: Land): Either<Failure, Land> {
+    override fun execute(land: Land): Either<LandFailure, Land> {
         DebugCommand.debug(this)
         val result = delegate.execute(land)
         return if (result.isLeft()) land.right()

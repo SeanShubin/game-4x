@@ -7,13 +7,13 @@ import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 
 data class GreaterThanCommand(val thing: Thing, val target: Int = 1) : LandCommand {
-    override fun execute(land: Land): Either<Failure, Land> {
+    override fun execute(land: Land): Either<LandFailure, Land> {
         DebugCommand.debug(this)
         val quantity: Int = land.countPartiallyMatches(thing)
         return if (quantity > target) {
             land.right()
         } else {
-            Failure(
+            LandFailure(
                 this,
                 land,
                 "$quantity is not greater than $target"

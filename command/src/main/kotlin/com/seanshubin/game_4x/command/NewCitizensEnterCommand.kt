@@ -9,7 +9,7 @@ import kotlin.math.min
 object NewCitizensEnterCommand : LandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
-    override fun execute(land: Land): Either<Failure, Land> {
+    override fun execute(land: Land): Either<LandFailure, Land> {
         DebugCommand.debug(this)
         val citizen = Things.createCitizen()
         val foodSupply = Things.createSupply("food")

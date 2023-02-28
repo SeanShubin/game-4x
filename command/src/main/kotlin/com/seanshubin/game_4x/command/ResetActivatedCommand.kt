@@ -6,7 +6,7 @@ import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 
 object ResetActivatedCommand:LandCommand {
-    override fun execute(land: Land): Either<Failure, Land> {
+    override fun execute(land: Land): Either<LandFailure, Land> {
         DebugCommand.debug(this)
         val anyActivated = Thing("activated" to true)
         val list = land.fullMatchesFor(anyActivated)

@@ -8,8 +8,8 @@ import com.seanshubin.game_4x.game.Universe
 data class CompositeUniverseCommand(val list: List<UniverseCommand>) : UniverseCommand {
     constructor(vararg universeCommand: UniverseCommand) : this(universeCommand.toList())
 
-    override fun execute(universe: Universe): Either<Failure, Universe> {
-        var current: Either<Failure, Universe> = universe.right()
+    override fun execute(universe: Universe): Either<UniverseFailure, Universe> {
+        var current: Either<UniverseFailure, Universe> = universe.right()
         list.forEach { command ->
             current = current.flatMap { command.execute(it) }
         }

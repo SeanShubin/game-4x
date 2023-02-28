@@ -8,9 +8,9 @@ import com.seanshubin.game_4x.game.Land
 data class CompositeLandCommand(val list: List<LandCommand>) : LandCommand {
     constructor(vararg landCommand: LandCommand) : this(landCommand.toList())
 
-    override fun execute(land: Land): Either<Failure, Land> {
+    override fun execute(land: Land): Either<LandFailure, Land> {
         DebugCommand.debug(this)
-        var current: Either<Failure, Land> = land.right()
+        var current: Either<LandFailure, Land> = land.right()
         list.forEach { command ->
             current = current.flatMap { command.execute(it) }
         }
