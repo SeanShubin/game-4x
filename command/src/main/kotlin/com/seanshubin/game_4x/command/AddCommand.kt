@@ -6,11 +6,13 @@ import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 
 data class AddCommand(val target: Thing, val quantity: Int = 1) : LandCommand {
-    override fun execute(land: Land): Either<LandFailure, Land> {
+    override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         DebugCommand.debug(this)
         val oldQuantity = land.quantityByThing[target] ?: 0
         val newQuantity = oldQuantity + quantity
-        return land.setQuantity(target, newQuantity).right()
+        val newLand:Land =land.setQuantity(target, newQuantity)
+        val message = "changed quantity from $oldQuantity to $newQuantity for $target"
+        return LandSuccess(this, newLand, message).right()
     }
 
     override fun toObject(): Map<String, Any> = mapOf(

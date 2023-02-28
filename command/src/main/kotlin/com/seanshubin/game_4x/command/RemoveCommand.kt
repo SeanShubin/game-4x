@@ -7,7 +7,7 @@ import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 
 data class RemoveCommand(val target: Thing, val quantity: Int = 1) : LandCommand {
-    override fun execute(land: Land): Either<LandFailure, Land> {
+    override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         DebugCommand.debug(this)
         val oldQuantity = land.quantityByThing[target] ?: 0
         val newQuantity = oldQuantity - quantity
@@ -18,7 +18,8 @@ data class RemoveCommand(val target: Thing, val quantity: Int = 1) : LandCommand
                 "can not reduce $oldQuantity by $quantity"
             ).left()
         } else {
-            land.setQuantity(target, newQuantity).right()
+            val newLand =land.setQuantity(target, newQuantity)
+            LandSuccess(this, newLand, "removed $quantity, from $oldQuantity to $newQuantity").right()
         }
     }
 

@@ -18,7 +18,7 @@ class CommandRunnerImpl(
             history.add(current)
             val result = universeCommand.execute(current)
             current = when (result) {
-                is Either.Right -> result.value
+                is Either.Right -> result.value.universe
                 is Either.Left -> throw RuntimeException(result.value.toString())
             }
             if(turn > turnLimit){

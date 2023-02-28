@@ -8,7 +8,7 @@ import com.seanshubin.game_4x.game.Things
 import kotlin.math.min
 
 object EatOrLeave {
-    fun execute(land: Land, wantsToEat: Thing): Either<LandFailure, Land> {
+    fun execute(command:LandCommand, land: Land, wantsToEat: Thing): Either<LandFailure, LandSuccess> {
         val foodSupply = Things.createSupply("food")
         val wantsToEatCount = land.quantityByThing[wantsToEat] ?: 0
         val foodSupplyCount = land.quantityByThing[foodSupply] ?: 0
@@ -23,7 +23,7 @@ object EatOrLeave {
         val commands = removeWantsToEatCommands + removeFoodCommands
         val result =
             if (commands.isEmpty()) {
-                land.right()
+                LandSuccess(command, land, "nothing to do").right()
             } else {
                 CompositeLandCommand(commands).execute(land)
             }

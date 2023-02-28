@@ -8,7 +8,7 @@ import com.seanshubin.game_4x.game.Things
 object ColonizeLandCommand : LandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
-    override fun execute(land: Land): Either<LandFailure, Land> {
+    override fun execute(land: Land): Either<LandFailure, LandSuccess> {
         DebugCommand.debug(this)
         val colonizer = Things.createColonizer()
         val foodNodeQuery = Thing(
