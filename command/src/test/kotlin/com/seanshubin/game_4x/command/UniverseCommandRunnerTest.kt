@@ -22,7 +22,7 @@ class UniverseCommandRunnerTest {
         val node = Things.createNode("food", density)
 
         val updateLand = { land: Land ->
-            land.addThing(node).addThing(colonizer)
+            land.addThing(node,4).addThing(colonizer)
         }
         val updatePlanet = { planet: Planet ->
             planet.addLand().updateLand(landIndex, updateLand)

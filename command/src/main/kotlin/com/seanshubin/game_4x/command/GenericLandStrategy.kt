@@ -8,11 +8,12 @@ object GenericLandStrategy:LandCommand {
         val commands = listOf(
             ZeroOrMoreCommand(ColonizeLandCommand),
             ZeroOrMoreCommand(RunGathererCommand("food")),
+            ZeroOrMoreCommand(BuildGathererCommand("food")),
             ActivatedCitizensEatOrLeave,
             NonActivatedCitizensEatOrLeave,
             NewCitizensEnterCommand,
             DiscardSupplyCommand,
-            ResetActivatedCommand
+            ResetActivatedCommand,
         )
         val result = CompositeLandCommand(this, commands).execute(land)
         return result

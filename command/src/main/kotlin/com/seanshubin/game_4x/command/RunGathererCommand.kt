@@ -19,7 +19,7 @@ data class RunGathererCommand(val resource: String) : LandCommand {
         val density = unusedNode.attributeByName.getValue("density").requireInt()
         val usedNode = unusedNode.setBooleanValue("activated", true)
         val unusedGatherer = Things.createGatherer(resource)
-        val usedGatherer = Things.createGatherer(resource, activated = false)
+        val usedGatherer = Things.createGatherer(resource, activated = true)
         val unusedCitizen = Things.createCitizen()
         val usedCitizen = Things.createCitizen(activated = true)
         val supply = Things.createSupply(resource)
@@ -35,6 +35,7 @@ data class RunGathererCommand(val resource: String) : LandCommand {
                 AddCommand(supply, density)
             )
         )
-        return composite.execute(land)
+        val result = composite.execute(land)
+        return result
     }
 }
