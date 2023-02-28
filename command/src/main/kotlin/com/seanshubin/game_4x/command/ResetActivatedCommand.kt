@@ -7,7 +7,6 @@ import com.seanshubin.game_4x.game.Thing
 
 object ResetActivatedCommand:LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        DebugCommand.debug(this)
         val anyActivated = Thing("activated" to true)
         val list = land.fullMatchesFor(anyActivated)
         val resetCommands:List<LandCommand> = list.flatMap {
@@ -19,7 +18,7 @@ object ResetActivatedCommand:LandCommand {
             )
 
         }
-        return if(resetCommands.isEmpty()) return LandSuccess(this, land, "nothing to reset").right()
+        return if(resetCommands.isEmpty()) return LandSuccess(this, land, listOf("nothing to reset")).right()
         else CompositeLandCommand(resetCommands).execute(land)
     }
 

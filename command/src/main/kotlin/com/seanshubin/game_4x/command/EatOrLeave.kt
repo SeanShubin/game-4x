@@ -23,7 +23,7 @@ object EatOrLeave {
         val commands = removeWantsToEatCommands + removeFoodCommands
         val result =
             if (commands.isEmpty()) {
-                LandSuccess(command, land, "nothing to do").right()
+                LandSuccess(command, land, listOf("nothing to do")).right()
             } else {
                 CompositeLandCommand(commands).execute(land)
             }

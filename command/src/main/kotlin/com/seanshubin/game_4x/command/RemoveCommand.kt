@@ -8,7 +8,6 @@ import com.seanshubin.game_4x.game.Thing
 
 data class RemoveCommand(val target: Thing, val quantity: Int = 1) : LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        DebugCommand.debug(this)
         val oldQuantity = land.quantityByThing[target] ?: 0
         val newQuantity = oldQuantity - quantity
         return if (newQuantity < 0) {
@@ -19,7 +18,7 @@ data class RemoveCommand(val target: Thing, val quantity: Int = 1) : LandCommand
             ).left()
         } else {
             val newLand =land.setQuantity(target, newQuantity)
-            LandSuccess(this, newLand, "removed $quantity, from $oldQuantity to $newQuantity").right()
+            LandSuccess(this, newLand, listOf("removed $quantity, from $oldQuantity to $newQuantity")).right()
         }
     }
 

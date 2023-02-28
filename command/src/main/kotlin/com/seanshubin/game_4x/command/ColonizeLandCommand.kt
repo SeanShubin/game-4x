@@ -9,7 +9,6 @@ object ColonizeLandCommand : LandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        DebugCommand.debug(this)
         val colonizer = Things.createColonizer()
         val foodNodeQuery = Thing(
             "name" to "node",
@@ -30,6 +29,7 @@ object ColonizeLandCommand : LandCommand {
             addCitizen,
             addFarm
         )
-        return composite.execute(land)
+        val result = composite.execute(land)
+        return result
     }
 }

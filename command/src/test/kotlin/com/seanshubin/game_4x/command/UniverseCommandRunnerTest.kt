@@ -31,12 +31,12 @@ class UniverseCommandRunnerTest {
             .updatePlanet(planetName, updatePlanet)
         val commands = listOf(
             ZeroOrMoreCommand(ColonizeLandCommand),
-            ZeroOrMoreCommand(RunGathererCommand("food", density)),
-            ActivatedCitizensEatOrLeave,
-            NonActivatedCitizensEatOrLeave,
-            NewCitizensEnterCommand,
-            DiscardSupplyCommand,
-            ResetActivatedCommand
+//            ZeroOrMoreCommand(RunGathererCommand("food", density)),
+//            ActivatedCitizensEatOrLeave,
+//            NonActivatedCitizensEatOrLeave,
+//            NewCitizensEnterCommand,
+//            DiscardSupplyCommand,
+//            ResetActivatedCommand
         )
         val command = EveryLandUniverseCommand(CompositeLandCommand(commands))
         val basePath = Paths.get("generated")

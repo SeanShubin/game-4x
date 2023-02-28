@@ -1,6 +1,7 @@
 package com.seanshubin.game_4x.command
 
 import arrow.core.Either
+import arrow.core.filterOrElse
 import arrow.core.flatMap
 import arrow.core.right
 import com.seanshubin.game_4x.command.CommandConverters.toUniverseCommand
@@ -13,12 +14,20 @@ data class EveryLandUniverseCommand(val landCommand: LandCommand) : UniverseComm
                 landCommand.toUniverseCommand(planet.name, landIndex)
             }
         }
-        val initialValue: Either<UniverseFailure, UniverseSuccess> = UniverseSuccess(this, universe, "every land").right()
+        val allResults = mutableListOf<Either<UniverseFailure, UniverseSuccess>>()
+        val initialValue: Either<UniverseFailure, UniverseSuccess> =
+            UniverseSuccess(this, universe, listOf()).right()
         val executeCommand = { accumulator: Either<UniverseFailure, UniverseSuccess>,
                                command: UniverseCommand ->
-            accumulator.flatMap { command.execute(it.universe) }
+            val result = accumulator.flatMap { command.execute(it.universe) }
+            allResults.add(result)
+            result
         }
-        val finalValue = universeCommandList.fold(initialValue, executeCommand)
+        val lastValue = universeCommandList.fold(initialValue, executeCommand)
+        val finalValue = lastValue.map { result ->
+            val details = allResults.mapNotNull{ it.getOrNull()}.flatMap{it.details}
+            result.copy(details = details)
+        }
         return finalValue
     }
 

@@ -8,10 +8,9 @@ import com.seanshubin.game_4x.game.Thing
 
 data class EqualToCommand(val thing: Thing, val target: Int) : LandCommand {
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        DebugCommand.debug(this)
         val quantity: Int = land.countPartiallyMatches(thing)
         return if (quantity == target) {
-            LandSuccess(this, land, "expected $target = actual $quantity").right()
+            LandSuccess(this, land, listOf("expected $target = actual $quantity")).right()
         } else {
             LandFailure(
                 this,

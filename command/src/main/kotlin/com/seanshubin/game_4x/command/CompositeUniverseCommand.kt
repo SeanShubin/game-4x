@@ -9,9 +9,20 @@ data class CompositeUniverseCommand(val list: List<UniverseCommand>) : UniverseC
     constructor(vararg universeCommand: UniverseCommand) : this(universeCommand.toList())
 
     override fun execute(universe: Universe): Either<UniverseFailure, UniverseSuccess> {
-        var current: Either<UniverseFailure, UniverseSuccess> = UniverseSuccess(this, universe, "composite universe command ${list.size}").right()
+        val details = mutableListOf<String>("composite universe command ${list.size}")
+        var current: Either<UniverseFailure, UniverseSuccess> = UniverseSuccess(
+            this,
+            universe,
+            emptyList()
+        ).right()
         list.forEach { command ->
-            current = current.flatMap { command.execute(it.universe) }
+            current = current.flatMap {
+                command.execute(it.universe)
+            }
+            when(val x = current){
+                is Either.Right -> details.addAll(x.value.details)
+                else -> {}
+            }
         }
         return current
     }

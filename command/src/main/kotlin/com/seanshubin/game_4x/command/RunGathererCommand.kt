@@ -8,7 +8,6 @@ data class RunGathererCommand(val resource:String, val density:Int) : LandComman
     override fun toObject(): String = this.javaClass.simpleName
 
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        DebugCommand.debug(this)
         val unusedGatherer = Things.createGatherer(resource)
         val usedGatherer = Things.createGatherer(resource, activated = true)
         val unusedNode = Things.createNode(resource, density)

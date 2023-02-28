@@ -10,7 +10,6 @@ object NewCitizensEnterCommand : LandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        DebugCommand.debug(this)
         val citizen = Things.createCitizen()
         val foodSupply = Things.createSupply("food")
         val totalCitizenCount = land.countPartiallyMatches(Thing("name" to "citizen"))
