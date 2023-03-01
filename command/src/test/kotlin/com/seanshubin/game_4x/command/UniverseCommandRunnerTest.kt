@@ -62,47 +62,130 @@ class UniverseCommandRunnerTest {
 
 /*
 colonize
-{name:colonizer} - 1
-{name:node, resource:food} > 0
-{name:citizen} = 0
-{name:citizen} + 1
-{name:gatherer, resource:food} + 1
+required has-food-node
+required no-citizens
+required remove-colonizer
+optional add-citizen
+optional add-farm
 
-run-food-gatherer
-a = {name:node, resource:food, activated:false } - 1
-{name:node, resource:food, activated:true } + 1
-{name:gatherer, resource:food, activated:false} - 1
-{name:gatherer, resource:food, activated:true} + 1
-{name:citizen, activated:false} - 1
-{name:citizen, activated:true} + 1
-{name:supply, resource:food} + a.density
+has-food-node
+greater-than 0 {node, resource:food}
 
-new-citizens-enter
-a = {name:citizen}
-b = {name:supply, resource:food}
-c = min(a,b)
-{name:citizen} + c
+no-citizens
+equal-to 0 {citizen}
 
-build-farm
-{name:gatherer, resource:food} < {name:node, resource:food}
-{name:citizen, activated:false} - 1
-{name:citizen, activated:true} + 1
-{name:gatherer, resource:food} + 1
+remove-colonizer
+remove {colonizer}
 
-feed-citizen
-{supply:citizen, resource:food} - 1
-{name:citizen, activated:true} - 1
-{name:citizen, activated:false} - 1
+add-citizen
+add {citizen, activated:false}
 
-activated-citizens-leave
-{name:citizen, activated:true} - 1
+add-farm
+less-than {gatherer, resource:food}                  {node, resource:food}
+add       {gatherer, resource:food, activated:false}
 
-reset-gatherer
-{name:gatherer, resource:food, activated:true} - 1
-{name:gatherer, resource:food, activated:false} + 1
+test-case
+input
+  1 {colonizer}
+  1 {node resource:food}
+output
+  1 -> 0 {colonizer}
+  0 -> 1 {citizen activated:false}
+  0 -> 1 {farm resource:food activated:false}
+expected
+  1 {node resource:food}
+  1 {gatherer resource:food}
+  1 {citizen activated:false}
 
-reset-node
-{name:node, resource:food, activated:true } - 1
-{name:node, resource:food, activated:false } + 1
+test-case
+name
+  typical
+input
+  1 {colonizer}
+  1 {node resource:food}
+output
+  1 -> 0 {colonizer}
+  0 -> 1 {citizen activated:false}
+  0 -> 1 {farm resource:food activated:false}
+expected
+  1 {node resource:food}
+  1 {gatherer resource:food}
+  1 {citizen activated:false}
+
+test-case
+name
+  farm-already-exists
+input
+  1 {colonizer}
+  2 {node resource:food}
+  1 {gatherer resource:food}
+output
+  1 -> 0 {colonizer}
+  0 -> 1 {citizen activated:false}
+  0 -> 1 {farm resource:food activated:false}
+expected
+  2 {node resource:food}
+  2 {gatherer resource:food}
+  1 {citizen activated:false}
+
+test-case
+name
+  farm-already-at-max
+input
+  1 {colonizer}
+  1 {node resource:food}
+  1 {gatherer resource:food}
+output
+  1 -> 0 {colonizer}
+  0 -> 1 {citizen activated:false}
+expected
+  1 {node resource:food}
+  1 {gatherer resource:food}
+  1 {citizen activated:false}
+
+----------
+
+harvest-food
+required activate-food-node
+required activate-food-gatherer
+required activate-citizen
+optional add-food
+
+activate-food-node
+find-first {node resource:food activated:false} {sort-by:density sort-order:descending, alias:found-node}
+activate found-node
+
+activate-food-gatherer
+activate {gatherer resource:food}
+
+activate-citizen
+activate {citizen}
+
+add-food
+add {supply resource:food} found-node.density
+
+sample-output
+harvest-food
+  activated {node resource:food}
+  activated {gatherer resource:food}
+  0 -> 6 {supply resource:food}
+
+----------
+
+build-food-gatherer
+required less-gatherers-than-nodes
+required activate-citizen
+optional add-gatherer
+
+less-gatherers-than-nodes
+less-than {gatherer resource:food} {node resource:food}
+activate {citizen}
+add {gatherer resource:food}
+
+sample-output
+build-food-gatherer
+  activated {citizen}
+  0 -> 1 {gatherer resource:food}
+
 */
 
