@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype
 
-import org.junit.Test
+import kotlin.test.Test
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths

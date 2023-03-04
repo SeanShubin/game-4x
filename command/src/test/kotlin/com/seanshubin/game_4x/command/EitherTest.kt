@@ -1,7 +1,7 @@
 package com.seanshubin.game_4x.command
 
 import arrow.core.*
-import org.junit.Test
+import kotlin.test.Test
 
 class EitherTest {
     @Test

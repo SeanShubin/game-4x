@@ -6,7 +6,7 @@ import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Planet
 import com.seanshubin.game_4x.game.Things
 import com.seanshubin.game_4x.game.Universe
-import org.junit.Test
+import kotlin.test.Test
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths

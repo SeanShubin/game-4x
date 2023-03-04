@@ -1,0 +1,36 @@
+input resource
+input density
+required activate-node
+required activate-gatherer
+required activate-citizen
+optional add-supply
+
+activate-node
+activate {node resource=$resource density=$density activated=false}
+
+activate-gatherer
+activate {gatherer resource=$resource}
+
+activate-citizen
+activate {citizen}
+
+add-supply
+add {supply resource=$resource quantity=$density}
+
+example
+  parameters
+    resource=food
+    density=6
+  state-before
+    {node resource=food activated=false density=6}
+    {gatherer resource=food activated=false}
+    {citizen activated=false}
+  log
+    activated {node resource=food}
+    activated {gatherer resource=food}
+    0 -> 6 {supply resource=food}
+  state-after
+    {node resource=food activated=true}
+    {gatherer resource=food activated=true}
+    {citizen activated=true}
+    {supply resource=food quantity=6}

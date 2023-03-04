@@ -1,0 +1,19 @@
+input thing
+required remove-not-activated
+required add-activated
+
+remove-not-activated
+remove {$thing activated=false}
+
+add-activated
+add {$thing activated=true}
+
+test-case
+  input
+    thing={gatherer resource=food}
+  state-before
+    {gatherer resource=food activated=false}
+  log
+    activated {gatherer resource=food}
+  state-after
+    {gatherer resource=food activated=true}

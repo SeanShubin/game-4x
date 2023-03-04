@@ -1,0 +1,19 @@
+required reset-all
+
+reset-all
+find-all {activated=true alias=need-reset}
+for-all reset $need-reset
+
+test-case
+  state-before
+    {node resource=food activated=true}
+    {gatherer resource=food activated=true}
+    {citizen activated=true}
+  log
+    reset {node resource=food}
+    reset {gatherer resource=food}
+    reset {citizen}
+  state-after
+    {node resource=food activated=false density=6}
+    {gatherer resource=food activated=false}
+    {citizen activated=false}
