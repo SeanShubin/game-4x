@@ -1,8 +1,8 @@
 package com.seanshubin.game_4x.prototype2
 
-data class StateMachineImpl(val state:State, override val commandScriptBuilder:CommandScriptBuilder):StateMachine {
+data class StateMachineImpl(val builderState:BuilderState, override val builder:Builder):StateMachine {
     override fun processLine(line: Line): StateMachine {
-        val (newState, newPartial) = state.processLine(commandScriptBuilder, line)
+        val (newState, newPartial) = builderState.processLine(builder, line)
         return StateMachineImpl(newState, newPartial)
     }
 

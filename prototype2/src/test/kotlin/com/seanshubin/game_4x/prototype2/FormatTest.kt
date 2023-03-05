@@ -3,7 +3,7 @@ package com.seanshubin.game_4x.prototype2
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ParserTest {
+class FormatTest {
     @Test
     fun parseInput() {
         // given
@@ -11,7 +11,7 @@ class ParserTest {
         val expected = "resource"
 
         // when
-        val actual = Parser.parseInputLine(input)
+        val actual = Format.parseInputLine(input)
 
         // then
         assertEquals(expected, actual)
@@ -24,7 +24,7 @@ class ParserTest {
         val expected = TopCommand("required", "activate-node")
 
         // when
-        val actual = Parser.parseRequiredLine(input)
+        val actual = Format.parseRequiredLine(input)
 
         // then
         assertEquals(expected, actual)
@@ -37,7 +37,7 @@ class ParserTest {
         val expected = TopCommand("optional", "add-supply")
 
         // when
-        val actual = Parser.parseOptionalLine(input)
+        val actual = Format.parseOptionalLine(input)
 
         // then
         assertEquals(expected, actual)
@@ -50,7 +50,7 @@ class ParserTest {
         val expected = "activate-node"
 
         // when
-        val actual = Parser.parseSubName(input)
+        val actual = Format.parseSubName(input)
 
         // then
         assertEquals(expected, actual)
@@ -73,7 +73,7 @@ class ParserTest {
         val expected = SubCommandCall(name, calls)
 
         // when
-        val actual = Parser.parseCall(input)
+        val actual = Format.parseCall(input)
         assertEquals(expected, actual)
     }
 
@@ -91,7 +91,7 @@ class ParserTest {
         )
 
         // when
-        val actual = Parser.parseItem(input)
+        val actual = Format.parseItem(input)
         assertEquals(expected, actual)
     }
 
@@ -110,7 +110,7 @@ class ParserTest {
         val expected = listOf(item)
 
         // when
-        val actual = Parser.parseItemList(input)
+        val actual = Format.parseItemList(input)
         assertEquals(expected, actual)
     }
 }

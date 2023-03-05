@@ -45,7 +45,7 @@
     game      [ jackson arrow format ]
     format    [ jackson ]
     prototype [ jackson ]
-    prototype2 [ jackson format ]
+    prototype2 [ jackson format arrow ]
     skirmish  []
   }
   detangler [domain]

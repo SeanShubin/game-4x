@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype2
 
-data class CommandScriptBuilder(
+data class Builder(
     val inputNameList: List<String> = emptyList(),
     val topCommandList: List<TopCommand> = emptyList(),
     val subCommandName: String? = null,
@@ -12,19 +12,19 @@ data class CommandScriptBuilder(
     val exampleStateAfterItemList: List<Item> = emptyList(),
     val exampleList: List<Example> = emptyList()
 )  {
-    fun input(name: String): CommandScriptBuilder =
+    fun input(name: String): Builder =
         copy(inputNameList = inputNameList + name)
 
-    fun topCommand(topCommand: TopCommand): CommandScriptBuilder =
+    fun topCommand(topCommand: TopCommand): Builder =
         copy(topCommandList = topCommandList + topCommand)
 
-    fun subCommandName(name: String): CommandScriptBuilder =
+    fun subCommandName(name: String): Builder =
         copy(subCommandName = name)
 
-    fun subCommandCall(call: SubCommandCall): CommandScriptBuilder =
+    fun subCommandCall(call: SubCommandCall): Builder =
         copy(subCommandCallList = subCommandCallList + call)
 
-    fun subCommandFinalize(): CommandScriptBuilder = if(subCommandName == null) {
+    fun subCommandFinalize(): Builder = if(subCommandName == null) {
         this
     } else {
         copy(
@@ -34,16 +34,16 @@ data class CommandScriptBuilder(
         )
     }
 
-    fun exampleStateBeforeItem(item: Item): CommandScriptBuilder =
+    fun exampleStateBeforeItem(item: Item): Builder =
         copy(exampleStateBeforeItemList = exampleStateBeforeItemList + item)
 
-    fun exampleLog(message: String): CommandScriptBuilder =
+    fun exampleLog(message: String): Builder =
         copy(exampleLogMessageList = exampleLogMessageList + message)
 
-    fun exampleStateAfterItem(item: Item): CommandScriptBuilder =
+    fun exampleStateAfterItem(item: Item): Builder =
         copy(exampleStateAfterItemList = exampleStateAfterItemList + item)
 
-    fun exampleFinalize(): CommandScriptBuilder =
+    fun exampleFinalize(): Builder =
         copy(
             exampleParameterList = emptyList(),
             exampleStateBeforeItemList = emptyList(),
@@ -57,14 +57,14 @@ data class CommandScriptBuilder(
             )
         )
 
-    fun exampleParameter(parameter: Pair<String, Any>): CommandScriptBuilder =
+    fun exampleParameter(parameter: Pair<String, Any>): Builder =
         copy(exampleParameterList = exampleParameterList + parameter)
 
-    fun build(): CommandScript =
+    fun build(): Script =
         finalize().buildWithoutFinalize()
 
-    private fun finalize():CommandScriptBuilder = subCommandFinalize().exampleFinalize()
+    private fun finalize():Builder = subCommandFinalize().exampleFinalize()
 
-    private fun buildWithoutFinalize():CommandScript =
-        CommandScript(inputNameList, topCommandList, subCommandList, exampleList)
+    private fun buildWithoutFinalize():Script =
+        Script(inputNameList, topCommandList, subCommandList, exampleList)
 }

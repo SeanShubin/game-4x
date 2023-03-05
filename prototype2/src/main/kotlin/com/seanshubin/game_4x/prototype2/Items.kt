@@ -12,6 +12,7 @@ data class Items(val itemMap:Map<Item, Int> = emptyMap()) {
         val updateQuantity = { quantity:Int -> quantity - 1}
         return this.updateQuantityOrNull(target, updateQuantity)
     }
+    fun count(target:Item):Int = itemMap[target] ?: 0
     private fun updateQuantityOrNull(target:Item, update:(Int)->Int):Items? {
         val existingQuantity = itemMap[target] ?: 0
         val newQuantity = update(existingQuantity)
