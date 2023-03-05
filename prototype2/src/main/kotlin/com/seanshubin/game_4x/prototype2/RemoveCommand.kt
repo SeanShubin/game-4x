@@ -15,4 +15,6 @@ data class RemoveCommand(val item:Item):Command {
             Result.success(newState, messages)
         }
     }
+
+    override fun toMessage(): String = "remove ${Format.formatItem(item)}"
 }

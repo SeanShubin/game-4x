@@ -8,4 +8,6 @@ data class AddCommand(val item:Item):Command {
         val messages = Messages.quantityChanged(oldQuantity, newQuantity, item)
         return Result.success(newState, messages)
     }
+
+    override fun toMessage(): String = "add ${Format.formatItem(item)}"
 }
