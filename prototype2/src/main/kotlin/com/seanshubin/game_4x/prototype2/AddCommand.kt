@@ -1,8 +1,7 @@
 package com.seanshubin.game_4x.prototype2
 
-object AddCommand:Command {
-    override fun execute(state: Items, parameters: List<Item>): Result {
-        val item = parameters.getOrNull(0) ?: return Result.missingParameter(state,0)
+data class AddCommand(val item:Item):Command {
+    override fun execute(state: Items): Result {
         val newState = state.add(item)
         val oldQuantity = state.count(item)
         val newQuantity = newState.count(item)

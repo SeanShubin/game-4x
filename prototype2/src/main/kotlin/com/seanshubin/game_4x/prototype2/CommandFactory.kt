@@ -1,5 +1,7 @@
 package com.seanshubin.game_4x.prototype2
 
+import arrow.core.Either
+
 interface CommandFactory {
-    fun lookup(name:String):Command?
+    fun build(name:String, parameters:List<Item>): Either<String, Command>
 }
