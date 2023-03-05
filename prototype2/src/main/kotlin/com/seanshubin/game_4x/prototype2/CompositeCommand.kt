@@ -17,5 +17,5 @@ data class CompositeCommand(val commands:List<Command>):Command {
         return Result.success(currentState, allMessages)
     }
 
-    override fun toMessage(): String = commands.joinToString(", ") { it.toMessage() }
+    override fun toMessage(): String = commands.joinToString(", ", "composite ") { it.toMessage() }
 }
