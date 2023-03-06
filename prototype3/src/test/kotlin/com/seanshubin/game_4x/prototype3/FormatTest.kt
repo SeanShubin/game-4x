@@ -1,6 +1,7 @@
 package com.seanshubin.game_4x.prototype3
 
-import com.seanshubin.game_4x.prototype3.Item.Companion.toItem
+import com.seanshubin.game_4x.prototype3.ValueUtil.toItem
+import com.seanshubin.game_4x.prototype3.ValueUtil.toValue
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -57,6 +58,33 @@ class FormatTest {
                 "owner" to "\$owner"
             ).toItem(), Format.parseItem("{node resource=food activated=false density=6 owner=\$owner}")
         )
+    }
+
+    @Test
+    fun call(){
+        // given
+        val input = "my-function 6 false {foo a=b c=1 d=false e=\$f} \$g h"
+        val expectedItem = mapOf(
+            "name" to "foo",
+            "a" to "b",
+            "c" to 1,
+            "d" to false,
+            "e" to "\$f"
+        ).toItem()
+        val expectedParameters:List<Value> = listOf(
+            6,
+            false,
+            expectedItem,
+            "\$g",
+            "h"
+        ).map{it.toValue()}
+        val expected = Call("my-function", expectedParameters)
+
+        // when
+        val actual = Format.parseCall(input)
+
+        // then
+        assertEquals(expected, actual)
     }
 }
 

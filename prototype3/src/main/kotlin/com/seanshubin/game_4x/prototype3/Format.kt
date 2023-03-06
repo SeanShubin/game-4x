@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype3
 
-import com.seanshubin.game_4x.prototype3.PrimitiveUtil.toPrimitive
+import com.seanshubin.game_4x.prototype3.ValueUtil.toPrimitive
 
 object Format {
     private val name = """\w+"""
@@ -11,6 +11,10 @@ object Format {
     private val unNamedItemRegex = Regex("""\{($attribute(?: $attribute)*)}""")
     fun parseItem(text:String):Item? =
         parseNamedItem(text) ?: parseUnnamedItem(text) ?: parseEmptyItem(text)
+
+    fun parseCall(text:String):Call? {
+        throw UnsupportedOperationException("not implemented")
+    }
 
     private fun parseEmptyItem(text:String):Item? =
         if(text == "{}") Item() else null
