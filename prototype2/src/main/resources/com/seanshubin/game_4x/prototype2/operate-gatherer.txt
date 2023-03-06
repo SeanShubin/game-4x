@@ -25,7 +25,7 @@ example
     {node resource=food activated=false density=6}
     {gatherer resource=food activated=false}
     {citizen activated=false}
-  log
+  messages
     activated {node resource=food}
     activated {gatherer resource=food}
     0 -> 6 {supply resource=food}

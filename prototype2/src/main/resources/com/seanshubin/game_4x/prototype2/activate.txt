@@ -8,12 +8,12 @@ remove {$thing activated=false}
 add-activated
 add {$thing activated=true}
 
-test-case
+example
   input
     thing={gatherer resource=food}
   state-before
     {gatherer resource=food activated=false}
-  log
+  messages
     activated {gatherer resource=food}
   state-after
     {gatherer resource=food activated=true}

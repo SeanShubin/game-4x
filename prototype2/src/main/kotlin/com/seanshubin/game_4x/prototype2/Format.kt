@@ -2,34 +2,42 @@ package com.seanshubin.game_4x.prototype2
 
 object Format {
     val lineBreak = Regex("\r\n|\r|\n")
-    private const val nameSubstitute = """\$?[\w-]+"""
-    private const val nameCapture = """($nameSubstitute)"""
-    private const val item = """\{$nameCapture((?: $nameSubstitute=$nameSubstitute)*)}"""
-    private const val input = """input ($nameSubstitute)"""
-    private const val required = """required ($nameSubstitute)"""
-    private const val optional = """optional ($nameSubstitute)"""
-    private const val call = """$nameCapture( $item)*"""
-    private const val parameter = """$nameCapture=$nameCapture"""
+    private const val name = """\$?[\w-]+"""
+    private const val nameCapture = """($name)"""
+    private const val namedItemSubstitute = """\{$name(?: $name=$name)*}"""
+    private const val namedItemCapture = """\{$nameCapture((?: $name=$name)*)}"""
+    private const val unnamedItemSubstitute = """\{(?:\s*$name=$name\s*)*}"""
+    private const val unnamedItemCapture = """\{((?:\s*$name=$name\s*)*)}"""
+    private const val itemCapture = """$namedItemCapture|$unnamedItemCapture"""
+    private const val itemSubstitute = """$namedItemSubstitute|$unnamedItemSubstitute"""
+    private const val valueSubstitute = """$name|$namedItemSubstitute"""
+    private const val valueCapture = """($valueSubstitute)"""
+    private const val input = """input ($name)"""
+    private const val required = """required ($name)"""
+    private const val optional = """optional ($name)"""
+    private const val call = """$nameCapture(\s*$itemSubstitute)*"""
+    private const val parameter = """$nameCapture=$valueCapture"""
     private val inputRegex = Regex(input)
     private val requiredRegex = Regex(required)
     private val optionalRegex = Regex(optional)
     private val subNameRegex = Regex(nameCapture)
     private val callRegex = Regex(call)
-    private val itemRegex = Regex(item)
+    private val itemRegex = Regex(itemCapture)
+    private val namedItemRegex = Regex(namedItemCapture)
+    private val unnamedItemRegex = Regex(unnamedItemCapture)
     private val parameterRegex = Regex(parameter)
-    fun formatItem(item: Item): String =
-        item.attributeMap.map { (name, value) ->
-            if (name == "name") {
-                "$value"
-            } else {
-                "$name=$value"
-            }
-        }.joinToString(" ", "{", "}")
 
-    fun formatItems(items: Items): String =
-        items.itemMap.map { (item, quantity) ->
-            "$quantity of ${formatItem(item)}"
-        }.joinToString(" ", "{", "}")
+    fun formatItem(item: Item): String = item.attributeMap.map { (name, value) ->
+        if (name == "name") {
+            "$value"
+        } else {
+            "$name=$value"
+        }
+    }.joinToString(" ", "{", "}")
+
+    fun formatItems(items: Items): String = items.itemMap.map { (item, quantity) ->
+        "$quantity of ${formatItem(item)}"
+    }.joinToString(" ", "{", "}")
 
     fun parseInputLine(line: String): String? {
         val matchResult = inputRegex.matchEntire(line) ?: return null
@@ -38,12 +46,12 @@ object Format {
 
     fun parseRequiredLine(line: String): TopCommand? {
         val matchResult = requiredRegex.matchEntire(line) ?: return null
-        return TopCommand("required", matchResult.groupValues[1])
+        return TopCommand(required = true, matchResult.groupValues[1])
     }
 
     fun parseOptionalLine(line: String): TopCommand? {
         val matchResult = optionalRegex.matchEntire(line) ?: return null
-        return TopCommand("optional", matchResult.groupValues[1])
+        return TopCommand(required = false, matchResult.groupValues[1])
     }
 
     fun parseSubName(line: String): String? {
@@ -66,12 +74,21 @@ object Format {
         }.toList()
     }
 
-    fun parseItem(line: String): Item? {
-        val matchResult = itemRegex.matchEntire(line) ?: return null
+    fun parseItem(line: String): Item? = parseNamedItem(line) ?: parseUnnamedItem(line)
+
+    private fun parseNamedItem(line: String): Item? {
+        val matchResult = namedItemRegex.matchEntire(line) ?: return null
         val name = matchResult.groupValues[1]
         val remain = matchResult.groupValues[2]
         val parameters = parseParameterList(remain)
         return Item(mapOf("name" to name) + parameters.toMap())
+    }
+
+    private fun parseUnnamedItem(line: String): Item? {
+        val matchResult = unnamedItemRegex.matchEntire(line) ?: return null
+        val attributesString = matchResult.groupValues[1]
+        val attributeList = parseAttributeList(attributesString)
+        return Item(attributeList.toMap())
     }
 
     fun parseParameter(line: String): Pair<String, Any>? {
@@ -90,7 +107,15 @@ object Format {
         }.toList()
     }
 
-    private fun String.toDynamic(): Any =
-        toIntOrNull() ?: toBooleanStrictOrNull() ?: this
+    fun parseAttributeList(line: String): List<Pair<String, Any>> {
+        val matchResults = parameterRegex.findAll(line)
+        return matchResults.map {
+            val name = it.groupValues[1]
+            val value = it.groupValues[2].toDynamic()
+            Pair(name, value)
+        }.toList()
+    }
+
+    private fun String.toDynamic(): Any = toIntOrNull() ?: toBooleanStrictOrNull() ?: this
 
 }

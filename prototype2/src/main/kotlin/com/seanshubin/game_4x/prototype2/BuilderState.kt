@@ -43,6 +43,9 @@ interface BuilderState {
 
         object ReadingSubCommandCalls : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
+                if(line.source == "src/main/resources/com/seanshubin/game_4x/prototype2/reset-all.txt" && line.index== 3){
+                    println("found it")
+                }
                 if (line.text.isBlank()) {
                     return Pair(ReadingSubCommands, builder.subCommandFinalize())
                 }

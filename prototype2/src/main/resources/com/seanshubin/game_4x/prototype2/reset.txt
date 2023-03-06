@@ -8,8 +8,8 @@ remove {$thing activated=true}
 add-not-activated
 add {$thing activated=false}
 
-test-case
-  input
+example
+  parameters
     thing={gatherer resource=food}
   state-before
     {gatherer resource=food activated=true}

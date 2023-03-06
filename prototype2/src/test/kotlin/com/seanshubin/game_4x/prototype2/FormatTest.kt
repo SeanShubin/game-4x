@@ -21,7 +21,7 @@ class FormatTest {
     fun parseRequired() {
         // given
         val input = "required activate-node"
-        val expected = TopCommand("required", "activate-node")
+        val expected = TopCommand(required = true, "activate-node")
 
         // when
         val actual = Format.parseRequiredLine(input)
@@ -34,7 +34,7 @@ class FormatTest {
     fun parseOptional() {
         // given
         val input = "optional add-supply"
-        val expected = TopCommand("optional", "add-supply")
+        val expected = TopCommand(required = false, "add-supply")
 
         // when
         val actual = Format.parseOptionalLine(input)
@@ -78,12 +78,29 @@ class FormatTest {
     }
 
     @Test
-    fun parseItem() {
+    fun parseNamedItem() {
         // given
         val input = "{node resource=\$resource density=\$density activated=false}"
         val expected = Item(
             mapOf(
                 "name" to "node",
+                "resource" to "\$resource",
+                "density" to "\$density",
+                "activated" to false
+            )
+        )
+
+        // when
+        val actual = Format.parseItem(input)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parseUnnamedItem() {
+        // given
+        val input = "{resource=\$resource density=\$density activated=false}"
+        val expected = Item(
+            mapOf(
                 "resource" to "\$resource",
                 "density" to "\$density",
                 "activated" to false
@@ -111,6 +128,25 @@ class FormatTest {
 
         // when
         val actual = Format.parseItemList(input)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun parseCall(){
+        // given
+
+        val input = "find-partial-matches {activated=true} {alias=need-reset}"
+
+        val expectedName = "find-partial-matches"
+        val expectedParameter1 = Item(mapOf("activated" to true))
+        val expectedParameter2 = Item(mapOf("alias" to "need-reset"))
+        val expectedParameters = listOf(expectedParameter1, expectedParameter2)
+        val expected = SubCommandCall(expectedName, expectedParameters)
+
+        // when
+        val actual = Format.parseCall(input)
+
+        // then
         assertEquals(expected, actual)
     }
 }

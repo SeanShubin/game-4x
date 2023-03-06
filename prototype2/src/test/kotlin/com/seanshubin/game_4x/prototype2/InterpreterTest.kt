@@ -16,8 +16,7 @@ class InterpreterTest {
         ))
         val expectedMessages = listOf("0 -> 1 changed quantity of {citizen activated=false}")
         val expected = Result.success(expectedState, expectedMessages)
-        val commandFactory:CommandFactory = CommandFactoryImpl()
-        val interpreter:Interpreter = InterpreterImpl(commandFactory)
+        val interpreter:Interpreter = newInterpreter()
         val initialState = Items()
 
         // when
@@ -38,13 +37,18 @@ class InterpreterTest {
         val expectedState = Items()
         val expectedMessages = listOf("1 -> 0 changed quantity of {citizen activated=false}")
         val expected = Result.success(expectedState, expectedMessages)
-        val commandFactory:CommandFactory = CommandFactoryImpl()
-        val interpreter:Interpreter = InterpreterImpl(commandFactory)
+        val interpreter:Interpreter = newInterpreter()
 
         // when
         val actual = interpreter.execute(initialState, "remove {citizen activated=false}")
 
         // then
         assertEquals(expected, actual)
+    }
+
+    private fun newInterpreter():Interpreter {
+        val commandFactory:CommandFactory = CommandFactoryImpl()
+        val interpreter:Interpreter = InterpreterImpl(commandFactory)
+        return interpreter
     }
 }

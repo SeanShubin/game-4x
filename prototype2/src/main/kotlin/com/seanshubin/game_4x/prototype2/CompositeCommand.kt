@@ -18,4 +18,11 @@ data class CompositeCommand(val commands:List<Command>):Command {
     }
 
     override fun toMessage(): String = commands.joinToString(", ", "composite ") { it.toMessage() }
+    companion object {
+        fun fromList(list:List<Command>):Command = if(list.size == 1){
+            list[0]
+        } else {
+            CompositeCommand(list)
+        }
+    }
 }
