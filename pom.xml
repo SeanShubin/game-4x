@@ -59,6 +59,7 @@
         <module>format</module>
         <module>prototype</module>
         <module>prototype2</module>
+        <module>prototype3</module>
         <module>skirmish</module>
     </modules>
     <properties>
