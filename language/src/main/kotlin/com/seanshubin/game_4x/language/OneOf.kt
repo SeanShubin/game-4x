@@ -10,6 +10,6 @@ data class OneOf(val name:String, val expressions:List<Expression>):Expression {
                 return Result.wrap(name, result)
             }
         }
-        return Result.failure(cursor)
+        return Result.failure()
     }
 }
