@@ -1,12 +1,11 @@
 package com.seanshubin.game_4x.language
-import com.seanshubin.game_4x.language.Result.Success
-import com.seanshubin.game_4x.language.Result.Failure
 
+import com.seanshubin.game_4x.language.Result.Success
 import org.junit.Test
 
 class ParserTest {
     @Test
-    fun parseCall(){
+    fun parseCall() {
         val text = "call 3 {name} {key=value}"
         val iterator = text.iterator()
         val cursor = IteratorCursor(iterator)
