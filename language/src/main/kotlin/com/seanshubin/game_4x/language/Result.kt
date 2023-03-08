@@ -5,6 +5,7 @@ sealed interface Result {
 
     data class Success(val cursor: Cursor<Char>, val tree: Tree<Char>) : Result {
         override val success: Boolean = true
+        fun wrap(name: String): Result = Success(cursor, Branch(name, listOf(tree)))
     }
 
     object Failure : Result {
@@ -12,8 +13,6 @@ sealed interface Result {
     }
 
     companion object {
-        fun success(cursor: Cursor<Char>, tree: Tree<Char>): Result = Success(cursor, tree)
-        fun failure(): Result = Failure
         fun wrap(name: String, result: Result): Result = when (result) {
             is Success -> Success(result.cursor, Branch(name, listOf(result.tree)))
             is Failure -> Failure

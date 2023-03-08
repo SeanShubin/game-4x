@@ -16,10 +16,10 @@ data class SeqOf(val name: String, val expressions: List<Expression>) : Expressi
                     list.add(result.tree)
                 }
                 is Failure -> {
-                    return Result.failure()
+                    return Failure
                 }
             }
         }
-        return Result.success(currentCursor, Branch(name, list))
+        return Success(currentCursor, Branch(name, list))
     }
 }
