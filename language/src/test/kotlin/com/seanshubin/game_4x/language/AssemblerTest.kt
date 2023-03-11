@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.language
 
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class AssemblerTest {

@@ -2,7 +2,7 @@ package com.seanshubin.game_4x.prototype3
 
 import com.seanshubin.game_4x.prototype3.ValueUtil.toItem
 import com.seanshubin.game_4x.prototype3.ValueUtil.toValue
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class FormatTest {

@@ -1,7 +1,7 @@
 package com.seanshubin.game_4x.language
 
 import com.seanshubin.game_4x.language.Result.Success
-import org.junit.Test
+import kotlin.test.Test
 
 class ParserTest {
     @Test

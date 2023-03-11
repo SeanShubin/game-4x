@@ -60,6 +60,7 @@
         <module>prototype</module>
         <module>prototype2</module>
         <module>prototype3</module>
+        <module>prototype4</module>
         <module>language</module>
         <module>skirmish</module>
     </modules>

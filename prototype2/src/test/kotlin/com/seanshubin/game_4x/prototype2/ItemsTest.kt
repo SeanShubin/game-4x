@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype2
 
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ItemsTest {
