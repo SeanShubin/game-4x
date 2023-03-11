@@ -12,8 +12,7 @@ object AddCommand:Command {
         val newState = state.add(item, quantity)
         val oldCount = state.count(item)
         val newCount = newState.count(item)
-        val itemString = Format.formatItem(item)
-        val message = listOf("$oldCount -> $newCount $itemString changed quantity")
+        val message = listOf(Messages.changedQuantity(oldCount, newCount, item))
         return CommandResult(success = true, newState, message)
     }
 }

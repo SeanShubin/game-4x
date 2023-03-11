@@ -11,7 +11,7 @@ class ReplTest {
     fun addColonizer(){
         // given
         val input = listOf("add {colonizer}")
-        val expected = listOf("0 -> 1 {colonizer} changed quantity")
+        val expected = listOf("0 -> 1 {colonizer}")
         val tester = Tester(input)
 
         // when

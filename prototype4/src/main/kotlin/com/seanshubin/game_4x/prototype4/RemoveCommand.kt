@@ -11,13 +11,12 @@ object RemoveCommand:Command {
         val quantity = validated.intOrDefaultAt(1, 1)
         val newState = state.removeOrNull(item, quantity)
         val oldCount = state.count(item)
-        val itemString = Format.formatItem(item)
         return if(newState == null){
-            val message = listOf("Unable to remove item $itemString, count is $oldCount")
+            val message = listOf(Messages.unableToRemove(oldCount, item))
             CommandResult(success = false, state, message)
         } else {
             val newCount = newState.count(item)
-            val message = listOf("$oldCount -> $newCount $itemString changed quantity")
+            val message = listOf(Messages.changedQuantity(oldCount, newCount, item))
             CommandResult(success = true, newState, message)
         }
     }
