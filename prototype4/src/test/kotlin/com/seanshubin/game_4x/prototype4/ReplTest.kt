@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class ReplTest {
     @Test
-    fun addColonizer(){
+    fun addColonizer() {
         // given
         val input = listOf("add {colonizer}")
         val expected = listOf("0 -> 1 {colonizer}")
@@ -22,23 +22,23 @@ class ReplTest {
         assertEquals(expected, actual)
     }
 
-    class Tester(input:List<String>){
+    class Tester(input: List<String>) {
         val readLine = ReadLineStub(input)
         val lineSource = LineSourceImpl(readLine)
-        val writeLine= WriteLineStub()
+        val writeLine = WriteLineStub()
         val assemblerMap = CommandAssemblers.assemblerMap
         val assembler = AssemblerImpl(assemblerMap)
         val parser = ParserImpl(assembler)
         val commandLookup = CommandLookupImpl()
-        val loadDir= Paths.get("script")
-        val files= object:FilesContractUnsupportedOperation {}
+        val loadDir = Paths.get("script")
+        val files = object : FilesContractUnsupportedOperation {}
         val environment = EnvironmentImpl(loadDir, files, lineSource)
         val interpreter = InterpreterImpl(parser, commandLookup, environment)
         val state = Items()
         val repl = Repl(lineSource::readLine, writeLine, interpreter, state)
     }
 
-    class ReadLineStub(val lines:List<String>):(() -> String?){
+    class ReadLineStub(val lines: List<String>) : (() -> String?) {
         var index = 0
         override fun invoke(): String? {
             val line = lines.getOrNull(index)
@@ -47,9 +47,9 @@ class ReplTest {
         }
     }
 
-    class WriteLineStub:(String)->Unit {
+    class WriteLineStub : (String) -> Unit {
         private val mutableLinesWritten = mutableListOf<String>()
-        val linesWritten:List<String> = mutableLinesWritten
+        val linesWritten: List<String> = mutableLinesWritten
         override fun invoke(line: String) {
             mutableLinesWritten.add(line)
         }

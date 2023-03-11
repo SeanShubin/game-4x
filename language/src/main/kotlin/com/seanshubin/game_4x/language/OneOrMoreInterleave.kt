@@ -3,7 +3,6 @@ package com.seanshubin.game_4x.language
 import com.seanshubin.game_4x.language.ExpressionUtil.consumeManyInterleave
 import com.seanshubin.game_4x.language.Result.Failure
 import com.seanshubin.game_4x.language.Result.Success
-import com.seanshubin.game_4x.language.Tree.Leaf
 import com.seanshubin.game_4x.language.Tree.Branch
 
 data class OneOrMoreInterleave(val name: String, val outer: Expression, val inner: Expression) : Expression {

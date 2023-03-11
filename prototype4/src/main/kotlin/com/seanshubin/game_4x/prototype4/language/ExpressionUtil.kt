@@ -1,8 +1,8 @@
 package com.seanshubin.game_4x.prototype4.language
 
-import com.seanshubin.game_4x.prototype4.language.Result.Success
-import com.seanshubin.game_4x.prototype4.language.Result.Failure
 import com.seanshubin.game_4x.prototype4.cursor.Cursor
+import com.seanshubin.game_4x.prototype4.language.Result.Failure
+import com.seanshubin.game_4x.prototype4.language.Result.Success
 
 object ExpressionUtil {
     fun consumeMany(cursor: Cursor<Char>, expression: Expression): Pair<Cursor<Char>, List<Tree<Char>>> {

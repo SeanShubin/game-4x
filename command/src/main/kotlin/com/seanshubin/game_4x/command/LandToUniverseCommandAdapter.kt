@@ -6,17 +6,17 @@ import arrow.core.right
 import com.seanshubin.game_4x.game.Universe
 
 data class LandToUniverseCommandAdapter(
-    val planetName:String,
-    val landIndex:Int,
-    val landCommand:LandCommand
-):UniverseCommand {
+    val planetName: String,
+    val landIndex: Int,
+    val landCommand: LandCommand
+) : UniverseCommand {
     override fun execute(universe: Universe): Either<UniverseFailure, UniverseSuccess> {
         val land = universe.getLand(planetName, landIndex)
         val landResult = landCommand.execute(land)
         val result = when (landResult) {
             is Either.Right -> {
                 val newUniverse = universe.setLand(planetName, landIndex, landResult.value.land)
-                val message= "planet '$planetName', land $landIndex: ${landResult.value.message}"
+                val message = "planet '$planetName', land $landIndex: ${landResult.value.message}"
                 val children = landResult.value.children.map { it.toUniverseSuccess(newUniverse) }
                 UniverseSuccess(landCommand.javaClass.simpleName, newUniverse, message, children).right()
             }
@@ -31,8 +31,8 @@ data class LandToUniverseCommandAdapter(
         "landCommand" to landCommand.toObject()
     )
 
-    private fun LandSuccess.toUniverseSuccess(universe:Universe):UniverseSuccess {
-        val newChildren = children.map{it.toUniverseSuccess(universe)}
+    private fun LandSuccess.toUniverseSuccess(universe: Universe): UniverseSuccess {
+        val newChildren = children.map { it.toUniverseSuccess(universe) }
         return UniverseSuccess(command.javaClass.simpleName, universe, message, newChildren)
     }
 }

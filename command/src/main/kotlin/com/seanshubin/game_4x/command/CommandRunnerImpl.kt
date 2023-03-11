@@ -26,7 +26,7 @@ class CommandRunnerImpl(
                 }
                 is Either.Left -> throw RuntimeException(result.value.toString())
             }
-            if(turn > turnLimit){
+            if (turn > turnLimit) {
                 throw RuntimeException("Turn limit $turnLimit exceeded")
             }
         } while (!history.contains(current))

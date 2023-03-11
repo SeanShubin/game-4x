@@ -6,7 +6,7 @@ data class Example(
     val log: List<String>,
     val stateAfter: Items
 ) {
-    fun toObject():Map<String, Any> = mapOf(
+    fun toObject(): Map<String, Any> = mapOf(
         "parameters" to parameters,
         "stateBefore" to stateBefore.toObject(),
         "log" to log,

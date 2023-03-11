@@ -1,13 +1,14 @@
 package com.seanshubin.game_4x.language
+
 import com.seanshubin.game_4x.language.PBoolean.Companion.toPBoolean
 import com.seanshubin.game_4x.language.PNumber.Companion.toPNumber
 import com.seanshubin.game_4x.language.PString.Companion.toPString
-import com.seanshubin.game_4x.language.Tree.Leaf
 import com.seanshubin.game_4x.language.Tree.Branch
+import com.seanshubin.game_4x.language.Tree.Leaf
 
 object AssemblersOld {
     fun assemble(tree: Tree<Char>): Any? {
-       return when (tree) {
+        return when (tree) {
             is Branch<Char> -> assembleBranch(tree)
             is Leaf<Char> -> assembelLeaf(tree)
         }
@@ -29,8 +30,9 @@ object AssemblersOld {
             else -> assembleGeneric(branch.list)
         }
     }
+
     fun assembelLeaf(leaf: Leaf<Char>): Any? =
-        when(leaf.name){
+        when (leaf.name) {
             "word-char" -> leaf.value
             "number-char" -> leaf.value
             else -> null
@@ -45,19 +47,19 @@ object AssemblersOld {
     fun assembleName(parts: List<Any>): String =
         parts.joinToString("")
 
-    fun assembleGeneric(list:List<Tree<Char>>):Any? = if(list.size == 1){
+    fun assembleGeneric(list: List<Tree<Char>>): Any? = if (list.size == 1) {
         assemble(list[0])
     } else {
         list.mapNotNull(::assemble)
     }
 
-    fun assembleNumber(parts: List<Any>):PNumber =
+    fun assembleNumber(parts: List<Any>): PNumber =
         parts.joinToString("").toInt().toPNumber()
 
-    fun assembleString(parts: List<Any>):PString =
+    fun assembleString(parts: List<Any>): PString =
         parts.joinToString("").toPString()
 
-    fun assembleNamed(parts: List<Any>):Item {
+    fun assembleNamed(parts: List<Any>): Item {
         val name = parts[0] as String
         val attributes = parts[1] as List<Pair<String, Primitive>>
         val attributeList = listOf(Pair("name", name.toPString())) + attributes
@@ -65,13 +67,15 @@ object AssemblersOld {
         val item = Item(attributeMap)
         return item
     }
-    fun assembleUnnamed(parts: List<Any>):Item {
+
+    fun assembleUnnamed(parts: List<Any>): Item {
         val attributeList = parts[0] as List<Pair<String, Primitive>>
         val attributeMap = attributeList.toMap()
         val item = Item(attributeMap)
         return item
     }
-    fun assemblePair(parts: List<Any>):Any {
+
+    fun assemblePair(parts: List<Any>): Any {
         return Pair(parts[0], parts[1])
     }
 }

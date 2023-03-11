@@ -1,3 +1,3 @@
 package com.seanshubin.game_4x.prototype3
 
-data class PrimitiveBoolean(val booleanValue:Boolean):PrimitiveValue
+data class PrimitiveBoolean(val booleanValue: Boolean) : PrimitiveValue

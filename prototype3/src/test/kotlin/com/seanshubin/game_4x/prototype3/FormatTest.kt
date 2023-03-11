@@ -61,7 +61,7 @@ class FormatTest {
     }
 
     @Test
-    fun call(){
+    fun call() {
         // given
         val input = "my-function 6 false {foo a=b c=1 d=false e=\$f} \$g h"
         val expectedItem = mapOf(
@@ -71,13 +71,13 @@ class FormatTest {
             "d" to false,
             "e" to "\$f"
         ).toItem()
-        val expectedParameters:List<Value> = listOf(
+        val expectedParameters: List<Value> = listOf(
             6,
             false,
             expectedItem,
             "\$g",
             "h"
-        ).map{it.toValue()}
+        ).map { it.toValue() }
         val expected = Call("my-function", expectedParameters)
 
         // when

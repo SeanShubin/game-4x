@@ -11,14 +11,14 @@ object ReplApp {
     @JvmStatic
     fun main(args: Array<String>) {
         val assemblerMap = CommandAssemblers.assemblerMap
-        val assembler:Assembler = AssemblerImpl(assemblerMap)
-        val parser:Parser = ParserImpl(assembler)
-        val commandLookup:CommandLookup = CommandLookupImpl()
-        val lineSource:LineSource = LineSourceImpl(::readLine)
+        val assembler: Assembler = AssemblerImpl(assemblerMap)
+        val parser: Parser = ParserImpl(assembler)
+        val commandLookup: CommandLookup = CommandLookupImpl()
+        val lineSource: LineSource = LineSourceImpl(::readLine)
         val files: FilesContract = FilesDelegate
         val loadDir: Path = Paths.get("script")
-        val environment:Environment = EnvironmentImpl(loadDir, files, lineSource)
-        val interpreter:Interpreter = InterpreterImpl(parser, commandLookup, environment)
+        val environment: Environment = EnvironmentImpl(loadDir, files, lineSource)
+        val interpreter: Interpreter = InterpreterImpl(parser, commandLookup, environment)
         val state = Items()
         val repl = Repl(lineSource::readLine, ::println, interpreter, state)
         println("Waiting for commands")

@@ -3,7 +3,7 @@ package com.seanshubin.game_4x.prototype4
 class InterpreterImpl(
     private val parser: Parser,
     private val commandLookup: CommandLookup,
-    private val environment:Environment
+    private val environment: Environment
 ) : Interpreter {
     override fun execute(state: Items, line: String): CommandResult =
         when (val parseResult = parser.parseCall(line)) {

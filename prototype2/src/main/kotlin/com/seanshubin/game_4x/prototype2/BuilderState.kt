@@ -43,7 +43,7 @@ interface BuilderState {
 
         object ReadingSubCommandCalls : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
-                if(line.source == "src/main/resources/com/seanshubin/game_4x/prototype2/reset-all.txt" && line.index== 3){
+                if (line.source == "src/main/resources/com/seanshubin/game_4x/prototype2/reset-all.txt" && line.index == 3) {
                     println("found it")
                 }
                 if (line.text.isBlank()) {
@@ -59,7 +59,7 @@ interface BuilderState {
 
         object ReadingExamples : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
-                if(line.text.isBlank()){
+                if (line.text.isBlank()) {
                     return Pair(ReadingExamples, builder)
                 }
                 if (line.text == "example") {
@@ -68,6 +68,7 @@ interface BuilderState {
                 throw RuntimeException("line '$line' did not match a valid pattern for state ${javaClass.simpleName}")
             }
         }
+
         object ReadingExampleContents : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
                 val newExampleSection = checkForExampleSection(line)
@@ -81,15 +82,15 @@ interface BuilderState {
 
         object ReadingExampleParameters : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
-                if(line.text.isBlank()){
+                if (line.text.isBlank()) {
                     return Pair(ReadingExamples, builder.exampleFinalize())
                 }
                 val newExampleSection = checkForExampleSection(line)
-                if(newExampleSection != null){
+                if (newExampleSection != null) {
                     return Pair(newExampleSection, builder)
                 }
                 val parameter = Format.parseParameter(line.text.trim())
-                if(parameter != null){
+                if (parameter != null) {
                     return Pair(this, builder.exampleParameter(parameter))
                 }
                 throw RuntimeException("line '$line' did not match a valid pattern for state ${javaClass.simpleName}")
@@ -98,15 +99,15 @@ interface BuilderState {
 
         object ReadingExampleBuilderStateBefore : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
-                if(line.text.isBlank()){
+                if (line.text.isBlank()) {
                     return Pair(ReadingExamples, builder.exampleFinalize())
                 }
                 val newExampleSection = checkForExampleSection(line)
-                if(newExampleSection != null){
+                if (newExampleSection != null) {
                     return Pair(newExampleSection, builder)
                 }
                 val item = Format.parseItem(line.text.trim())
-                if(item != null){
+                if (item != null) {
                     return Pair(this, builder.exampleStateBeforeItem(item))
                 }
                 throw RuntimeException("line '$line' did not match a valid pattern for state ${javaClass.simpleName}")
@@ -115,11 +116,11 @@ interface BuilderState {
 
         object ReadingExampleLog : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
-                if(line.text.isBlank()){
+                if (line.text.isBlank()) {
                     return Pair(ReadingExamples, builder.exampleFinalize())
                 }
                 val newExampleSection = checkForExampleSection(line)
-                if(newExampleSection != null){
+                if (newExampleSection != null) {
                     return Pair(newExampleSection, builder)
                 }
                 return Pair(this, builder.exampleLog(line.text.trim()))
@@ -128,15 +129,15 @@ interface BuilderState {
 
         object ReadingExampleBuilderStateAfter : BuilderState {
             override fun processLine(builder: Builder, line: Line): Pair<BuilderState, Builder> {
-                if(line.text.isBlank()){
+                if (line.text.isBlank()) {
                     return Pair(ReadingExamples, builder.exampleFinalize())
                 }
                 val newExampleSection = checkForExampleSection(line)
-                if(newExampleSection != null){
+                if (newExampleSection != null) {
                     return Pair(newExampleSection, builder)
                 }
                 val item = Format.parseItem(line.text.trim())
-                if(item != null){
+                if (item != null) {
                     return Pair(this, builder.exampleStateAfterItem(item))
                 }
                 throw RuntimeException("line '$line' did not match a valid pattern for state ${javaClass.simpleName}")
@@ -155,7 +156,7 @@ interface BuilderState {
             }
         }
 
-        fun checkForExampleSection(line:Line):BuilderState? =
+        fun checkForExampleSection(line: Line): BuilderState? =
             when (line.text.trim()) {
                 "parameters" -> ReadingExampleParameters
                 "state-before" -> ReadingExampleBuilderStateBefore

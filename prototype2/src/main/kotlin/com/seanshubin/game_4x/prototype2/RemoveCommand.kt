@@ -1,9 +1,9 @@
 package com.seanshubin.game_4x.prototype2
 
-data class RemoveCommand(val item:Item):Command {
+data class RemoveCommand(val item: Item) : Command {
     override fun execute(state: Items): Result {
         val newState = state.removeOrNull(item)
-        return if(newState == null){
+        return if (newState == null) {
             val message = "unable to remove ${Format.formatItem(item)} from ${Format.formatItems(state)}"
             val messages = listOf(message)
             Result.failure(state, messages)

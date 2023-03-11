@@ -1,8 +1,8 @@
 package com.seanshubin.game_4x.language
 
-data class PBoolean(val booleanValue:Boolean):Primitive{
+data class PBoolean(val booleanValue: Boolean) : Primitive {
     companion object {
-        fun Boolean.toPBoolean():PBoolean = PBoolean(this)
+        fun Boolean.toPBoolean(): PBoolean = PBoolean(this)
     }
 }
 

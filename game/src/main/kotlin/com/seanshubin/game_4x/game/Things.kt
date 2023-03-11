@@ -20,7 +20,7 @@ object Things {
         "activated" to activated
     )
 
-    fun createSupply(resource:String): Thing = Thing(
+    fun createSupply(resource: String): Thing = Thing(
         "name" to "supply",
         "resource" to resource
     )

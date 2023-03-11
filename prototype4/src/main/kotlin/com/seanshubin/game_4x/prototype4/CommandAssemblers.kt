@@ -1,9 +1,10 @@
 package com.seanshubin.game_4x.prototype4
+
 import com.seanshubin.game_4x.prototype4.assembler.AssemblerUtil.delegateToNestedAssembler
+import com.seanshubin.game_4x.prototype4.assembler.AssemblerUtil.falseAssembler
 import com.seanshubin.game_4x.prototype4.assembler.AssemblerUtil.listAssembler
 import com.seanshubin.game_4x.prototype4.assembler.AssemblerUtil.nullAssembler
 import com.seanshubin.game_4x.prototype4.assembler.AssemblerUtil.trueAssembler
-import com.seanshubin.game_4x.prototype4.assembler.AssemblerUtil.falseAssembler
 
 object CommandAssemblers {
     private val callAssembler: (parts: List<Any>) -> Call = { parts ->

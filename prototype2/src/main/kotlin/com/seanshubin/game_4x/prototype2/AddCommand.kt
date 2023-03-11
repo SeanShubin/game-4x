@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype2
 
-data class AddCommand(val item:Item):Command {
+data class AddCommand(val item: Item) : Command {
     override fun execute(state: Items): Result {
         val newState = state.add(item)
         val oldQuantity = state.count(item)

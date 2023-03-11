@@ -8,7 +8,7 @@ import com.seanshubin.game_4x.game.Things
 import kotlin.math.min
 
 object EatOrLeave {
-    fun execute(command:LandCommand, land: Land, wantsToEat: Thing): Either<LandFailure, LandSuccess> {
+    fun execute(command: LandCommand, land: Land, wantsToEat: Thing): Either<LandFailure, LandSuccess> {
         val foodSupply = Things.createSupply("food")
         val wantsToEatCount = land.quantityByThing[wantsToEat] ?: 0
         val foodSupplyCount = land.quantityByThing[foodSupply] ?: 0

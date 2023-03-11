@@ -5,7 +5,7 @@ import kotlin.test.assertTrue
 
 class AssemblerTest {
     @Test
-    fun call(){
+    fun call() {
         val text = "foo 3 {name resource=food active=true} {active=false}"
         val iterator = text.iterator()
         val cursor = IteratorCursor(iterator)

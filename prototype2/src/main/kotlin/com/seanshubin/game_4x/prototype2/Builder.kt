@@ -11,7 +11,7 @@ data class Builder(
     val exampleLogMessageList: List<String> = emptyList(),
     val exampleStateAfterItemList: List<Item> = emptyList(),
     val exampleList: List<Example> = emptyList()
-)  {
+) {
     fun input(name: String): Builder =
         copy(inputNameList = inputNameList + name)
 
@@ -24,7 +24,7 @@ data class Builder(
     fun subCommandCall(call: SubCommandCall): Builder =
         copy(subCommandCallList = subCommandCallList + call)
 
-    fun subCommandFinalize(): Builder = if(subCommandName == null) {
+    fun subCommandFinalize(): Builder = if (subCommandName == null) {
         this
     } else {
         copy(
@@ -63,8 +63,8 @@ data class Builder(
     fun build(): Script =
         finalize().buildWithoutFinalize()
 
-    private fun finalize():Builder = subCommandFinalize().exampleFinalize()
+    private fun finalize(): Builder = subCommandFinalize().exampleFinalize()
 
-    private fun buildWithoutFinalize():Script =
+    private fun buildWithoutFinalize(): Script =
         Script(inputNameList, topCommandList, subCommandList, exampleList)
 }

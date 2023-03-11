@@ -13,6 +13,7 @@ data class Universe(val planets: List<Planet> = emptyList()) : HasToObject {
         updatePlanet(planetName) { planet ->
             planet.copy(lands = planet.lands.updateAtIndex(landIndex, update))
         }
+
     fun getPlanet(planetName: String): Planet = planetsByName.getValue(planetName)
     fun getLand(planetName: String, landIndex: Int): Land = getPlanet(planetName).lands[landIndex]
     fun setPlanet(planetName: String, planet: Planet): Universe = updatePlanet(planetName) { planet }

@@ -10,6 +10,7 @@ data class NormalizeNewlineCursor constructor(val cursor: Cursor<Char>) : Cursor
             reifyLazy()
             return lazyValue!!
         }
+
     override fun next(): NormalizeNewlineCursor {
         reifyLazy()
         return lazyNext!!

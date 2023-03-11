@@ -1,11 +1,15 @@
 package com.seanshubin.game_4x.command
 
-import com.seanshubin.game_4x.command.FormatUtil.indent
 import com.seanshubin.game_4x.format.JsonMappers
 import com.seanshubin.game_4x.game.HasToObject
 import com.seanshubin.game_4x.game.Land
 
-data class LandSuccess(val command: LandCommand, val land: Land, val message:String, val children:List<LandSuccess> = emptyList()) : HasToObject {
+data class LandSuccess(
+    val command: LandCommand,
+    val land: Land,
+    val message: String,
+    val children: List<LandSuccess> = emptyList()
+) : HasToObject {
     override fun toString(): String =
         JsonMappers.pretty.writeValueAsString(toObject())
 
@@ -13,6 +17,6 @@ data class LandSuccess(val command: LandCommand, val land: Land, val message:Str
         "command" to command.toObject(),
         "land" to land.toObject(),
         "message" to message,
-        "children" to children.map{it.toObject()}
+        "children" to children.map { it.toObject() }
     )
 }

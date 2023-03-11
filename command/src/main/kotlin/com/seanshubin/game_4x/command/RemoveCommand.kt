@@ -17,7 +17,7 @@ data class RemoveCommand(val target: Thing, val quantity: Int = 1) : LandCommand
                 "can not reduce $oldQuantity by $quantity"
             ).left()
         } else {
-            val newLand =land.setQuantity(target, newQuantity)
+            val newLand = land.setQuantity(target, newQuantity)
             LandSuccess(this, newLand, "removed $quantity, from $oldQuantity to $newQuantity").right()
         }
     }

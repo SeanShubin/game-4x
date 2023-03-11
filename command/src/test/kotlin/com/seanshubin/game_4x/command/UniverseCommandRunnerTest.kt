@@ -1,15 +1,14 @@
 package com.seanshubin.game_4x.command
 
-import arrow.core.Either
 import com.seanshubin.game_4x.format.JsonMappers
 import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Planet
 import com.seanshubin.game_4x.game.Things
 import com.seanshubin.game_4x.game.Universe
-import kotlin.test.Test
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import kotlin.test.Test
 
 class UniverseCommandRunnerTest {
     @Test
@@ -22,7 +21,7 @@ class UniverseCommandRunnerTest {
         val node = Things.createNode("food", density)
 
         val updateLand = { land: Land ->
-            land.addThing(node,4).addThing(colonizer)
+            land.addThing(node, 4).addThing(colonizer)
         }
         val updatePlanet = { planet: Planet ->
             planet.addLand().updateLand(landIndex, updateLand)
@@ -32,7 +31,7 @@ class UniverseCommandRunnerTest {
             .updatePlanet(planetName, updatePlanet)
         val command = EveryLandUniverseCommand(GenericLandStrategy)
         val basePath = Paths.get("generated")
-        val newUniverseEvent = {turn:Int, newUniverse:Universe ->
+        val newUniverseEvent = { turn: Int, newUniverse: Universe ->
             writeTurn(basePath, turn, newUniverse)
         }
         val turnLimit = 10
@@ -45,7 +44,7 @@ class UniverseCommandRunnerTest {
         // then
     }
 
-    private fun clearHistory(basePath: Path){
+    private fun clearHistory(basePath: Path) {
         Files.createDirectories(basePath)
         Files.list(basePath).toList().forEach { file ->
             Files.delete(file)

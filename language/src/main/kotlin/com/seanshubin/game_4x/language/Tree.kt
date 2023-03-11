@@ -1,7 +1,7 @@
 package com.seanshubin.game_4x.language
 
 sealed interface Tree<T> {
-    val name:String
+    val name: String
     fun toList(): List<T>
     fun toLines(): List<String>
 

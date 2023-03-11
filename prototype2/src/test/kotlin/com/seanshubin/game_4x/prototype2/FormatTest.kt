@@ -4,7 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class FormatTest {
-//    @Test
+    //    @Test
 //    fun parseInput() {
 //        // given
 //        val input = "input resource"
@@ -132,7 +132,7 @@ class FormatTest {
 //    }
 //
     @Test
-    fun parseCall(){
+    fun parseCall() {
         // given
 
         val input = "find-partial-matches {activated=true} {alias=need-reset}"

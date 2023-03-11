@@ -4,18 +4,20 @@ import com.seanshubin.game_4x.game.ListUtil.updateWhere
 
 data class Thing(val attributes: List<Pair<String, Attribute>>) : HasToObject {
     constructor(vararg pairs: Pair<String, Any>) : this(pairsToAttributePairs(*pairs))
-    val attributeByName:Map<String, Attribute> = attributes.toMap()
+
+    val attributeByName: Map<String, Attribute> = attributes.toMap()
 
     fun toLines(): List<String> = attributes.flatMap { it.toLines() }
 
-    fun setBooleanValue(name:String, value:Boolean):Thing = copy(attributes = attributes.updateWhere({it.first == name}){
-        name to BooleanAttribute(value)
-    })
+    fun setBooleanValue(name: String, value: Boolean): Thing =
+        copy(attributes = attributes.updateWhere({ it.first == name }) {
+            name to BooleanAttribute(value)
+        })
 
-    fun isPartOf(that:Thing):Boolean =
+    fun isPartOf(that: Thing): Boolean =
         attributes.all { it.isPartOf(that) }
 
-    private fun Pair<String, Attribute>.isPartOf(that:Thing):Boolean {
+    private fun Pair<String, Attribute>.isPartOf(that: Thing): Boolean {
         val thatAttribute = that.attributeByName[first] ?: return false
         return second == thatAttribute
     }
@@ -24,10 +26,11 @@ data class Thing(val attributes: List<Pair<String, Attribute>>) : HasToObject {
 
     companion object {
         sealed interface Attribute : HasToObject {
-            fun requireInt():Int = throw RuntimeException("${javaClass.simpleName} is not an integer")
-            fun requireBoolean():Boolean = throw RuntimeException("${javaClass.simpleName} is not an integer")
-            fun requireString():String = throw RuntimeException("${javaClass.simpleName} is not an integer")
+            fun requireInt(): Int = throw RuntimeException("${javaClass.simpleName} is not an integer")
+            fun requireBoolean(): Boolean = throw RuntimeException("${javaClass.simpleName} is not an integer")
+            fun requireString(): String = throw RuntimeException("${javaClass.simpleName} is not an integer")
         }
+
         data class StringAttribute(val stringValue: String) : Attribute {
             override fun toObject(): String = stringValue
             override fun requireString(): String = stringValue

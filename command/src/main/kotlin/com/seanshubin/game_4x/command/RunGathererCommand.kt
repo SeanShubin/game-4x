@@ -10,11 +10,13 @@ data class RunGathererCommand(val resource: String) : LandCommand {
     override fun toObject(): String = this.javaClass.simpleName
 
     override fun execute(land: Land): Either<LandFailure, LandSuccess> {
-        val unusedNodes = land.findExpanded(Thing(
-            "name" to "node",
-            "resource" to resource,
-            "activated" to false
-        )).sortedByDescending { it.attributeByName.getValue("density").requireInt() }
+        val unusedNodes = land.findExpanded(
+            Thing(
+                "name" to "node",
+                "resource" to resource,
+                "activated" to false
+            )
+        ).sortedByDescending { it.attributeByName.getValue("density").requireInt() }
         val unusedNode = unusedNodes.firstOrNull() ?: return LandFailure(this, land, "no available gatherers").left()
         val density = unusedNode.attributeByName.getValue("density").requireInt()
         val usedNode = unusedNode.setBooleanValue("activated", true)

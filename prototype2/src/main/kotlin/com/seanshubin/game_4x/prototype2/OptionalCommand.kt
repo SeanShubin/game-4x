@@ -1,12 +1,12 @@
 package com.seanshubin.game_4x.prototype2
 
-data class OptionalCommand(val command:Command):Command {
+data class OptionalCommand(val command: Command) : Command {
     override fun execute(state: Items): Result {
         val result = command.execute(state)
-        return if(result.success){
+        return if (result.success) {
             result
         } else {
-            result.copy(success= true)
+            result.copy(success = true)
         }
     }
 

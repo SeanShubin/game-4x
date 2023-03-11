@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype2
 
-class ScriptParserImpl:ScriptParser {
+class ScriptParserImpl : ScriptParser {
     override fun parseLines(lines: List<Line>): Script {
         val builder = Builder()
         val initialBuilderState = BuilderState.Companion.ReadingHeader

@@ -1,7 +1,6 @@
 package com.seanshubin.game_4x.command
 
 import arrow.core.Either
-import arrow.core.left
 import com.seanshubin.game_4x.game.Land
 import com.seanshubin.game_4x.game.Thing
 import com.seanshubin.game_4x.game.Things

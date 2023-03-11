@@ -1,6 +1,6 @@
 package com.seanshubin.game_4x.prototype4
 
-class CommandLookupImpl:CommandLookup {
+class CommandLookupImpl : CommandLookup {
     private val commandMap = mapOf(
         "add" to AddCommand,
         "remove" to RemoveCommand,
@@ -8,7 +8,7 @@ class CommandLookupImpl:CommandLookup {
         "remove-all" to RemoveAllCommand,
         "load" to LoadCommand
     )
-    private val commandNames = commandMap.map{it.key}.sorted()
+    private val commandNames = commandMap.map { it.key }.sorted()
     override fun lookupByName(name: String): Command =
-        commandMap[name] ?:  UnknownCommand(name, commandNames)
+        commandMap[name] ?: UnknownCommand(name, commandNames)
 }

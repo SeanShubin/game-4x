@@ -1,7 +1,5 @@
 package com.seanshubin.game_4x.prototype3
 
-import com.seanshubin.game_4x.prototype3.ValueUtil.toValue
-
 object ValueUtil {
     fun Any.toPrimitive(): PrimitiveValue =
         toPrimitiveOrNull() ?: throw RuntimeException(
@@ -19,12 +17,12 @@ object ValueUtil {
     fun Any.toValueOrNull(): Value? =
         toPrimitiveOrNull() ?: toItemOrNull()
 
-    fun Any.toItem():Item =
+    fun Any.toItem(): Item =
         toItemOrNull() ?: throw RuntimeException(
             "Unable to covert $this of type ${this.javaClass.simpleName} to an item"
         )
 
-    fun Any.toItemOrNull():Item? = when(this) {
+    fun Any.toItemOrNull(): Item? = when (this) {
         is Item -> this
         is Map<*, *> -> Item((this as Map<String, Any>).valuesToPrimitive())
         else -> null

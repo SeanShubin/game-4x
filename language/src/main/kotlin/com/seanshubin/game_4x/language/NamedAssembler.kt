@@ -2,7 +2,7 @@ package com.seanshubin.game_4x.language
 
 import com.seanshubin.game_4x.language.PString.Companion.toPString
 
-object NamedAssembler:Assembler {
+object NamedAssembler : Assembler {
     override fun assemble(parts: List<Any>): Item {
         val name = parts[0] as String
         val otherAttributes = parts[1] as List<Pair<String, Primitive>>
