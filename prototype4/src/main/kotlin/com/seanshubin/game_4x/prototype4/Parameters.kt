@@ -4,30 +4,38 @@ data class Parameters(
     val unvalidated: List<Any>,
     val messages: List<String> = emptyList()
 ) {
-    fun requireCount(expectedCount:Int):Parameters{
+    fun requireAtLeastCount(requiredCount:Int):Parameters{
         val actualCount = unvalidated.size
-        return if(expectedCount != actualCount){
-            val message = "wrong number of parameters, expected $expectedCount, got $actualCount"
+        return if(actualCount < requiredCount){
+            val message = "wrong number of parameters, expected at least $requiredCount, got $actualCount"
             addMessage(message)
         } else {
             this
         }
     }
     fun requireIsItem(index:Int):Parameters{
-        val atIndex = unvalidated.getOrNull(index) ?: return missingParameterAt(index)
+        val atIndex = unvalidated.getOrNull(index) ?: return this
         return when(atIndex){
             is Item -> this
-            else -> itemExpectedAt(index, atIndex.javaClass.simpleName)
+            else -> wrongTypeAt(index, Item::javaClass.name, atIndex.javaClass.simpleName)
+        }
+    }
+    fun requireIsInt(index:Int):Parameters{
+        val atIndex = unvalidated.getOrNull(index) ?: return this
+        return when(atIndex){
+            is Int -> this
+            else -> wrongTypeAt(index, Int.Companion::class.java.simpleName, atIndex.javaClass.simpleName)
         }
     }
     fun itemAt(index:Int):Item = unvalidated[index] as Item
+    fun intOrDefaultAt(index:Int, default:Int):Int = (unvalidated.getOrNull(index) ?: default) as Int
     fun valid():Boolean = messages.isEmpty()
     fun notValid():Boolean = !valid()
     private fun addMessage(message:String):Parameters = copy(messages = messages + message)
     private fun missingParameterAt(index:Int):Parameters = addMessage(
         "Missing parameter at index $index"
     )
-    private fun itemExpectedAt(index:Int, typeName:String):Parameters = addMessage(
-        "Item expected at index $index, got $typeName"
+    private fun wrongTypeAt(index:Int, expectedType:String, actualType:String):Parameters = addMessage(
+        "Expected type $expectedType at index $index, got $actualType"
     )
 }

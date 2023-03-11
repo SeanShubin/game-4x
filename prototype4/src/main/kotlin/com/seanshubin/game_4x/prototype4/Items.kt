@@ -1,12 +1,12 @@
 package com.seanshubin.game_4x.prototype4
 
 data class Items(val itemMap:Map<Item, Int> = emptyMap()) {
-    fun add(target:Item):Items {
-        val updateQuantity = { quantity:Int -> quantity + 1}
+    fun add(target:Item, delta:Int):Items {
+        val updateQuantity = { quantity:Int -> quantity + delta}
         return this.updateQuantityOrNull(target, updateQuantity)!!
     }
-    fun removeOrNull(target:Item):Items? {
-        val updateQuantity = { quantity:Int -> quantity - 1}
+    fun removeOrNull(target:Item, delta:Int):Items? {
+        val updateQuantity = { quantity:Int -> quantity - delta}
         return this.updateQuantityOrNull(target, updateQuantity)
     }
     fun count(target:Item):Int = itemMap[target] ?: 0
@@ -20,11 +20,5 @@ data class Items(val itemMap:Map<Item, Int> = emptyMap()) {
         } else {
             Items(itemMap + (target to newQuantity))
         }
-    }
-    companion object {
-        fun fromItemList(itemList:List<Item>):Items =
-            itemList.fold(Items()) { items, item ->
-                items.add(item)
-            }
     }
 }
