@@ -14,7 +14,7 @@ class InterpreterImpl(
                 commandResult
             }
             is ParseResult.Failure -> {
-                CommandResult(success = false, state, listOf(parseResult.message))
+                CommandResult(success = false, state, parseResult.messages)
             }
         }
 }

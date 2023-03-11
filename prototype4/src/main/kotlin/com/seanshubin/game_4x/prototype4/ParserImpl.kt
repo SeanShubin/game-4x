@@ -16,11 +16,18 @@ class ParserImpl(private val assembler: Assembler):Parser {
                     ParseResult.Success(assembleCall(result.tree))
                 } else {
                     val remain = result.cursor.reify().joinToString("")
-                    ParseResult.Failure("text remains after parse: '$remain'")
+                    val parsed = cursor.between(result.cursor).joinToString("")
+                    ParseResult.Failure(listOf(
+                        "Unable to parse as call : '$line'",
+                        "parsed this portion     : '$parsed'",
+                        "but this portion remains: '$remain'"
+                    ))
                 }
             }
             is Result.Failure -> {
-                ParseResult.Failure("Unable to as call: '$line'")
+                ParseResult.Failure(listOf(
+                    "Unable to parse as call: '$line'"
+                ))
             }
         }
     }

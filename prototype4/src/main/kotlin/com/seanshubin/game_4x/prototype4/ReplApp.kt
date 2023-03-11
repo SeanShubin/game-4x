@@ -13,6 +13,7 @@ object ReplApp {
         val interpreter:Interpreter = InterpreterImpl(parser, commandLookup)
         val state = Items()
         val repl = Repl(::readLine, ::println, interpreter, state)
+        println("Waiting for commands")
         repl.run()
     }
 }

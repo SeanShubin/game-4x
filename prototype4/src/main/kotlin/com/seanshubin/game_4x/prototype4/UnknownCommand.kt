@@ -1,8 +1,8 @@
 package com.seanshubin.game_4x.prototype4
 
-data class UnknownCommand(val name:String):Command {
+data class UnknownCommand(val name:String, val commandNames:List<String>):Command {
     override fun execute(state: Items, parameters: Parameters): CommandResult =
         CommandResult(success = false, state, listOf(
-            "Unknown command '$name"
-        ))
+            "Unknown command '$name', supported commands are"
+        ) + commandNames.map{"  $it"})
 }
