@@ -1,7 +1,7 @@
 package com.seanshubin.game_4x.prototype4
 
 object AddCommand:Command {
-    override fun execute(state: Items, parameters: Parameters): CommandResult {
+    override fun execute(state: Items, parameters: Parameters, environment:Environment): CommandResult {
         val validated = parameters
             .requireAtLeastCount(1)
             .requireIsItem(0)

@@ -47,9 +47,11 @@
     prototype [ jackson ]
     prototype2 [ jackson format arrow ]
     prototype3 [ ]
-    prototype4 [ ]
+    prototype4 [ contract contract-test ]
     language  []
     skirmish  []
+    contract  []
+    contract-test [ contract ]
   }
   detangler [domain]
   consoleEntryPoint {

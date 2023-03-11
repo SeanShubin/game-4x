@@ -1,7 +1,7 @@
 package com.seanshubin.game_4x.prototype4
 
 object ListAllCommand:Command {
-    override fun execute(state: Items, parameters: Parameters): CommandResult {
+    override fun execute(state: Items, parameters: Parameters, environment:Environment): CommandResult {
         val validated = parameters.requireAtLeastCount(0)
         if(validated.notValid()) return CommandResult(success=false, state,validated.messages)
         val itemMessages = state.itemMap.map(::composeMessage)

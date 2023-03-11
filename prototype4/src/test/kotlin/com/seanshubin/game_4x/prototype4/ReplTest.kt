@@ -1,6 +1,8 @@
 package com.seanshubin.game_4x.prototype4
 
+import com.seanshubin.game_4x.contract.test.FilesContractUnsupportedOperation
 import com.seanshubin.game_4x.prototype4.assembler.AssemblerImpl
+import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -22,14 +24,18 @@ class ReplTest {
 
     class Tester(input:List<String>){
         val readLine = ReadLineStub(input)
+        val lineSource = LineSourceImpl(readLine)
         val writeLine= WriteLineStub()
         val assemblerMap = CommandAssemblers.assemblerMap
         val assembler = AssemblerImpl(assemblerMap)
         val parser = ParserImpl(assembler)
         val commandLookup = CommandLookupImpl()
-        val interpreter = InterpreterImpl(parser, commandLookup)
+        val loadDir= Paths.get("script")
+        val files= object:FilesContractUnsupportedOperation {}
+        val environment = EnvironmentImpl(loadDir, files, lineSource)
+        val interpreter = InterpreterImpl(parser, commandLookup, environment)
         val state = Items()
-        val repl = Repl(readLine, writeLine, interpreter, state)
+        val repl = Repl(lineSource::readLine, writeLine, interpreter, state)
     }
 
     class ReadLineStub(val lines:List<String>):(() -> String?){

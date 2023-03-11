@@ -1,0 +1,5 @@
+add {colonizer}
+add {citizen activated=false} 10
+add {citizen activated=true} 5
+add {node resource=food activated=false density=6} 6
+add {gatherer resource=food activated=false} 4

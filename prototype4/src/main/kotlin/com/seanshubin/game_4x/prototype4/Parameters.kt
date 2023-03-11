@@ -20,6 +20,13 @@ data class Parameters(
             else -> wrongTypeAt(index, Item::javaClass.name, atIndex.javaClass.simpleName)
         }
     }
+    fun requireIsString(index:Int):Parameters{
+        val atIndex = unvalidated.getOrNull(index) ?: return this
+        return when(atIndex){
+            is String -> this
+            else -> wrongTypeAt(index, String::javaClass.name, atIndex.javaClass.simpleName)
+        }
+    }
     fun requireIsInt(index:Int):Parameters{
         val atIndex = unvalidated.getOrNull(index) ?: return this
         return when(atIndex){
@@ -28,6 +35,7 @@ data class Parameters(
         }
     }
     fun itemAt(index:Int):Item = unvalidated[index] as Item
+    fun stringAt(index:Int):String = unvalidated[index] as String
     fun intOrDefaultAt(index:Int, default:Int):Int = (unvalidated.getOrNull(index) ?: default) as Int
     fun valid():Boolean = messages.isEmpty()
     fun notValid():Boolean = !valid()

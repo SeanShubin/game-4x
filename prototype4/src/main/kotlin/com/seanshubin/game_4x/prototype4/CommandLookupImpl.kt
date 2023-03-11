@@ -5,7 +5,8 @@ class CommandLookupImpl:CommandLookup {
         "add" to AddCommand,
         "remove" to RemoveCommand,
         "list-all" to ListAllCommand,
-        "remove-all" to RemoveAllCommand
+        "remove-all" to RemoveAllCommand,
+        "load" to LoadCommand
     )
     private val commandNames = commandMap.map{it.key}.sorted()
     override fun lookupByName(name: String): Command =

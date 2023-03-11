@@ -63,6 +63,8 @@
         <module>prototype4</module>
         <module>language</module>
         <module>skirmish</module>
+        <module>contract</module>
+        <module>contract-test</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
